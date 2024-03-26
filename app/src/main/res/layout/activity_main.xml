@@ -119,7 +119,7 @@
             android:textOff="@string/sw_locations_updates_textOff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:checked="true" app:layout_constraintTop_toTopOf="parent"
+            android:checked="false" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="12dp"
             android:layout_marginStart="10dp"
             app:layout_constraintHorizontal_bias="0.003"/>
@@ -136,7 +136,7 @@
             android:id="@+id/tv_updates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_updates"
+            android:text="@string/sw_locations_updates_textOff"
             app:layout_constraintStart_toEndOf="@+id/tv_label_updates"
             app:layout_constraintTop_toTopOf="@+id/tv_label_updates"/>
 

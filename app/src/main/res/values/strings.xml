@@ -9,7 +9,6 @@
     <string name="tv_label_accuracy">Accuracy:</string>
     <string name="tv_label_speed">Speed:</string>
     <string name="tv_label_updates">Updates:</string>
-    <string name="tv_updates">Location is being tracked</string>
     <string name="sw_locations_updates">Location Updates</string>
     <string name="sw_locations_updates_textOn">Location is being tracked</string>
     <string name="sw_locations_updates_textOff">Location is NOT being tracked</string>
@@ -21,9 +20,18 @@
     <string name="btn_btn">Button Value</string>
 
     <!-- MainActivity.java -->
+    <!-- Toast warnings -->
     <string name="location_permissions_granted">Location permissions successfully granted</string>
     <string name="location_permissions_not_granted">This app requires permissions to work</string>
-    <string name="location_not_activated">The location services are not activated</string>
+    <string name="location_not_activated_toast">The location services are not activated</string>
     <string name="location_updated">Location was updated</string>
+
+    <!-- UI Label Warnings -->
+    <string name="location_permissions_not_available">Location permissions not available</string>
+    <string name="location_not_enabled_label">Location not activated</string>
+    <string name="not_tracking_location">Not tracking location</string>
+    <string name="not_tracking_location_2">Location is NOT being tracked</string>
+    <string name="location_is_null">Location null</string>
+    <string name="not_available_message">Not available</string>
 
 </resources>

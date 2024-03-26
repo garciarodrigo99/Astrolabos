@@ -1,0 +1,104 @@
+package es.ull.etsii.testastrolabos;
+
+import android.location.Location;
+import android.widget.TextView;
+import androidx.appcompat.widget.SwitchCompat;
+
+import java.text.DecimalFormat;
+
+/**
+ * Class that manage the actions to update the values of the UI
+ */
+public class UIWriter {
+    public static void locationPermissionNotGranted(MainActivity activity){
+        String warning = activity.getString(R.string.location_permissions_not_available);
+        setWarningTextUIValues(activity,warning);
+        activity.sw_location_updates.setEnabled(false);
+        activity.tv_updates.setText(warning);
+        activity.sw_gps.setEnabled(false);
+        activity.tv_sensor.setText(warning);
+    }
+    public static void locationNotEnabled(MainActivity activity){
+        String warning = activity.getString(R.string.location_not_enabled_label);
+        setWarningTextUIValues(activity,warning);
+        activity.sw_location_updates.setEnabled(false);
+        activity.tv_updates.setText(warning);
+        activity.sw_gps.setEnabled(false);
+        activity.tv_sensor.setText(warning);
+    }
+    public static void notTrackingLocation(MainActivity activity){
+        String warning = activity.getString(R.string.not_tracking_location);
+        setWarningTextUIValues(activity,warning);
+        activity.tv_updates.setText(activity.getString(R.string.not_tracking_location_2));
+        activity.sw_gps.setEnabled(false);
+        activity.tv_sensor.setText(warning);
+    }
+    public static void locationNull(MainActivity activity){
+        String warning = activity.getString(R.string.location_is_null);
+        setWarningTextUIValues(activity,warning);
+        // TODO: Check if above whenEnableSwitch calls really do something
+        whenEnableSwitch(activity.sw_location_updates,activity.tv_updates);
+        whenEnableSwitch(activity.sw_gps,activity.tv_sensor);
+    }
+    public static void writeLocation(MainActivity activity, Location location){
+        activity.tv_lat.setText(String.valueOf(location.getLatitude()));
+        activity.tv_lon.setText(String.valueOf(location.getLongitude()));
+        activity.tv_accuracy.setText(String.valueOf(location.getAccuracy()));
+
+        if (location.hasAltitude()){
+            activity.tv_altitude.setText(String.valueOf(location.getAltitude()));
+        } else {
+            activity.tv_altitude.setText(activity.getString(R.string.not_available_message));
+        }
+        if (location.hasSpeed()){
+            activity.tv_speed.setText(speedFormat(location.getSpeed()));
+        } else {
+            activity.tv_speed.setText(activity.getString(R.string.not_available_message));
+        }
+    }
+
+    /**
+     * When some the location information can not be shown in each element of the GUI, a string is set in all of those
+     * elements of the GUI to help the user what is going on with location.
+     * @param warning String with the warning to show in each element of the GUI
+     */
+    private static void setWarningTextUIValues(MainActivity activity, String warning){
+        activity.tv_lat.setText(warning);
+        activity.tv_lon.setText(warning);
+        activity.tv_accuracy.setText(warning);
+        activity.tv_altitude.setText(warning);
+        activity.tv_speed.setText(warning);
+    }
+
+    /**
+     * When a switch changes from disable to enable, switch set as enabled and sets the correspondent text dependent if
+     * it is checked or not. (probably the text was changed during the disabling)
+     * @param _switch Switch to apply the changes
+     */
+    public static void whenEnableSwitch(SwitchCompat _switch, TextView switchTextView){
+        _switch.setEnabled(true);
+        switchTextView.setText(_switch.isChecked() ? _switch.getTextOn().toString() : _switch.getTextOff().toString());
+    }
+
+    private static String speedFormat(double speed){
+        speed *= 3.6;
+        Double formatedDouble = (double) speed;
+        DecimalFormat decimalFormat;
+        String toReturn;
+        if (speed < 10.0){
+            if (speed < 5.0){
+                decimalFormat = new DecimalFormat("#.##");
+            } else {
+                decimalFormat = new DecimalFormat("#.#");
+            }
+            toReturn = decimalFormat.format(formatedDouble);
+        } else {
+            toReturn = Integer.toString(formatedDouble.intValue());
+        }
+        return toReturn;
+    }
+
+/*    private static Float convertMPStoKMH(){
+
+    }*/
+}

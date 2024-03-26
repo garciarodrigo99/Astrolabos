@@ -78,12 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Switches listeners
         sw_location_updates.setOnClickListener(v -> {
-            if (sw_location_updates.isChecked()){
-                sw_gps.setEnabled(true);
+            boolean thisSwitchIsChecked = sw_location_updates.isChecked();
+            sw_gps.setEnabled(thisSwitchIsChecked);
+            if (thisSwitchIsChecked){
+                UIWriter.whenEnableSwitch(sw_gps,tv_sensor);
                 tv_updates.setText(sw_location_updates.getTextOn());
             } else {
-                sw_gps.setEnabled(false);
-                tv_updates.setText(sw_location_updates.getTextOff());
+                UIWriter.notTrackingLocation(MainActivity.this);
+/*                sw_gps.setEnabled(false);
+                tv_updates.setText(sw_location_updates.getTextOff());*/
             }
         });
 
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 appLocationRequest = powerBalanceLR;
             }
         });
+
         updateGPS();
     }
 
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                                     getString(R.string.location_permissions_not_granted),
                             Toast.LENGTH_LONG).
                             show();
-                    //UIWriter.locationPermissionNotGranted(MainActivity.this);
+                    UIWriter.locationPermissionNotGranted(MainActivity.this);
                     //finish();
                 }
                 break;
@@ -148,10 +152,10 @@ public class MainActivity extends AppCompatActivity {
         // The location is not enabled
         if (!(isLocationActivated())) {
             Toast.makeText(MainActivity.this,
-                    getString(R.string.location_not_activated),
+                    getString(R.string.location_not_enabled_label),
                     Toast.LENGTH_LONG).
                     show();
-            //UIWriter.locationNotEnabled(MainActivity.this);
+            UIWriter.locationNotEnabled(MainActivity.this);
             return;
         }
         // Location permissions is granted and location is enabled.
@@ -163,7 +167,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).
                     show();
 
-/*               updateUIValues(location);
+              //updateUIValues(location);
+              /*
             // Tracking está activado
             if (fileWriter != null) {
                 Date date = new Date();
@@ -175,4 +180,6 @@ public class MainActivity extends AppCompatActivity {
             }*/
         });
     }
+
+
 }
