@@ -3,6 +3,7 @@ package es.ull.etsii.testastrolabos;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         });
         updateGPS();
     }
+
+    // Function to handle when certain permissions are granted or not
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -122,6 +125,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    /**
+     * @return true if the location service is activated.
+     * false if the location service is NOT activated.
+     */
+    public boolean isLocationActivated(){
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        return ((locationManager != null) && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)));
+    }
+
     private void updateGPS(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
         // Permissions are not granted
@@ -133,10 +146,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         // The location is not enabled
-/*        if (!(isLocationEnable())) {
-            UIWriter.locationNotEnabled(MainActivity.this);
+        if (!(isLocationActivated())) {
+            Toast.makeText(MainActivity.this,
+                    getString(R.string.location_not_activated),
+                    Toast.LENGTH_LONG).
+                    show();
+            //UIWriter.locationNotEnabled(MainActivity.this);
             return;
-        }*/
+        }
         // Location permissions is granted and location is enabled.
         //Toast.makeText(MainActivity.this,"Location permissions granted",Toast.LENGTH_LONG).show();
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
