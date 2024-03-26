@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Test Astrolabos</string>
-    <string name="button">Button Value</string>
+
+    <!-- activity_main.xml  -->
     <string name="tv_label_lat">Lat:</string>
     <string name="tv_default_value">0.00</string>
     <string name="tv_label_lon">Lon:</string>
@@ -18,5 +19,10 @@
     <string name="tv_label_sensor">Sensor:</string>
     <string name="tv_sensor">Using GPS sensors</string>
     <string name="btn_btn">Button Value</string>
+
+    <!-- MainActivity.java -->
+    <string name="location_permissions_granted">Location permissions successfully granted</string>
+    <string name="location_permissions_not_granted">This app requires permissions to work</string>
+    <string name="location_updated">Location was updated</string>
 
 </resources>
