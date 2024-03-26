@@ -41,22 +41,14 @@ public class MainActivity extends AppCompatActivity {
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
 
-        // As LocationRequest method setPriority is deprecated outside the constructor/builder,
-        // two objects are created in this method to having them available to switch between each other
-        // in sw_gps.setOnClickListener method.
-
+        /* As LocationRequest method setPriority is deprecated outside the constructor/builder,
+        * two objects are created in this method to having them available to switch between each other
+        * in sw_gps.setOnClickListener method.*/
         // Set properties of high accuracy request
-        // TODO: Crear un abstract factory para encapsular estas asignaciones en otra clase.
-        LocationRequest highAccuracyLR = new LocationRequest.Builder(1000 * FAST_UPDATE).
-                setMinUpdateIntervalMillis(1000 * FAST_UPDATE).
-                setPriority(Priority.PRIORITY_HIGH_ACCURACY).
-                build();
+        LocationRequest highAccuracyLR = LocationAF.getFastUpdateLocationRequest();
 
         // Set properties of power balance request
-        LocationRequest powerBalanceLR = new LocationRequest.Builder(1000 * DEFAULT_UPDATE).
-                setMinUpdateIntervalMillis(1000 * DEFAULT_UPDATE).
-                setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY).
-                build();
+        LocationRequest powerBalanceLR = LocationAF.getPowerBalanceLocationRequest();
 
         // By default, the object would be initialized with high accuracy
         appLocationRequest = highAccuracyLR;
@@ -86,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()){
                 tv_sensor.setText(sw_gps.getTextOn());
+                appLocationRequest = highAccuracyLR;
             } else {
                 tv_sensor.setText(sw_gps.getTextOff());
+                appLocationRequest = powerBalanceLR;
             }
         });
 
