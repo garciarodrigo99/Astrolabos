@@ -10,11 +10,11 @@
     <string name="tv_label_updates">Updates:</string>
     <string name="tv_updates">Location is being tracked</string>
     <string name="sw_locations_updates">Location Updates</string>
-    <string name="sw_locations_updates_textOn">Using GPS sensors</string>
-    <string name="sw_locations_updates_textOff">Using Cell Towers + Wifi</string>
+    <string name="sw_locations_updates_textOn">Location is being tracked</string>
+    <string name="sw_locations_updates_textOff">Location is NOT being tracked</string>
     <string name="sw_gps">SavePower/GPS</string>
-    <string name="sw_gps_textOn">SavePower/GPS</string>
-    <string name="sw_gps_textOff">SavePower/GPS</string>
+    <string name="sw_gps_textOn">Using GPS sensors</string>
+    <string name="sw_gps_textOff">Using Cell Towers + Wifi</string>
     <string name="tv_label_sensor">Sensor:</string>
     <string name="tv_sensor">Using GPS sensors</string>
     <string name="btn_btn">Button Value</string>
