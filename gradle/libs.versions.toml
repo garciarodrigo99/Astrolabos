@@ -12,6 +12,8 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+location = { group = "com.google.android.gms", name = "play-services-location", version = "21.2.0" }
+gson = { group = "com.google.code.gson", name = "gson", version = "2.10.1" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
