@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onLocationResult(@NonNull @NotNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 // save location
-                //TODO:
-                updateUIValues(locationResult.getLastLocation());
+                locationObtainedHandler(locationResult.getLastLocation());
             }
         };
 
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).
                     show();
 
-              updateUIValues(location);
+              locationObtainedHandler(location);
               /*
             // Tracking está activado
             if (fileWriter != null) {
@@ -212,18 +211,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUIValues(Location location) {
+    /**
+     * Method to aisle the cases when location is obtained.
+     * It could be null or valid values
+     */
+    private void locationObtainedHandler(Location location){
         // If the GPS cannot set a valid location, the location value will be null.
         // It must be handled this case due to nullPointerException that causes the app ends with no explanation to the user.
         if (location == null){
-            //TODO: Remove code above. !isLocationActivated is checked before call this method
-
-            // Location is not enabled, so it would be null
-/*            if(!isLocationActivated()){
-                //TODO: Cambiar a location not enable
-                UIWriter.locationNull(MainActivity.this);
-                return;
-            }*/
             // Location is null, maybe GPS sensors are not sending location information yet.
             UIWriter.locationNull(MainActivity.this);
             return;
