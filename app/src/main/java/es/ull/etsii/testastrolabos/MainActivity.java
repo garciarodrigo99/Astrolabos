@@ -67,12 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
         // event that is trigger each interval is met to know the location
         locationCallBack = new LocationCallback() {
+
+            // At this point location permissions are granted and location services activated
             @Override
             public void onLocationResult(@NonNull @NotNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 // save location
                 //TODO:
-                //updateUIValues(locationResult.getLastLocation());
+                updateUIValues(locationResult.getLastLocation());
             }
         };
 
@@ -83,23 +85,22 @@ public class MainActivity extends AppCompatActivity {
             if (thisSwitchIsChecked){
                 UIWriter.whenEnableSwitch(sw_gps,tv_sensor);
                 tv_updates.setText(sw_location_updates.getTextOn());
+                startLocationUpdates();
             } else {
-                UIWriter.notTrackingLocation(MainActivity.this);
-/*                sw_gps.setEnabled(false);
-                tv_updates.setText(sw_location_updates.getTextOff());*/
+                stopLocationUpdates();
             }
         });
 
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()){
-                tv_sensor.setText(sw_gps.getTextOn());
                 appLocationRequest = highAccuracyLR;
+                tv_sensor.setText(sw_gps.getTextOn());
             } else {
-                tv_sensor.setText(sw_gps.getTextOff());
                 appLocationRequest = powerBalanceLR;
+                tv_sensor.setText(sw_gps.getTextOff());
             }
         });
-
+        //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
         updateGPS();
     }
 
@@ -139,9 +140,39 @@ public class MainActivity extends AppCompatActivity {
         return ((locationManager != null) && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)));
     }
 
+    /**
+     * Method that activate the trigger function locationCallBack with the LocationRequest settings
+     * @see  com.google.android.gms.location.LocationCallback
+     */
+    private void startLocationUpdates() {
+        tv_updates.setText(getString(R.string.sw_locations_updates_textOn));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationProviderClient.requestLocationUpdates(appLocationRequest, locationCallBack, null);
+        updateGPS();
+    }
+
+    /**
+     * Method that stop the trigger function locationCallBack
+     * @see  com.google.android.gms.location.LocationCallback
+     */
+    private void stopLocationUpdates() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
+        UIWriter.notTrackingLocation(MainActivity.this);
+    }
+
     private void updateGPS(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
         // Permissions are not granted
+        //TODO: Request for permissions
         if (!(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             // Request permissions if the OS version is supported
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -150,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         // The location is not enabled
+        //TODO: create a function that guides the user to activate location
         if (!(isLocationActivated())) {
             Toast.makeText(MainActivity.this,
                     getString(R.string.location_not_enabled_label),
@@ -159,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         // Location permissions is granted and location is enabled.
-        //Toast.makeText(MainActivity.this,"Location permissions granted",Toast.LENGTH_LONG).show();
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
             // We got permissions. Put the values in the GUI
             Toast.makeText(MainActivity.this,
@@ -167,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).
                     show();
 
-              //updateUIValues(location);
+              updateUIValues(location);
               /*
             // Tracking está activado
             if (fileWriter != null) {
@@ -181,5 +212,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void updateUIValues(Location location) {
+        // If the GPS cannot set a valid location, the location value will be null.
+        // It must be handled this case due to nullPointerException that causes the app ends with no explanation to the user.
+        if (location == null){
+            //TODO: Remove code above. !isLocationActivated is checked before call this method
 
+            // Location is not enabled, so it would be null
+/*            if(!isLocationActivated()){
+                //TODO: Cambiar a location not enable
+                UIWriter.locationNull(MainActivity.this);
+                return;
+            }*/
+            // Location is null, maybe GPS sensors are not sending location information yet.
+            UIWriter.locationNull(MainActivity.this);
+            return;
+        }
+        // Write location values
+        UIWriter.writeLocation(MainActivity.this,location);
+    }
 }
