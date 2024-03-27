@@ -34,4 +34,17 @@
     <string name="location_is_null">Location null</string>
     <string name="not_available_message">Not available</string>
 
+
+    <!-- flight_track_screen.xml -->
+    <!-- start_tracking_screen -->
+    <string name="btn_start_tracking">Start Tracking</string>
+
+    <!-- recording_tracking_screen -->
+    <string name="sw_speed_mode_onTextOn">Mode: Fast</string>
+    <string name="sw_speed_mode_onTextOff">Mode: Slow</string>
+    <string name="tv_tracking">Tracking: </string>
+    <string name="tv_flight_name">flight_name</string>
+    <string name="btn_finish_save">Finish and save</string>
+    <string name="btn_cancel">Cancel</string>
+
 </resources>

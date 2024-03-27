@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- activity_main.xml -->
     <item name="tv_label_lat" type="id"/>
     <item name="tv_lat" type="id"/>
     <item name="tv_label_lon" type="id"/>
@@ -19,5 +20,18 @@
     <item name="btn_btn" type="id"/>
     <item name="divider" type="id"/>
     <item name="divider2" type="id"/>
+
+    <!-- flight_track_screen.xml -->
+    <!-- start_tracking_screen -->
+    <item name="start_tracking_screen" type="id"/>
+    <item name="btn_start_tracking" type="id"/>
+
+    <!-- recording_tracking_screen -->
+    <item name="recording_tracking_screen" type="id"/>
+    <item name="sw_speed_mode" type="id"/>
+    <item name="tv_tracking" type="id"/>
+    <item name="tv_flight_name" type="id"/>
+    <item name="btn_finish_save" type="id"/>
+    <item name="btn_cancel" type="id"/>
 
 </resources>
