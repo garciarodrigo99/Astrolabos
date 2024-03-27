@@ -16,8 +16,6 @@
     <string name="sw_gps_textOn">Using GPS sensors</string>
     <string name="sw_gps_textOff">Using Cell Towers + Wifi</string>
     <string name="tv_label_sensor">Sensor:</string>
-    <string name="tv_sensor">Using GPS sensors</string>
-    <string name="btn_btn">Button Value</string>
 
     <!-- MainActivity.java -->
     <!-- Toast warnings -->

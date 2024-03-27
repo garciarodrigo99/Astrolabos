@@ -6,6 +6,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -37,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
     // Class to use location info
     FusedLocationProviderClient fusedLocationProviderClient;
 
+    FrameLayout fl_flight_track;
+    View view_flight_track;
+    private FlightTrackScreen flightTrackScreen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -52,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         tv_updates = findViewById(R.id.tv_updates);
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
+
+        fl_flight_track = findViewById(R.id.fl_flight_track);
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        view_flight_track = inflater.inflate(R.layout.flight_track_screen, null);
+        flightTrackScreen = new FlightTrackScreen(view_flight_track);
+        fl_flight_track.addView(view_flight_track);
 
         /* As LocationRequest method setPriority is deprecated outside the constructor/builder,
         * two objects are created in this method to having them available to switch between each other
@@ -99,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 tv_sensor.setText(sw_gps.getTextOff());
             }
         });
+
         //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
         updateGPS();
     }

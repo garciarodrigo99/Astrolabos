@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activity_main.xml -->
+    <item name="sw_location_updates" type="id"/>
+    <item name="tv_label_updates" type="id"/>
+    <item name="tv_updates" type="id"/>
+    <item name="sw_gps" type="id"/>
+    <item name="tv_label_sensor" type="id"/>
+    <item name="tv_sensor" type="id"/>
+    <item name="hdv_1" type="id"/>
     <item name="tv_label_lat" type="id"/>
     <item name="tv_lat" type="id"/>
     <item name="tv_label_lon" type="id"/>
@@ -11,15 +18,9 @@
     <item name="tv_accuracy" type="id"/>
     <item name="tv_label_speed" type="id"/>
     <item name="tv_speed" type="id"/>
-    <item name="tv_label_updates" type="id"/>
-    <item name="tv_updates" type="id"/>
-    <item name="sw_location_updates" type="id"/>
-    <item name="sw_gps" type="id"/>
-    <item name="tv_label_sensor" type="id"/>
-    <item name="tv_sensor" type="id"/>
-    <item name="btn_btn" type="id"/>
-    <item name="divider" type="id"/>
-    <item name="divider2" type="id"/>
+    <item name="hdv_2" type="id"/>
+    <item name="fl_flight_track" type="id"/>
+    <item name="hdv_3" type="id"/>
 
     <!-- flight_track_screen.xml -->
     <!-- start_tracking_screen -->
