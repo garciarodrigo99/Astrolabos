@@ -2,15 +2,17 @@ package es.ull.etsii.testastrolabos.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import es.ull.etsii.testastrolabos.R;
 
 public class AcceptCancelDialogs {
-/*    public static class RecordFlightData {
+    public static class RecordFlightData {
         private String flightName;
         private int minUpdate;
         private int maxUpdate;
@@ -41,10 +43,10 @@ public class AcceptCancelDialogs {
         View dialogView = inflater.inflate(R.layout.dialog_record_flight, null);
         builder.setView(dialogView);
 
-        TextView title = dialogView.findViewById(R.id.dialog_title);
-        final EditText flightNameEditText = dialogView.findViewById(R.id.flight_name_edittext);
-        final EditText minUpdateEditText = dialogView.findViewById(R.id.min_update_edittext);
-        final EditText maxUpdateEditText = dialogView.findViewById(R.id.max_update_edittext);
+        TextView title = dialogView.findViewById(R.id.tv_dialog_record_flight_title);
+        final EditText flightNameEditText = dialogView.findViewById(R.id.et_dialog_record_flight_flight_update);
+        final EditText minUpdateEditText = dialogView.findViewById(R.id.et_dialog_record_flight_slow_mode);
+        final EditText maxUpdateEditText = dialogView.findViewById(R.id.et_dialog_record_flight_fast_mode);
 
         title.setText("Record flight");
 
@@ -63,16 +65,10 @@ public class AcceptCancelDialogs {
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // No se hace nada
-                action.cancel(null);
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> action.cancel(null));
 
         builder.create().show();
-    }*/
+    }
 
 
     public static void showConfirmationDialog(Context context, String title, String message, final AcceptCancelActions<Void> action) {

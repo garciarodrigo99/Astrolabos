@@ -62,7 +62,30 @@ public class FlightTrackScreen {
 
     private void startTracking() {
         // Lógica para iniciar el seguimiento
-        swapScreenVisibility(startTrackingScreen,recordingTrackingScreen);
+        AcceptCancelDialogs.showRecordFlightDialog(this.mainActivityViewContext, new AcceptCancelActions<AcceptCancelDialogs.RecordFlightData>() {
+            @Override
+            public void accept(AcceptCancelDialogs.RecordFlightData data) {
+                // Aquí puedes realizar la acción específica según los datos proporcionados
+                if (data != null) {
+                    // Por ejemplo, guardar los datos en una base de datos o hacer algo más
+                    //recordFlightData = data;
+                    //TODO: uncomment
+                    Toast.makeText(mainActivityView.getContext(), data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
+                    //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
+                    //TODO: uncomment
+                } else {
+                    // Si el usuario cancela el diálogo, no se hace nada
+                    Toast.makeText(mainActivityView.getContext(), "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
+                }
+                swapScreenVisibility(startTrackingScreen,recordingTrackingScreen);
+                tv_flight_name.setText(data.getFlightName());
+            }
+
+            @Override
+            public void cancel(AcceptCancelDialogs.RecordFlightData data) {
+                Toast.makeText(mainActivityViewContext, "Flight tracking cancelled", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void finishAndSave() {

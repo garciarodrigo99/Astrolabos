@@ -35,8 +35,20 @@
     <item name="btn_finish_save" type="id"/>
     <item name="btn_cancel" type="id"/>
 
+
     <!-- dialog_confirmation.xml -->
     <item name="tv_dialog_confirmation_title" type="id"/>
     <item name="tv_dialog_confirmation_question" type="id"/>
+
+    <!-- dialog_record_flight.xml -->
+    <item name="tv_dialog_record_flight_title" type="id"/>
+    <item name="tv_dialog_record_flight_flight_name" type="id"/>
+    <item name="et_dialog_record_flight_flight_name" type="id"/>
+    <item name="tv_dialog_record_flight_update_settings" type="id"/>
+    <item name="tv_dialog_record_flight_slow_mode" type="id"/>
+    <item name="et_dialog_record_flight_slow_mode" type="id"/>
+    <item name="tv_dialog_record_flight_fast_mode" type="id"/>
+    <item name="et_dialog_record_flight_fast_mode" type="id"/>
+
 
 </resources>

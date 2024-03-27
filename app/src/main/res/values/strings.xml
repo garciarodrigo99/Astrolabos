@@ -59,4 +59,14 @@
     </string>
     <string name="tv_dialog_confirmation_toast_text_cancel_tracking">Flight tracking cancelled</string>
 
+    <!-- dialog_record_flight.xml -->
+    <string name="tv_dialog_record_flight_title">Record flight</string>
+    <string name="tv_dialog_record_flight_flight_name">Flight name</string>
+    <string name="et_dialog_record_flight_flight_name">Introduce flight name</string>
+    <string name="tv_dialog_record_flight_update_settings">Location updates settings</string>
+    <string name="tv_dialog_record_flight_slow_mode">Slow mode</string>
+    <string name="et_dialog_record_flight_slow_mode">60 sec</string>
+    <string name="tv_dialog_record_flight_fast_mode">Fast mode</string>
+    <string name="et_dialog_record_flight_fast_mode">5 sec</string>
+
 </resources>
