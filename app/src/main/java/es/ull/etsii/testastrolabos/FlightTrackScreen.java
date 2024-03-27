@@ -1,13 +1,18 @@
 package es.ull.etsii.testastrolabos;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import es.ull.etsii.testastrolabos.dialogs.*;
+
 public class FlightTrackScreen {
 
+    private Context mainActivityViewContext;
     private final View mainActivityView;
     private final ConstraintLayout startTrackingScreen;
     private final ConstraintLayout recordingTrackingScreen;
@@ -22,6 +27,7 @@ public class FlightTrackScreen {
     public FlightTrackScreen(View view) {
 
         this.mainActivityView = view;
+        this.mainActivityViewContext = view.getContext();
         this.startTrackingScreen = this.mainActivityView.findViewById(R.id.start_tracking_screen);
         this.recordingTrackingScreen = this.mainActivityView.findViewById(R.id.recording_tracking_screen);
 
@@ -56,22 +62,40 @@ public class FlightTrackScreen {
 
     private void startTracking() {
         // Lógica para iniciar el seguimiento
-        switchScreenVisibility(startTrackingScreen,recordingTrackingScreen);
+        swapScreenVisibility(startTrackingScreen,recordingTrackingScreen);
     }
 
     private void finishAndSave() {
-        switchScreenVisibility(recordingTrackingScreen,startTrackingScreen);
-        // Lógica para finalizar y guardar el seguimiento
-        // ...
+        showConfirmationDialog(
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_title_save_and_finish),
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_question_save_and_finish),
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_save_and_finish));
     }
 
     private void cancel() {
-        switchScreenVisibility(recordingTrackingScreen,startTrackingScreen);
-        // Lógica para cancelar el seguimiento
-        // ...
+        showConfirmationDialog(
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_title_cancel_tracking),
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_question_cancel_tracking),
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_cancel_tracking));
     }
 
-    public static void switchScreenVisibility(View viewToSetGone, View viewToSetVisible){
+    private void showConfirmationDialog(String title, String question, String toastText) {
+        // Lógica para cancelar el seguimiento
+        AcceptCancelDialogs.showConfirmationDialog(this.mainActivityViewContext, title, question,
+                new AcceptCancelActions<Void>() {
+                    @Override
+                    public void accept(Void data) {
+                        //TODO: Guardar los registros en el archivo
+                        swapScreenVisibility(recordingTrackingScreen,startTrackingScreen);
+                        Toast.makeText(mainActivityViewContext,toastText,Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void cancel(Void data) {}
+                });
+    }
+
+    public static void swapScreenVisibility(View viewToSetGone, View viewToSetVisible){
         viewToSetGone.setVisibility(View.GONE);
         viewToSetVisible.setVisibility(View.VISIBLE);
     }

@@ -45,4 +45,18 @@
     <string name="btn_finish_save">Finish and save</string>
     <string name="btn_cancel">Cancel</string>
 
+
+    <!-- dialog_confirmation.xml -->
+    <string name="tv_dialog_confirmation_title_save_and_finish">@string/btn_finish_save</string>
+    <string name="tv_dialog_confirmation_question_save_and_finish">
+        Are you sure that you want to finish tracking and save registers?
+    </string>
+    <string name="tv_dialog_confirmation_toast_text_save_and_finish">Flight tracking saved</string>
+
+    <string name="tv_dialog_confirmation_title_cancel_tracking">@string/btn_cancel</string>
+    <string name="tv_dialog_confirmation_question_cancel_tracking">
+        Are you sure that you want to finish tracking and save registers?
+    </string>
+    <string name="tv_dialog_confirmation_toast_text_cancel_tracking">Flight tracking cancelled</string>
+
 </resources>
