@@ -10,34 +10,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import es.ull.etsii.testastrolabos.R;
+import es.ull.etsii.testastrolabos.TrackSettings;
 
 public class AcceptCancelDialogs {
-    public static class RecordFlightData {
-        private String flightName;
-        private int minUpdate;
-        private int maxUpdate;
 
-        public RecordFlightData(String flightName, int minUpdate, int maxUpdate) {
-            this.flightName = flightName;
-            this.minUpdate = minUpdate;
-            this.maxUpdate = maxUpdate;
-        }
-
-        // Getters y setters
-
-        public int getMinUpdate() {
-            return minUpdate;
-        }
-
-        public int getMaxUpdate() {
-            return maxUpdate;
-        }
-
-        public String getFlightName() {
-            return flightName;
-        }
-    }
-    public static void showRecordFlightDialog(Context context, final AcceptCancelActions<RecordFlightData> action) {
+    public static void showRecordFlightDialog(Context context, final AcceptCancelActions<TrackSettings> action) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogView = inflater.inflate(R.layout.dialog_record_flight, null);
@@ -53,16 +30,29 @@ public class AcceptCancelDialogs {
         minUpdateEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
         maxUpdateEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        builder.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                RecordFlightData data = new RecordFlightData(
-                        flightNameEditText.getText().toString(),
-                        Integer.parseInt(minUpdateEditText.getText().toString()),
-                        Integer.parseInt(maxUpdateEditText.getText().toString())
-                );
-                action.accept(data);
+        builder.setPositiveButton("Continuar", (dialog, which) -> {
+            String flightName = flightNameEditText.getText().toString();
+
+            if (flightName.isEmpty()) {
+                flightName = TrackSettings.DEFAULT_FLIGHT_NAME;
             }
+
+            int maxUpdates;
+            String maxUpdatesString = maxUpdateEditText.getText().toString();
+            if (maxUpdatesString.isEmpty()) {
+                maxUpdates = TrackSettings.DEFAULT_MAX_VALUE;
+            } else {
+                maxUpdates = Integer.parseInt(maxUpdatesString);
+            }
+            int minUpdates;
+            String minUpdatesString = minUpdateEditText.getText().toString();
+            if (minUpdatesString.isEmpty()) {
+                minUpdates = TrackSettings.DEFAULT_MIN_VALUE;
+            } else {
+                minUpdates = Integer.parseInt(minUpdatesString);
+            }
+            TrackSettings data = new TrackSettings(flightName,maxUpdates,minUpdates);
+            action.accept(data);
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> action.cancel(null));
