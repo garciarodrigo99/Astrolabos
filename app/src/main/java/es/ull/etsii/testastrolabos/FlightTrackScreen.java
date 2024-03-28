@@ -1,5 +1,7 @@
 package es.ull.etsii.testastrolabos;
 
+import java.util.function.Predicate;
+
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import es.ull.etsii.testastrolabos.FileWriter.FileWriter;
+import es.ull.etsii.testastrolabos.FileWriter.JsonWriter;
 import es.ull.etsii.testastrolabos.dialogs.*;
 
 public class FlightTrackScreen {
@@ -23,6 +27,8 @@ public class FlightTrackScreen {
 
     private SwitchCompat sw_mode;
     private TextView tv_tracking,tv_flight_name;
+
+    private FileWriter fileWriter;
 
     public FlightTrackScreen(View view) {
 
@@ -62,7 +68,7 @@ public class FlightTrackScreen {
 
     private void startTracking() {
         // Lógica para iniciar el seguimiento
-        AcceptCancelDialogs.showRecordFlightDialog(this.mainActivityViewContext, new AcceptCancelActions<TrackSettings>() {
+        Dialogs.showRecordFlightDialog(this.mainActivityViewContext, new AcceptCancelActions<TrackSettings>() {
             @Override
             public void accept(TrackSettings data) {
                 // Aquí puedes realizar la acción específica según los datos proporcionados
@@ -73,8 +79,8 @@ public class FlightTrackScreen {
                     Toast.makeText(mainActivityView.getContext(), data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
                     //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
                     //TODO: uncomment
-
                     tv_flight_name.setText(data.getFlightName());
+                    fileWriter = new JsonWriter(data);
                 } else {
                     // Si el usuario cancela el diálogo, no se hace nada
                     Toast.makeText(mainActivityView.getContext(), "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
@@ -90,32 +96,50 @@ public class FlightTrackScreen {
     }
 
     private void finishAndSave() {
+        Runnable finishAndSave = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Do nothing");
+            }
+        };
         showConfirmationDialog(
                 this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_title_save_and_finish),
                 this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_question_save_and_finish),
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_save_and_finish));
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_save_and_finish),
+                finishAndSave);
+
     }
 
     private void cancel() {
+        Runnable cancel = new Runnable() {
+            @Override
+            public void run() {
+                fileWriter = null;
+            }
+        };
+
         showConfirmationDialog(
                 this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_title_cancel_tracking),
                 this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_question_cancel_tracking),
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_cancel_tracking));
+                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_cancel_tracking),
+                cancel);
     }
 
-    private void showConfirmationDialog(String title, String question, String toastText) {
+    private void showConfirmationDialog(String title, String question, String toastText, Runnable acceptAction) {
         // Lógica para cancelar el seguimiento
-        AcceptCancelDialogs.showConfirmationDialog(this.mainActivityViewContext, title, question,
+        Dialogs.showConfirmationDialog(this.mainActivityViewContext, title, question,
                 new AcceptCancelActions<Void>() {
                     @Override
                     public void accept(Void data) {
                         //TODO: Guardar los registros en el archivo
                         swapScreenVisibility(recordingTrackingScreen,startTrackingScreen);
                         Toast.makeText(mainActivityViewContext,toastText,Toast.LENGTH_LONG).show();
+                        acceptAction.run();
                     }
 
                     @Override
                     public void cancel(Void data) {}
+
                 });
     }
 

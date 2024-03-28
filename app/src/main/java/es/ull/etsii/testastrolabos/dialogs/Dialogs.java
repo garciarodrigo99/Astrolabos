@@ -1,7 +1,6 @@
 package es.ull.etsii.testastrolabos.dialogs;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import es.ull.etsii.testastrolabos.R;
 import es.ull.etsii.testastrolabos.TrackSettings;
 
-public class AcceptCancelDialogs {
+public class Dialogs {
 
     public static void showRecordFlightDialog(Context context, final AcceptCancelActions<TrackSettings> action) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
