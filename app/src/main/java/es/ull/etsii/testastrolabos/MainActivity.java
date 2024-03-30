@@ -1,9 +1,12 @@
 package es.ull.etsii.testastrolabos;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.*;
 import com.google.android.gms.tasks.OnSuccessListener;
+import es.ull.etsii.testastrolabos.Utils.FileUtils;
+import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     FrameLayout fl_flight_track;
     View view_flight_track;
-    private FlightTrackScreen flightTrackScreen;
+    FlightTrackScreen flightTrackScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         fl_flight_track = findViewById(R.id.fl_flight_track);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         view_flight_track = inflater.inflate(R.layout.flight_track_screen, null);
-        flightTrackScreen = new FlightTrackScreen(view_flight_track);
+        flightTrackScreen = new FlightTrackScreen(this);
         fl_flight_track.addView(view_flight_track);
 
         /* As LocationRequest method setPriority is deprecated outside the constructor/builder,
@@ -80,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
         // event that is trigger each interval is met to know the location
         locationCallBack = new LocationCallback() {
-
             // At this point location permissions are granted and location services activated
             @Override
             public void onLocationResult(@NonNull @NotNull LocationResult locationResult) {
@@ -141,6 +145,17 @@ public class MainActivity extends AppCompatActivity {
                     //finish();
                 }
                 break;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PermissionUtils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                Uri uri = data.getData();
+                FileUtils.writeFileContent(this, uri, "Contenido del archivo");
+                Toast.makeText(this, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -212,16 +227,6 @@ public class MainActivity extends AppCompatActivity {
                     show();
 
               locationObtainedHandler(location);
-              /*
-            // Tracking está activado
-            if (fileWriter != null) {
-                Date date = new Date();
-
-                // Formatear la fecha y hora en el formato deseado
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                String timestamp = sdf.format(date);
-                fileWriter.addContent(timestamp,location);
-            }*/
         });
     }
 
@@ -230,14 +235,16 @@ public class MainActivity extends AppCompatActivity {
      * It could be null or valid values
      */
     private void locationObtainedHandler(Location location){
-        // If the GPS cannot set a valid location, the location value will be null.
-        // It must be handled this case due to nullPointerException that causes the app ends with no explanation to the user.
-        if (location == null){
-            // Location is null, maybe GPS sensors are not sending location information yet.
-            UIWriter.locationNull(MainActivity.this);
-            return;
-        }
         // Write location values
+        //TODO:Implementar método observador
         UIWriter.writeLocation(MainActivity.this,location);
+        if (flightTrackScreen.fileFormat != null) {
+            Date date = new Date();
+
+            // Formatear la fecha y hora en el formato deseado
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            String timestamp = sdf.format(date);
+            flightTrackScreen.fileFormat.addContent(timestamp,location);
+        }
     }
 }

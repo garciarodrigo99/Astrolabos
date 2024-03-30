@@ -40,7 +40,7 @@
     <!-- recording_tracking_screen -->
     <string name="sw_speed_mode_onTextOn">Mode: Fast</string>
     <string name="sw_speed_mode_onTextOff">Mode: Slow</string>
-    <string name="tv_tracking">Tracking: </string>
+    <string name="tv_tracking">Tracking:  </string>
     <string name="tv_flight_name">flight_name</string>
     <string name="btn_finish_save">Finish and save</string>
     <string name="btn_cancel">Cancel</string>

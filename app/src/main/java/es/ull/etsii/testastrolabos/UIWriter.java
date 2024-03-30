@@ -41,6 +41,13 @@ public class UIWriter {
         whenEnableSwitch(activity.sw_gps,activity.tv_sensor);
     }
     public static void writeLocation(MainActivity activity, Location location){
+        // If the GPS cannot set a valid location, the location value will be null.
+        // It must be handled this case due to nullPointerException that causes the app ends with no explanation to the user.
+        if (location == null){
+            // Location is null, maybe GPS sensors are not sending location information yet.
+            UIWriter.locationNull(activity);
+            return;
+        }
         activity.tv_lat.setText(String.valueOf(location.getLatitude()));
         activity.tv_lon.setText(String.valueOf(location.getLongitude()));
         activity.tv_accuracy.setText(String.valueOf(location.getAccuracy()));

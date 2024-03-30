@@ -1,23 +1,24 @@
 package es.ull.etsii.testastrolabos;
 
-import java.util.function.Predicate;
-
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import es.ull.etsii.testastrolabos.FileWriter.FileWriter;
-import es.ull.etsii.testastrolabos.FileWriter.JsonWriter;
-import es.ull.etsii.testastrolabos.dialogs.*;
+import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
+import es.ull.etsii.testastrolabos.Writers.*;
+import es.ull.etsii.testastrolabos.Dialogs.*;
 
 public class FlightTrackScreen {
 
-    private Context mainActivityViewContext;
-    private final View mainActivityView;
+    private Context context;
+    private final View view;
+    private Activity activity;
     private final ConstraintLayout startTrackingScreen;
     private final ConstraintLayout recordingTrackingScreen;
 
@@ -28,30 +29,30 @@ public class FlightTrackScreen {
     private SwitchCompat sw_mode;
     private TextView tv_tracking,tv_flight_name;
 
-    private FileWriter fileWriter;
+    FileFormat fileFormat;
 
-    public FlightTrackScreen(View view) {
-
-        this.mainActivityView = view;
-        this.mainActivityViewContext = view.getContext();
-        this.startTrackingScreen = this.mainActivityView.findViewById(R.id.start_tracking_screen);
-        this.recordingTrackingScreen = this.mainActivityView.findViewById(R.id.recording_tracking_screen);
+    public FlightTrackScreen(MainActivity activity) {
+        this.activity = activity;
+        this.view = activity.view_flight_track;
+        this.context = view.getContext();
+        this.startTrackingScreen = this.view.findViewById(R.id.start_tracking_screen);
+        this.recordingTrackingScreen = this.view.findViewById(R.id.recording_tracking_screen);
 
         // Inicializar los botones
         initializeButtons();
 
-        sw_mode = this.mainActivityView.findViewById(R.id.sw_speed_mode);
-        tv_tracking = this.mainActivityView.findViewById(R.id.tv_tracking);
-        tv_flight_name = this.mainActivityView.findViewById(R.id.tv_flight_name);
+        sw_mode = this.view.findViewById(R.id.sw_speed_mode);
+        tv_tracking = this.view.findViewById(R.id.tv_tracking);
+        tv_flight_name = this.view.findViewById(R.id.tv_flight_name);
 
         // Establecer los listeners para los botones
         setListeners();
     }
 
     private void initializeButtons() {
-        btnStartTracking = mainActivityView.findViewById(R.id.btn_start_tracking);
-        btnFinishSave = mainActivityView.findViewById(R.id.btn_finish_save);
-        btnCancel = mainActivityView.findViewById(R.id.btn_cancel);
+        btnStartTracking = view.findViewById(R.id.btn_start_tracking);
+        btnFinishSave = view.findViewById(R.id.btn_finish_save);
+        btnCancel = view.findViewById(R.id.btn_cancel);
     }
 
     private void setListeners() {
@@ -68,7 +69,7 @@ public class FlightTrackScreen {
 
     private void startTracking() {
         // Lógica para iniciar el seguimiento
-        Dialogs.showRecordFlightDialog(this.mainActivityViewContext, new AcceptCancelActions<TrackSettings>() {
+        Dialogs.showRecordFlightDialog(this.context, new AcceptCancelActions<TrackSettings>() {
             @Override
             public void accept(TrackSettings data) {
                 // Aquí puedes realizar la acción específica según los datos proporcionados
@@ -76,21 +77,21 @@ public class FlightTrackScreen {
                     // Por ejemplo, guardar los datos en una base de datos o hacer algo más
                     //recordFlightData = data;
                     //TODO: uncomment
-                    Toast.makeText(mainActivityView.getContext(), data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
                     //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
                     //TODO: uncomment
                     tv_flight_name.setText(data.getFlightName());
-                    fileWriter = new JsonWriter(data);
+                    fileFormat = new JsonFormat(data);
                 } else {
                     // Si el usuario cancela el diálogo, no se hace nada
-                    Toast.makeText(mainActivityView.getContext(), "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
                 }
                 swapScreenVisibility(startTrackingScreen,recordingTrackingScreen);
             }
 
             @Override
             public void cancel(TrackSettings data) {
-                Toast.makeText(mainActivityViewContext, "Flight tracking cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Flight tracking cancelled", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,13 +100,13 @@ public class FlightTrackScreen {
         Runnable finishAndSave = new Runnable() {
             @Override
             public void run() {
-                System.out.println("Do nothing");
+                PermissionUtils.openFilePicker(activity);
             }
         };
         showConfirmationDialog(
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_title_save_and_finish),
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_question_save_and_finish),
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_save_and_finish),
+                this.context.getString(R.string.tv_dialog_confirmation_title_save_and_finish),
+                this.context.getString(R.string.tv_dialog_confirmation_question_save_and_finish),
+                this.context.getString(R.string.tv_dialog_confirmation_toast_text_save_and_finish),
                 finishAndSave);
 
     }
@@ -114,26 +115,26 @@ public class FlightTrackScreen {
         Runnable cancel = new Runnable() {
             @Override
             public void run() {
-                fileWriter = null;
+                fileFormat = null;
             }
         };
 
         showConfirmationDialog(
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_title_cancel_tracking),
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_question_cancel_tracking),
-                this.mainActivityViewContext.getString(R.string.tv_dialog_confirmation_toast_text_cancel_tracking),
+                this.context.getString(R.string.tv_dialog_confirmation_title_cancel_tracking),
+                this.context.getString(R.string.tv_dialog_confirmation_question_cancel_tracking),
+                this.context.getString(R.string.tv_dialog_confirmation_toast_text_cancel_tracking),
                 cancel);
     }
 
     private void showConfirmationDialog(String title, String question, String toastText, Runnable acceptAction) {
         // Lógica para cancelar el seguimiento
-        Dialogs.showConfirmationDialog(this.mainActivityViewContext, title, question,
+        Dialogs.showConfirmationDialog(this.context, title, question,
                 new AcceptCancelActions<Void>() {
                     @Override
                     public void accept(Void data) {
                         //TODO: Guardar los registros en el archivo
                         swapScreenVisibility(recordingTrackingScreen,startTrackingScreen);
-                        Toast.makeText(mainActivityViewContext,toastText,Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,toastText,Toast.LENGTH_LONG).show();
                         acceptAction.run();
                     }
 
