@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos.dialogs;
+package es.ull.etsii.testastrolabos.Dialogs;
 
 public interface AcceptAction<T> {
     void accept(T data);

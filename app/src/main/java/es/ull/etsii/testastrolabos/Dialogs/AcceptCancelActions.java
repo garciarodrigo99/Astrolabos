@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos.dialogs;
+package es.ull.etsii.testastrolabos.Dialogs;
 
 public interface AcceptCancelActions<T> extends AcceptAction<T>{
     void accept(T data);

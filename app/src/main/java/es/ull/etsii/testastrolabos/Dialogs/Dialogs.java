@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos.dialogs;
+package es.ull.etsii.testastrolabos.Dialogs;
 
 import android.content.Context;
 import android.text.InputType;
@@ -75,6 +75,23 @@ public class Dialogs {
         builder.setPositiveButton("Yes", (dialog, which) -> action.accept(null));
 
         builder.setNegativeButton("Cancel", (dialog, which) -> action.cancel(null));
+
+        builder.create().show();
+    }
+
+    public static void showInformationDialog(Context context, String title, String message, final AcceptAction<Void> action) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.dialog_confirmation, null);
+        builder.setView(dialogView);
+
+        TextView titleTextView = dialogView.findViewById(R.id.tv_dialog_confirmation_title);
+        TextView messageTextView = dialogView.findViewById(R.id.tv_dialog_confirmation_question);
+
+        titleTextView.setText(title);
+        messageTextView.setText(message);
+
+        builder.setPositiveButton("Accept", (dialog, which) -> action.accept(null));
 
         builder.create().show();
     }
