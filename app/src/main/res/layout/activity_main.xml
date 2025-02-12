@@ -195,5 +195,9 @@
             app:layout_constraintTop_toBottomOf="@+id/hdv_2"
             android:layout_marginTop="120dp"
             app:layout_constraintStart_toStartOf="parent"/>
+    <View
+            android:layout_width="match_parent"
+            android:id="@+id/view3" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hdv_3" android:background="#FF0000"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
