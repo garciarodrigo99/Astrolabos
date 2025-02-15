@@ -50,5 +50,8 @@
     <item name="tv_dialog_record_flight_fast_mode" type="id"/>
     <item name="et_dialog_record_flight_fast_mode" type="id"/>
 
+    <!--  MapsForge  -->
+    <item name="mapView" type="id"/>
+
 
 </resources>

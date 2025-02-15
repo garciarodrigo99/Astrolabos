@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.view.MapView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,12 +49,20 @@ public class MainActivity extends AppCompatActivity {
 
     FrameLayout fl_flight_track;
     View view_flight_track;
+
+    MapView view_map;
     FlightTrackScreen flightTrackScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        AndroidGraphicFactory.createInstance(getApplication());
+
+//        setContentView(R.layout.map_view);
+//        view_map = findViewById(R.id.view3);
 
         // Matching attributes with activity_main.xml
         tv_lat = findViewById(R.id.tv_lat);
@@ -70,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         view_flight_track = inflater.inflate(R.layout.flight_track_screen, null);
         flightTrackScreen = new FlightTrackScreen(this);
         fl_flight_track.addView(view_flight_track);
+
+
 
         /* As LocationRequest method setPriority is deprecated outside the constructor/builder,
         * two objects are created in this method to having them available to switch between each other

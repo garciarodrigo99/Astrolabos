@@ -69,4 +69,7 @@
     <string name="tv_dialog_record_flight_fast_mode">Fast mode</string>
     <string name="et_dialog_record_flight_fast_mode">5 sec</string>
 
+    <!--  Mapsforge  -->
+    <string name="copyright_osm">Map data © OpenStreetMap contributors</string>
+
 </resources>
