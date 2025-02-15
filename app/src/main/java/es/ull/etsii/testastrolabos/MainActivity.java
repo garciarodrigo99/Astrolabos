@@ -19,13 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.*;
-import com.google.android.gms.tasks.OnSuccessListener;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.osmand.android.map.MapViewTracking;
+import net.osmand.plus.OsmandApplication;
 
 public class MainActivity extends AppCompatActivity {
 

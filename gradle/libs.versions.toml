@@ -5,6 +5,8 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
+mapsforge = "0.23.0"
+androidsvg = "1.4"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -14,6 +16,15 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 location = { group = "com.google.android.gms", name = "play-services-location", version = "21.2.0" }
 gson = { group = "com.google.code.gson", name = "gson", version = "2.10.1" }
+
+mapsforge-core = { group = "org.mapsforge", name = "mapsforge-core", version.ref = "mapsforge" }
+mapsforge-map = { group = "org.mapsforge", name = "mapsforge-map", version.ref = "mapsforge" }
+mapsforge-map-reader = { group = "org.mapsforge", name = "mapsforge-map-reader", version.ref = "mapsforge" }
+mapsforge-themes = { group = "org.mapsforge", name = "mapsforge-themes", version.ref = "mapsforge" }
+mapsforge-map-android = { group = "org.mapsforge", name = "mapsforge-map-android", version.ref = "mapsforge" }
+mapsforge-poi = { group = "org.mapsforge", name = "mapsforge-poi", version.ref = "mapsforge" }
+mapsforge-poi-android = { group = "org.mapsforge", name = "mapsforge-poi-android", version.ref = "mapsforge" }
+androidsvg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "androidsvg" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
