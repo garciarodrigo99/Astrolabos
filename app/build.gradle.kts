@@ -41,4 +41,11 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.location)
     implementation(libs.gson)
+    implementation(libs.mapsforge.core)
+    implementation(libs.mapsforge.map)
+    implementation(libs.mapsforge.map.reader)
+    implementation(libs.mapsforge.themes)
+    implementation(libs.mapsforge.map.android)
+    implementation(libs.mapsforge.poi)
+    implementation(libs.mapsforge.poi.android)
 }
