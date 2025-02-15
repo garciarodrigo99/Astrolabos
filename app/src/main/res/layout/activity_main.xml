@@ -195,10 +195,13 @@
             app:layout_constraintTop_toBottomOf="@+id/hdv_2"
             android:layout_marginTop="120dp"
             app:layout_constraintStart_toStartOf="parent"/>
-    <View
+
+    <org.mapsforge.map.android.view.MapView
             android:layout_width="match_parent"
-            android:id="@+id/view3" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/hdv_3" android:background="#FF0000"
-            android:layout_height="0dp"/>
+            android:id="@+id/view3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hdv_3"
+            android:layout_height="0dp">
+    </org.mapsforge.map.android.view.MapView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
