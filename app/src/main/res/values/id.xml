@@ -21,6 +21,7 @@
     <item name="hdv_2" type="id"/>
     <item name="fl_flight_track" type="id"/>
     <item name="hdv_3" type="id"/>
+    <item name="fl_map" type="id"/>
 
     <!-- flight_track_screen.xml -->
     <!-- start_tracking_screen -->
