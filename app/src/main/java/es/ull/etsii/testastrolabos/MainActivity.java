@@ -26,6 +26,22 @@ import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.util.AndroidUtil;
+import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.datastore.MapDataStore;
+import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.renderer.TileRendererLayer;
+import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int FAST_UPDATE = 1;
     private static final int DEFAULT_UPDATE = 30;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
+    private static final int SELECT_MAP_FILE = 0;
 
     // activity_main
     TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates;
@@ -47,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     // Class to use location info
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    FrameLayout fl_flight_track;
+    FrameLayout fl_flight_track, fl_map;
     View view_flight_track;
 
     MapView view_map;
@@ -60,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AndroidGraphicFactory.createInstance(getApplication());
-
-//        setContentView(R.layout.map_view);
-//        view_map = findViewById(R.id.view3);
 
         // Matching attributes with activity_main.xml
         tv_lat = findViewById(R.id.tv_lat);
@@ -81,6 +95,26 @@ public class MainActivity extends AppCompatActivity {
         flightTrackScreen = new FlightTrackScreen(this);
         fl_flight_track.addView(view_flight_track);
 
+        // Referenciar el FrameLayout donde se agregará el MapView
+        fl_map = findViewById(R.id.fl_map);
+
+        // Inflar el layout con el MapView (map_view.xml)
+        View mapViewLayout = inflater.inflate(R.layout.map_view, null);
+
+        // Obtener la instancia del MapView
+        view_map = mapViewLayout.findViewById(R.id.mapView);
+
+        if(view_map != null){
+            // Configurar el MapView
+            Intent intent = new Intent(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            startActivityForResult(intent, SELECT_MAP_FILE);
+
+            fl_map.addView(mapViewLayout);
+        } else {
+            System.out.println("MapView is null");
+        }
 
 
         /* As LocationRequest method setPriority is deprecated outside the constructor/builder,
@@ -167,6 +201,12 @@ public class MainActivity extends AppCompatActivity {
                 Uri uri = data.getData();
                 FileUtils.writeFileContent(this, uri, "Contenido del archivo");
                 Toast.makeText(this, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == SELECT_MAP_FILE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
+                openMap(uri);
             }
         }
     }
@@ -258,5 +298,65 @@ public class MainActivity extends AppCompatActivity {
             String timestamp = sdf.format(date);
             flightTrackScreen.fileFormat.addContent(timestamp,location);
         }
+    }
+    private void openMap(Uri uri) {
+        try {
+            /*
+             * We then make some simple adjustments, such as showing a scale bar and zoom controls.
+             */
+            view_map.getMapScaleBar().setVisible(true);
+            view_map.setBuiltInZoomControls(true);
+
+            /*
+             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with an
+             * utility method.
+             */
+            TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
+                    view_map.getModel().displayModel.getTileSize(), 1f,
+                    view_map.getModel().frameBufferModel.getOverdrawFactor());
+
+            /*
+             * Now we need to set up the process of displaying a map. A map can have several layers,
+             * stacked on top of each other. A layer can be a map or some visual elements, such as
+             * markers. Here we only show a map based on a mapsforge map file. For this we need a
+             * TileRendererLayer. A TileRendererLayer needs a TileCache to hold the generated map
+             * tiles, a map file from which the tiles are generated and Rendertheme that defines the
+             * appearance of the map.
+             */
+            FileInputStream fis = (FileInputStream) getContentResolver().openInputStream(uri);
+            MapDataStore mapDataStore = new MapFile(fis);
+            TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore,
+                    view_map.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+            tileRendererLayer.setXmlRenderTheme(MapsforgeThemes.MOTORIDER);
+
+            /*
+             * On its own a tileRendererLayer does not know where to display the map, so we need to
+             * associate it with our mapView.
+             */
+            view_map.getLayerManager().getLayers().add(tileRendererLayer);
+
+            /*
+             * The map also needs to know which area to display and at what zoom level.
+             * Note: this map position is specific to Berlin area.
+             */
+            view_map.setCenter(new LatLong(52.517037, 13.38886));
+            view_map.setZoomLevel((byte) 12);
+        } catch (Exception e) {
+            /*
+             * In case of map file errors avoid crash, but developers should handle these cases!
+             */
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        /*
+         * Whenever your activity exits, some cleanup operations have to be performed lest your app
+         * runs out of memory.
+         */
+        view_map.destroyAll();
+        AndroidGraphicFactory.clearResourceMemoryCache();
+        super.onDestroy();
     }
 }
