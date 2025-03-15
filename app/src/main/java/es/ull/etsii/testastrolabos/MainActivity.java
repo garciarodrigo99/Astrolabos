@@ -22,6 +22,7 @@ import com.google.android.gms.location.*;
 import com.google.android.gms.tasks.OnSuccessListener;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
+import es.ull.etsii.testastrolabos.GPSInfoPanel;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int SELECT_MAP_FILE = 0;
 
     // activity_main
-    TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates;
+    TextView tv_sensor, tv_updates;
     SwitchCompat sw_location_updates, sw_gps;
 
     // Location request for location settings
@@ -64,11 +65,12 @@ public class MainActivity extends AppCompatActivity {
     // Class to use location info
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    FrameLayout fl_flight_track, fl_map;
-    View view_flight_track;
+    FrameLayout fl_flight_track, fl_map, fl_gps_info_panel;
+    View view_flight_track, view_gps_info_panel;
 
     MapView view_map;
     FlightTrackScreen flightTrackScreen;
+    GPSInfoPanel gpsInfoPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -79,11 +81,6 @@ public class MainActivity extends AppCompatActivity {
         AndroidGraphicFactory.createInstance(getApplication());
 
         // Matching attributes with activity_main.xml
-        tv_lat = findViewById(R.id.tv_lat);
-        tv_lon = findViewById(R.id.tv_lon);
-        tv_altitude = findViewById(R.id.tv_altitude);
-        tv_accuracy = findViewById(R.id.tv_accuracy);
-        tv_speed = findViewById(R.id.tv_speed);
         tv_sensor = findViewById(R.id.tv_sensor);
         tv_updates = findViewById(R.id.tv_updates);
         sw_location_updates = findViewById(R.id.sw_location_updates);
@@ -94,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
         view_flight_track = inflater.inflate(R.layout.flight_track_screen, null);
         flightTrackScreen = new FlightTrackScreen(this);
         fl_flight_track.addView(view_flight_track);
+
+        fl_gps_info_panel = findViewById(R.id.fl_gps_info_panel);
+        view_gps_info_panel = inflater.inflate(R.layout.gps_info_panel,null);
+        gpsInfoPanel = new GPSInfoPanel(this);
+        fl_flight_track.addView(view_gps_info_panel);
 
         // Referenciar el FrameLayout donde se agregará el MapView
         fl_map = findViewById(R.id.fl_map);

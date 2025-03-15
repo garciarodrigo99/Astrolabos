@@ -48,19 +48,19 @@ public class UIWriter {
             UIWriter.locationNull(activity);
             return;
         }
-        activity.tv_lat.setText(String.valueOf(location.getLatitude()));
-        activity.tv_lon.setText(String.valueOf(location.getLongitude()));
-        activity.tv_accuracy.setText(String.valueOf(location.getAccuracy()));
+        activity.gpsInfoPanel.setLatitude(String.valueOf(location.getLatitude()));
+        activity.gpsInfoPanel.setLongitude(String.valueOf(location.getLongitude()));
+        activity.gpsInfoPanel.setAccuracy(String.valueOf(location.getAccuracy()));
 
         if (location.hasAltitude()){
-            activity.tv_altitude.setText(String.valueOf(location.getAltitude()));
+            activity.gpsInfoPanel.setAltitude(String.valueOf(location.getAltitude()));
         } else {
-            activity.tv_altitude.setText(activity.getString(R.string.not_available_message));
+            activity.gpsInfoPanel.setAltitude(activity.getString(R.string.not_available_message));
         }
         if (location.hasSpeed()){
-            activity.tv_speed.setText(speedFormat(location.getSpeed()));
+            activity.gpsInfoPanel.setSpeed(String.valueOf(location.getSpeed()));
         } else {
-            activity.tv_speed.setText(activity.getString(R.string.not_available_message));
+            activity.gpsInfoPanel.setSpeed(activity.getString(R.string.not_available_message));
         }
     }
 
@@ -70,11 +70,11 @@ public class UIWriter {
      * @param warning String with the warning to show in each element of the GUI
      */
     private static void setWarningTextUIValues(MainActivity activity, String warning){
-        activity.tv_lat.setText(warning);
-        activity.tv_lon.setText(warning);
-        activity.tv_accuracy.setText(warning);
-        activity.tv_altitude.setText(warning);
-        activity.tv_speed.setText(warning);
+        activity.gpsInfoPanel.setLatitude(warning);
+        activity.gpsInfoPanel.setLongitude(warning);
+        activity.gpsInfoPanel.setAccuracy(warning);
+        activity.gpsInfoPanel.setAltitude(warning);
+        activity.gpsInfoPanel.setSpeed(warning);
     }
 
     /**

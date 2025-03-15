@@ -8,20 +8,12 @@
     <item name="tv_label_sensor" type="id"/>
     <item name="tv_sensor" type="id"/>
     <item name="hdv_1" type="id"/>
-    <item name="tv_label_lat" type="id"/>
-    <item name="tv_lat" type="id"/>
-    <item name="tv_label_lon" type="id"/>
-    <item name="tv_lon" type="id"/>
-    <item name="tv_label_altitude" type="id"/>
-    <item name="tv_altitude" type="id"/>
-    <item name="tv_label_accuracy" type="id"/>
-    <item name="tv_accuracy" type="id"/>
-    <item name="tv_label_speed" type="id"/>
-    <item name="tv_speed" type="id"/>
     <item name="hdv_2" type="id"/>
     <item name="fl_flight_track" type="id"/>
     <item name="hdv_3" type="id"/>
     <item name="fl_map" type="id"/>
+    <item name="fl_gps_info_panel" type="id"/>
+
 
     <!-- flight_track_screen.xml -->
     <!-- start_tracking_screen -->
@@ -53,6 +45,18 @@
 
     <!--  MapsForge  -->
     <item name="mapView" type="id"/>
+
+    <!--  gps_info_panel.xml  -->
+    <item name="tv_label_lat" type="id"/>
+    <item name="tv_lat" type="id"/>
+    <item name="tv_label_lon" type="id"/>
+    <item name="tv_lon" type="id"/>
+    <item name="tv_label_altitude" type="id"/>
+    <item name="tv_altitude" type="id"/>
+    <item name="tv_label_accuracy" type="id"/>
+    <item name="tv_accuracy" type="id"/>
+    <item name="tv_label_speed" type="id"/>
+    <item name="tv_speed" type="id"/>
 
 
 </resources>
