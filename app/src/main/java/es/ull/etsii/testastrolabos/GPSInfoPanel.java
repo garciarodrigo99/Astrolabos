@@ -26,7 +26,7 @@ public class GPSInfoPanel {
 
     public GPSInfoPanel(MainActivity activity) {
         this.activity = activity;
-        this.view = activity.view_gps_info_panel;
+        this.view = activity.ll_gps_info_panel;
         this.context = view.getContext();
 
         tv_lat = this.view.findViewById(R.id.tv_lat);

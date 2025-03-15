@@ -11,9 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -53,10 +51,12 @@ public class MainActivity extends AppCompatActivity {
     private static final int DEFAULT_UPDATE = 30;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private static final int SELECT_MAP_FILE = 0;
+    private boolean isGPSInfoPanelVisible = false;
 
     // activity_main
     TextView tv_sensor, tv_updates;
     SwitchCompat sw_location_updates, sw_gps;
+    Button  btn_toggle_GPSInfoPanel;
 
     // Location request for location settings
     LocationRequest appLocationRequest;
@@ -65,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
     // Class to use location info
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    FrameLayout fl_flight_track, fl_map, fl_gps_info_panel;
-    View view_flight_track, view_gps_info_panel;
+    FrameLayout fl_flight_track, fl_map;
+    LinearLayout ll_gps_info_panel;
+    View view_flight_track;
 
     MapView view_map;
     FlightTrackScreen flightTrackScreen;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         tv_updates = findViewById(R.id.tv_updates);
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
+        btn_toggle_GPSInfoPanel = findViewById(R.id.btn_toggle_gps_info_panel);
 
         fl_flight_track = findViewById(R.id.fl_flight_track);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -92,10 +94,8 @@ public class MainActivity extends AppCompatActivity {
         flightTrackScreen = new FlightTrackScreen(this);
         fl_flight_track.addView(view_flight_track);
 
-        fl_gps_info_panel = findViewById(R.id.fl_gps_info_panel);
-        view_gps_info_panel = inflater.inflate(R.layout.gps_info_panel,null);
+        ll_gps_info_panel = findViewById(R.id.ll_gps_info_panel);
         gpsInfoPanel = new GPSInfoPanel(this);
-        fl_flight_track.addView(view_gps_info_panel);
 
         // Referenciar el FrameLayout donde se agregará el MapView
         fl_map = findViewById(R.id.fl_map);
@@ -163,6 +163,17 @@ public class MainActivity extends AppCompatActivity {
                 appLocationRequest = powerBalanceLR;
                 tv_sensor.setText(sw_gps.getTextOff());
             }
+        });
+
+        btn_toggle_GPSInfoPanel.setOnClickListener(v -> {
+            if (isGPSInfoPanelVisible) {
+                ll_gps_info_panel.setVisibility(View.GONE);
+//                btnTogglePanel.setText("Mostrar Panel");
+            } else {
+                ll_gps_info_panel.setVisibility(View.VISIBLE);
+//                btnTogglePanel.setText("Ocultar Panel");
+            }
+            isGPSInfoPanelVisible = !isGPSInfoPanelVisible;
         });
 
         //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
