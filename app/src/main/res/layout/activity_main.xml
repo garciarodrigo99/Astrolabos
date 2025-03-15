@@ -121,4 +121,16 @@
             android:layout_height="0dp">
     </FrameLayout>
 
+    <Button
+            android:id="@+id/btnLocation"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button"
+            android:drawableTop="@drawable/round_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="GPS Info"
+    />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
