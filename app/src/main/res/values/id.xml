@@ -57,6 +57,7 @@
     <item name="tv_accuracy" type="id"/>
     <item name="tv_label_speed" type="id"/>
     <item name="tv_speed" type="id"/>
+    <item name="gps_info_panel_glh_50" type="id"/>
 
 
 </resources>
