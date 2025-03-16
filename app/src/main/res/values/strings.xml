@@ -55,7 +55,7 @@
 
     <string name="tv_dialog_confirmation_title_cancel_tracking">@string/btn_cancel</string>
     <string name="tv_dialog_confirmation_question_cancel_tracking">
-        Are you sure that you want to finish tracking and save registers?
+        Are you sure that you want to cancel tracking and not save registers?
     </string>
     <string name="tv_dialog_confirmation_toast_text_cancel_tracking">Flight tracking cancelled</string>
 

@@ -21,14 +21,18 @@ public class FlightTrackScreen {
     private Activity activity;
     private final ConstraintLayout startTrackingScreen;
     private final ConstraintLayout recordingTrackingScreen;
-
-    private Button btnStartTracking;
     private Button btnFinishSave;
     private Button btnCancel;
 
     private SwitchCompat sw_mode;
     private TextView tv_tracking,tv_flight_name;
 
+    public enum State {
+        TRACKING,
+        NOT_TRACKING
+    };
+
+    private State state_ = State.NOT_TRACKING;
     FileFormat fileFormat;
 
     public FlightTrackScreen(MainActivity activity) {
@@ -49,14 +53,18 @@ public class FlightTrackScreen {
         setListeners();
     }
 
+    public State getState() {
+        return state_;
+    }
+
     private void initializeButtons() {
-        btnStartTracking = view.findViewById(R.id.btn_start_tracking);
+//        btnStartTracking = view.findViewById(R.id.btn_start_tracking);
         btnFinishSave = view.findViewById(R.id.btn_finish_save);
         btnCancel = view.findViewById(R.id.btn_cancel);
     }
 
     private void setListeners() {
-        btnStartTracking.setOnClickListener(v -> startTracking());
+//        btnStartTracking.setOnClickListener(v -> startTracking());
 
         btnFinishSave.setOnClickListener(v -> finishAndSave());
 
@@ -67,7 +75,7 @@ public class FlightTrackScreen {
         });
     }
 
-    private void startTracking() {
+    public void startTracking() {
         // Lógica para iniciar el seguimiento
         Dialogs.showRecordFlightDialog(this.context, new AcceptCancelActions<TrackSettings>() {
             @Override
@@ -87,6 +95,7 @@ public class FlightTrackScreen {
                     Toast.makeText(view.getContext(), "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
                 }
                 swapScreenVisibility(startTrackingScreen,recordingTrackingScreen);
+                state_ = State.TRACKING;
             }
 
             @Override
@@ -96,11 +105,12 @@ public class FlightTrackScreen {
         });
     }
 
-    private void finishAndSave() {
+    public void finishAndSave() {
         Runnable finishAndSave = new Runnable() {
             @Override
             public void run() {
                 PermissionUtils.openFilePicker(activity);
+                state_ = State.NOT_TRACKING;
             }
         };
         showConfirmationDialog(
@@ -111,11 +121,12 @@ public class FlightTrackScreen {
 
     }
 
-    private void cancel() {
+    public void cancel() {
         Runnable cancel = new Runnable() {
             @Override
             public void run() {
                 fileFormat = null;
+                state_ = State.NOT_TRACKING;
             }
         };
 

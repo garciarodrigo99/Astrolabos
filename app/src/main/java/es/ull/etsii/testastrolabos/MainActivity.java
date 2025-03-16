@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     // activity_main
     TextView tv_sensor, tv_updates;
     SwitchCompat sw_location_updates, sw_gps;
-    Button  btn_toggle_GPSInfoPanel;
+    Button  btn_toggle_GPSInfoPanel, btn_startTracking;
 
     // Location request for location settings
     LocationRequest appLocationRequest;
@@ -87,12 +87,14 @@ public class MainActivity extends AppCompatActivity {
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
         btn_toggle_GPSInfoPanel = findViewById(R.id.btn_toggle_gps_info_panel);
+        btn_startTracking = findViewById(R.id.btn_start_tracking);
 
         fl_flight_track = findViewById(R.id.fl_flight_track);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         view_flight_track = inflater.inflate(R.layout.flight_track_screen, null);
         flightTrackScreen = new FlightTrackScreen(this);
         fl_flight_track.addView(view_flight_track);
+        fl_flight_track.setVisibility(View.GONE);
 
         ll_gps_info_panel = findViewById(R.id.ll_gps_info_panel);
         gpsInfoPanel = new GPSInfoPanel(this);
@@ -174,6 +176,23 @@ public class MainActivity extends AppCompatActivity {
 //                btnTogglePanel.setText("Ocultar Panel");
             }
             isGPSInfoPanelVisible = !isGPSInfoPanelVisible;
+        });
+
+        btn_startTracking.setOnClickListener(v -> {
+            if (flightTrackScreen.getState() == FlightTrackScreen.State.NOT_TRACKING) {
+                flightTrackScreen.startTracking();
+                return;
+            } else {
+                //TODO: Launch config dialog
+            }
+        });
+
+        btn_startTracking.setOnLongClickListener(v -> {
+            if (flightTrackScreen.getState() != FlightTrackScreen.State.TRACKING) {
+                return true;
+            }
+            // TODO: Launch action dialog
+            return true;
         });
 
         //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
