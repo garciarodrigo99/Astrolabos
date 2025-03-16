@@ -16,23 +16,13 @@
             android:paddingBottom="16dp"/>
 
     <Button
-            android:id="@+id/btn_exit_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Exit Dialog"
-            android:background="@color/round_button_gray"
-            android:textColor="@android:color/white"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"/>
-
-    <Button
             android:id="@+id/btn_finish_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Finish Tracking"
             android:background="@color/green"
             android:textColor="@android:color/white"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_marginBottom="10dp"/>
 
     <Button
@@ -42,5 +32,16 @@
             android:text="Cancel Tracking"
             android:background="@color/red"
             android:textColor="@android:color/white"
-            android:padding="10dp"/>
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"/>
+
+    <Button
+            android:id="@+id/btn_exit_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exit Dialog"
+            android:background="@color/round_button_gray"
+            android:textColor="@android:color/white"
+            android:padding="5dp"/>
+
 </LinearLayout>

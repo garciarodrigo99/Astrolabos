@@ -1,20 +1,20 @@
 package es.ull.etsii.testastrolabos;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import es.ull.etsii.testastrolabos.Writers.FileFormat;
 
-public class GPSInfoPanelActionDialog extends DialogFragment {
+public class TrackingActionDialog extends DialogFragment {
+    private TrackingManager trackingManager_;
+    public TrackingActionDialog(TrackingManager trackingManager) {
+        this.trackingManager_ = trackingManager;
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,17 +29,19 @@ public class GPSInfoPanelActionDialog extends DialogFragment {
 
         // Configurar botones
         btn1.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Opción 1 seleccionada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Exit", Toast.LENGTH_SHORT).show();
             dismiss();
         });
 
         btn2.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Opción 2 seleccionada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Finish and save", Toast.LENGTH_SHORT).show();
+            trackingManager_.finishAndSave();
             dismiss();
         });
 
         btn3.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Opción 3 seleccionada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Cancel tracking", Toast.LENGTH_SHORT).show();
+            trackingManager_.cancel();
             dismiss();
         });
 
