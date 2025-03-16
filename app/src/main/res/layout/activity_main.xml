@@ -85,16 +85,16 @@
     <FrameLayout
             android:id="@+id/fl_flight_track"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/hdv_1"
             app:layout_constraintBottom_toTopOf="@+id/hdv_3"/>
     <View
             android:id="@+id/hdv_3"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintTop_toBottomOf="@+id/fl_flight_track"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintStart_toStartOf="parent"/>
 
     <FrameLayout
