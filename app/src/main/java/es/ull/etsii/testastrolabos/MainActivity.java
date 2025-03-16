@@ -192,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             // TODO: Launch action dialog
+            GPSInfoPanelActionDialog actionDialog = new GPSInfoPanelActionDialog();
+            actionDialog.show(getSupportFragmentManager(), "MiDialogo");
             return true;
         });
 

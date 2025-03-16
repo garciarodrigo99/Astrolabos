@@ -28,6 +28,7 @@
     <item name="tv_flight_name" type="id"/>
     <item name="btn_finish_save" type="id"/>
     <item name="btn_cancel" type="id"/>
+    <item name="btn_exit_dialog" type="id"/>
 
 
     <!-- dialog_confirmation.xml -->

@@ -21,8 +21,8 @@ public class FlightTrackScreen {
     private Activity activity;
     private final ConstraintLayout startTrackingScreen;
     private final ConstraintLayout recordingTrackingScreen;
-    private Button btnFinishSave;
-    private Button btnCancel;
+//    private Button btnFinishSave;
+//    private Button btnCancel;
 
     private SwitchCompat sw_mode;
     private TextView tv_tracking,tv_flight_name;
@@ -59,16 +59,16 @@ public class FlightTrackScreen {
 
     private void initializeButtons() {
 //        btnStartTracking = view.findViewById(R.id.btn_start_tracking);
-        btnFinishSave = view.findViewById(R.id.btn_finish_save);
-        btnCancel = view.findViewById(R.id.btn_cancel);
+//        btnFinishSave = view.findViewById(R.id.btn_finish_save);
+//        btnCancel = view.findViewById(R.id.btn_cancel);
     }
 
     private void setListeners() {
 //        btnStartTracking.setOnClickListener(v -> startTracking());
 
-        btnFinishSave.setOnClickListener(v -> finishAndSave());
+//        btnFinishSave.setOnClickListener(v -> finishAndSave());
 
-        btnCancel.setOnClickListener(v -> cancel());
+//        btnCancel.setOnClickListener(v -> cancel());
 
         sw_mode.setOnClickListener(v -> {
             sw_mode.setText((sw_mode.isChecked()) ? sw_mode.getTextOn() : sw_mode.getTextOff());

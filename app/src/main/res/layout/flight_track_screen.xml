@@ -66,26 +66,26 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_tracking" />
 
         <!-- Botón para finalizar y guardar -->
-        <Button
-                android:id="@+id/btn_finish_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_finish_save"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.04"
-                android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/tv_tracking"/>
+<!--        <Button-->
+<!--                android:id="@+id/btn_finish_save"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/btn_finish_save"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.04"-->
+<!--                android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/tv_tracking"/>-->
 
-        <!-- Botón para cancelar -->
-        <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_cancel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btn_finish_save"
-                app:layout_constraintHorizontal_bias="0.8"
-                app:layout_constraintTop_toTopOf="@+id/btn_finish_save"/>
+<!--        &lt;!&ndash; Botón para cancelar &ndash;&gt;-->
+<!--        <Button-->
+<!--                android:id="@+id/btn_cancel"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/btn_cancel"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/btn_finish_save"-->
+<!--                app:layout_constraintHorizontal_bias="0.8"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/btn_finish_save"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
