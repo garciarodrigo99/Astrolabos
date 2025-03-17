@@ -28,7 +28,7 @@ public class TrackingManager {
 
     public TrackingManager(MainActivity activity) {
         this.activity = activity;
-        this.context_ = activity.getApplicationContext();
+        this.context_ = activity;
     }
 
     public State getState() {
