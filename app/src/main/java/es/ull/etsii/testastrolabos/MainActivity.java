@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     // activity_main
     TextView tv_sensor, tv_updates;
     SwitchCompat sw_location_updates, sw_gps;
-    Button  btn_toggle_GPSInfoPanel, btn_startTracking;
+    Button  btn_startTracking;
+    ImageButton ib_toggle_GPSInfoPanel;
 
     // Location request for location settings
     LocationRequest appLocationRequest;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         tv_updates = findViewById(R.id.tv_updates);
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
-        btn_toggle_GPSInfoPanel = findViewById(R.id.btn_toggle_gps_info_panel);
+        ib_toggle_GPSInfoPanel = findViewById(R.id.btn_toggle_gps_info_panel);
         btn_startTracking = findViewById(R.id.btn_start_tracking);
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_toggle_GPSInfoPanel.setOnClickListener(v -> {
+        ib_toggle_GPSInfoPanel.setOnClickListener(v -> {
             if (isGPSInfoPanelVisible) {
                 ll_gps_info_panel.setVisibility(View.GONE);
             } else {

@@ -7,7 +7,8 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity"
         tools:layout_editor_absoluteY="-273dp"
-        tools:layout_editor_absoluteX="-133dp">
+        tools:layout_editor_absoluteX="-133dp"
+>
 
     <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_location_updates"
@@ -102,17 +103,18 @@
             android:layout_alignParentBottom="true"
     />
 
-    <Button
+    <ImageButton
             android:id="@+id/btn_toggle_gps_info_panel"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/round_button"
+            android:contentDescription="GPS Info"
             android:drawableTop="@drawable/round_button"
-            android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="GPS Info"
+            android:src="@drawable/satellite"
+            app:tint="@color/round_button_gray"
     />
 
     <Button

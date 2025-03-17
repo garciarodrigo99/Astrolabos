@@ -16,7 +16,6 @@ public class TrackingManager {
 
     private Context context_;
     private Activity activity;
-    private TextView tv_tracking,tv_flight_name;
 
     public enum State {
         TRACKING,
@@ -28,7 +27,7 @@ public class TrackingManager {
 
     public TrackingManager(MainActivity activity) {
         this.activity = activity;
-        this.context_ = activity.getApplicationContext();
+        this.context_ = activity;
     }
 
     public State getState() {
@@ -48,7 +47,6 @@ public class TrackingManager {
                     Toast.makeText(context_, data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
                     //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
                     //TODO: uncomment
-                    tv_flight_name.setText(data.getFlightName());
                     fileFormat = new JsonFormat(data);
                 } else {
                     // Si el usuario cancela el diálogo, no se hace nada
