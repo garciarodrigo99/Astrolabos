@@ -63,11 +63,15 @@
     <string name="tv_dialog_record_flight_title">Record flight</string>
     <string name="tv_dialog_record_flight_flight_name">Flight name</string>
     <string name="et_dialog_record_flight_flight_name">Introduce flight name</string>
-    <string name="tv_dialog_record_flight_update_settings">Location updates settings</string>
+    <string name="tv_dialog_record_flight_update_settings">Update time</string>
     <string name="tv_dialog_record_flight_slow_mode">Slow mode</string>
     <string name="et_dialog_record_flight_slow_mode">60 sec</string>
     <string name="tv_dialog_record_flight_fast_mode">Fast mode</string>
     <string name="et_dialog_record_flight_fast_mode">5 sec</string>
+
+    <!-- dialog_tracking_config.xml -->
+    <string name="tv_dialog_tracking_config_title">Tracking config</string>
+    <string name="tv_dialog_tracking_config_update_time">Update Time</string>
 
     <!--  Mapsforge  -->
     <string name="copyright_osm">Map data © OpenStreetMap contributors</string>

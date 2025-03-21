@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             } else {
                 //TODO: Launch config dialog
+                flightTrackManager.showTrackingSettings();
             }
         });
 
@@ -356,10 +357,10 @@ public class MainActivity extends AppCompatActivity {
 
             /*
              * The map also needs to know which area to display and at what zoom level.
-             * Note: this map position is specific to Berlin area.
+             * Note: this map position is specific to El Teide area.
              */
-            view_map.setCenter(new LatLong(52.517037, 13.38886));
-            view_map.setZoomLevel((byte) 12);
+            view_map.setCenter(new LatLong(28.272440, -16.642372));
+            view_map.setZoomLevel((byte) 8);
         } catch (Exception e) {
             /*
              * In case of map file errors avoid crash, but developers should handle these cases!

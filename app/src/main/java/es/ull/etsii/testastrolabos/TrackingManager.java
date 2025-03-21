@@ -2,11 +2,10 @@ package es.ull.etsii.testastrolabos;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AlertDialog;
 
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import es.ull.etsii.testastrolabos.Writers.*;
@@ -60,6 +59,20 @@ public class TrackingManager {
                 Toast.makeText(context_, "Flight tracking cancelled", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void showTrackingSettings() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.context_);
+        LayoutInflater inflater = LayoutInflater.from(this.context_);
+        View dialogView = inflater.inflate(R.layout.dialog_tracking_config, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton("Guardar",(dialog, which) -> {
+            // TODO: set update time
+        });
+        builder.setNegativeButton("Cancelar",(dialog, which) -> {
+//            action.cancel(null);
+        });
+        builder.create().show();
     }
 
     public void finishAndSave() {
