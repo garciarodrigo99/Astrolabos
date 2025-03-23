@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
             view_map.setBuiltInZoomControls(true);
 
             /*
-             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with an
+             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with a
              * utility method.
              */
             TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
