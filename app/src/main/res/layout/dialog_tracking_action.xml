@@ -7,39 +7,39 @@
               android:gravity="center">
 
     <TextView
-            android:id="@+id/tvTitulo"
+            android:id="@+id/dialog_tracking_action_label_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose an option"
+            android:text="@string/dialog_tracking_action_label_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="16dp"/>
 
     <Button
-            android:id="@+id/btn_finish_save"
+            android:id="@+id/dialog_tracking_action_btn_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Finish Tracking"
+            android:text="@string/dialog_tracking_action_btn_finish"
             android:background="@color/green"
             android:textColor="@android:color/white"
             android:padding="5dp"
             android:layout_marginBottom="10dp"/>
 
     <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/dialog_tracking_action_btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel Tracking"
+            android:text="@string/dialog_tracking_action_btn_cancel"
             android:background="@color/red"
             android:textColor="@android:color/white"
             android:padding="5dp"
             android:layout_marginBottom="10dp"/>
 
     <Button
-            android:id="@+id/btn_exit_dialog"
+            android:id="@+id/dialog_tracking_action_btn_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exit Dialog"
+            android:text="@string/dialog_tracking_action_btn_exit"
             android:background="@color/round_button_gray"
             android:textColor="@android:color/white"
             android:padding="5dp"/>

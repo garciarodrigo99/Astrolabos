@@ -16,6 +16,9 @@
     <string name="sw_gps_textOn">Using GPS sensors</string>
     <string name="sw_gps_textOff">Using Cell Towers + Wifi</string>
     <string name="tv_label_sensor">Sensor:</string>
+    <string name="ib_toggle_gps_info_panel_description">GPS Info</string>
+    <string name="ib_start_tracking_description">Start Tracking || Tracking config/action</string>
+
 
     <!-- MainActivity.java -->
     <!-- Toast warnings -->
@@ -69,9 +72,18 @@
     <string name="tv_dialog_record_flight_fast_mode">Fast mode</string>
     <string name="et_dialog_record_flight_fast_mode">5 sec</string>
 
+    <!-- dialog_tracking_action.xml -->
+    <string name="dialog_tracking_action_label_title">Choose an option</string>
+    <string name="dialog_tracking_action_btn_finish">Save tracking</string>
+    <string name="dialog_tracking_action_btn_cancel">Cancel tracking</string>
+    <string name="dialog_tracking_action_btn_exit">Exit dialog</string>
+
     <!-- dialog_tracking_config.xml -->
-    <string name="tv_dialog_tracking_config_title">Tracking config</string>
-    <string name="tv_dialog_tracking_config_update_time">Update Time</string>
+    <string name="dialog_tracking_config_label_title">Tracking config</string>
+    <string name="dialog_tracking_config_label_update_time">Update Time</string>
+    <string name="dialog_tracking_config_number_update_time">1</string>
+    <string name="dialog_tracking_config_rb_minutes">Min</string>
+    <string name="dialog_tracking_config_rb_seconds">Sec</string>
 
     <!--  Mapsforge  -->
     <string name="copyright_osm">Map data © OpenStreetMap contributors</string>

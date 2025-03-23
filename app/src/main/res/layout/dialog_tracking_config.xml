@@ -6,10 +6,10 @@
               android:padding="16dp">
 
     <TextView
-            android:id="@+id/tv_dialog_record_flight_title"
+            android:id="@+id/dialog_tracking_config_label_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_dialog_tracking_config_title"
+            android:text="@string/dialog_tracking_config_label_title"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginBottom="16dp"/>
@@ -19,25 +19,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-<!--        <EditText-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:inputType="number"-->
-<!--                android:ems="10"-->
-<!--                android:id="@+id/editTextNumber" android:layout_weight="1"/>-->
         <TextView
-                android:id="@+id/tv_dialog_tracking_config_update_time"
+                android:id="@+id/dialog_tracking_config_label_update_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/tv_dialog_record_flight_update_settings"/>
+                android:text="@string/dialog_tracking_config_label_update_time"/>
 
         <EditText
                 android:id="@+id/et_dialog_record_flight_slow_mode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number"/>
+                android:autofillHints="@string/dialog_tracking_config_number_update_time"
+                android:inputType="number"
+                android:hint="@string/dialog_tracking_config_number_update_time"/>
 
         <RadioGroup
                 android:layout_width="0dp"
@@ -46,17 +42,17 @@
                 android:orientation="horizontal">
 
             <RadioButton
-                    android:text="Min"
+                    android:text="@string/dialog_tracking_config_rb_minutes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/dialog_tracking_config_rb_minutes"
                     android:layout_weight="1"
             />
             <RadioButton
-                    android:text="Sec"
+                    android:text="@string/dialog_tracking_config_rb_seconds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton"
+                    android:id="@+id/dialog_tracking_config_rb_seconds"
                     android:layout_weight="1"
             />
         </RadioGroup>

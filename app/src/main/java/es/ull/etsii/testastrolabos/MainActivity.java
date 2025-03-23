@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         tv_updates = findViewById(R.id.tv_updates);
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
-        ib_toggle_GPSInfoPanel = findViewById(R.id.btn_toggle_gps_info_panel);
+        ib_toggle_GPSInfoPanel = findViewById(R.id.ib_toggle_gps_info_panel);
         btn_startTracking = findViewById(R.id.btn_start_tracking);
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);

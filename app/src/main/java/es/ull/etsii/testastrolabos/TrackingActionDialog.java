@@ -23,9 +23,9 @@ public class TrackingActionDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_tracking_action, null);
 
         // Obtener botones
-        Button btn1 = view.findViewById(R.id.btn_exit_dialog);
-        Button btn2 = view.findViewById(R.id.btn_finish_save);
-        Button btn3 = view.findViewById(R.id.btn_cancel);
+        Button btn1 = view.findViewById(R.id.dialog_tracking_action_btn_exit);
+        Button btn2 = view.findViewById(R.id.dialog_tracking_action_btn_finish);
+        Button btn3 = view.findViewById(R.id.dialog_tracking_action_btn_cancel);
 
         // Configurar botones
         btn1.setOnClickListener(v -> {

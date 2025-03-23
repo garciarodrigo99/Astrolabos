@@ -53,7 +53,8 @@
             android:enabled="false"
             app:layout_constraintEnd_toEndOf="@+id/sw_location_updates"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_updates" android:checked="true"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_updates"
+            android:checked="true"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
             android:id="@+id/tv_label_sensor"
@@ -91,7 +92,6 @@
             android:layout_height="0dp">
     </FrameLayout>
 
-    <!-- Incluir el panel desde otro XML -->
     <include
             android:id="@+id/ll_gps_info_panel"
             layout="@layout/gps_info_panel"
@@ -99,16 +99,16 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_toggle_gps_info_panel"
+            app:layout_constraintBottom_toTopOf="@+id/ib_toggle_gps_info_panel"
             android:layout_alignParentBottom="true"
     />
 
     <ImageButton
-            android:id="@+id/btn_toggle_gps_info_panel"
+            android:id="@+id/ib_toggle_gps_info_panel"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/round_button"
-            android:contentDescription="GPS Info"
+            android:contentDescription="@+id/ib_toggle_gps_info_panel_description"
             android:drawableTop="@drawable/round_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,14 +117,15 @@
             app:tint="@color/round_button_gray"
     />
 
+    <!-- TODO: refactor to image button -->
     <Button
             android:id="@+id/btn_start_tracking"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/round_button"
             android:drawableTop="@drawable/round_button"
-            android:text="Tracking"
-            android:textSize="10dp"
+            android:text="@string/ib_start_tracking_description"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
