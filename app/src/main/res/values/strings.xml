@@ -29,12 +29,11 @@
         <string name="sw_speed_mode_onTextOff">Mode: Slow</string>
         <string name="tv_tracking">Tracking:  </string>
         <string name="tv_flight_name">flight_name</string>
-        <string name="btn_finish_save">Finish and save</string>
         <string name="btn_cancel">Cancel</string>
 
 
         <!-- dialog_confirmation.xml -->
-        <string name="tv_dialog_confirmation_title_save_and_finish">@string/btn_finish_save</string>
+        <string name="tv_dialog_confirmation_title_save_and_finish">Finish and save</string>
         <string name="tv_dialog_confirmation_question_save_and_finish">
             Are you sure that you want to finish tracking and save registers?
         </string>
