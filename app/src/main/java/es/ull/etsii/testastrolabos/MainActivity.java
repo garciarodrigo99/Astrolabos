@@ -11,37 +11,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.*;
-import com.google.android.gms.tasks.OnSuccessListener;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
-import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,10 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int DEFAULT_UPDATE = 30;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private static final int SELECT_MAP_FILE = 0;
+    private boolean isGPSInfoPanelVisible = false;
 
     // activity_main
-    TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates;
+    TextView tv_sensor, tv_updates;
     SwitchCompat sw_location_updates, sw_gps;
+    Button  btn_startTracking;
+    ImageButton ib_toggle_GPSInfoPanel;
 
     // Location request for location settings
     LocationRequest appLocationRequest;
@@ -64,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
     // Class to use location info
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    FrameLayout fl_flight_track, fl_map;
-    View view_flight_track;
+    FrameLayout fl_map;
+    LinearLayout ll_gps_info_panel;
 
     MapView view_map;
-    FlightTrackScreen flightTrackScreen;
+    TrackingManager flightTrackManager;
+    GPSInfoPanel gpsInfoPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -79,21 +73,18 @@ public class MainActivity extends AppCompatActivity {
         AndroidGraphicFactory.createInstance(getApplication());
 
         // Matching attributes with activity_main.xml
-        tv_lat = findViewById(R.id.tv_lat);
-        tv_lon = findViewById(R.id.tv_lon);
-        tv_altitude = findViewById(R.id.tv_altitude);
-        tv_accuracy = findViewById(R.id.tv_accuracy);
-        tv_speed = findViewById(R.id.tv_speed);
         tv_sensor = findViewById(R.id.tv_sensor);
         tv_updates = findViewById(R.id.tv_updates);
         sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
+        ib_toggle_GPSInfoPanel = findViewById(R.id.ib_toggle_gps_info_panel);
+        btn_startTracking = findViewById(R.id.btn_start_tracking);
 
-        fl_flight_track = findViewById(R.id.fl_flight_track);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        view_flight_track = inflater.inflate(R.layout.flight_track_screen, null);
-        flightTrackScreen = new FlightTrackScreen(this);
-        fl_flight_track.addView(view_flight_track);
+        flightTrackManager = new TrackingManager(this);
+
+        ll_gps_info_panel = findViewById(R.id.ll_gps_info_panel);
+        gpsInfoPanel = new GPSInfoPanel(this);
 
         // Referenciar el FrameLayout donde se agregará el MapView
         fl_map = findViewById(R.id.fl_map);
@@ -163,6 +154,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ib_toggle_GPSInfoPanel.setOnClickListener(v -> {
+            if (isGPSInfoPanelVisible) {
+                ll_gps_info_panel.setVisibility(View.GONE);
+            } else {
+                ll_gps_info_panel.setVisibility(View.VISIBLE);
+            }
+            isGPSInfoPanelVisible = !isGPSInfoPanelVisible;
+        });
+
+        btn_startTracking.setOnClickListener(v -> {
+            if (flightTrackManager.getState() == TrackingManager.State.NOT_TRACKING) {
+                flightTrackManager.startTracking();
+                return;
+            }
+            flightTrackManager.showTrackingSettings();
+        });
+
+        btn_startTracking.setOnLongClickListener(v -> {
+            if (flightTrackManager.getState() != TrackingManager.State.TRACKING) {
+                return true;
+            }
+            TrackingActionDialog actionDialog = new TrackingActionDialog(flightTrackManager);
+            actionDialog.show(getSupportFragmentManager(), "MiDialogo");
+            return true;
+        });
+
         //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
         updateGPS();
     }
@@ -199,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PermissionUtils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getData() != null) {
                 Uri uri = data.getData();
-                FileUtils.writeFileContent(this, uri, "Contenido del archivo");
+                FileUtils.writeFileContent(this, uri, getString(R.string.file_save_successfully));
                 Toast.makeText(this, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
             }
         }
@@ -290,13 +307,13 @@ public class MainActivity extends AppCompatActivity {
         // Write location values
         //TODO:Implementar método observador
         UIWriter.writeLocation(MainActivity.this,location);
-        if (flightTrackScreen.fileFormat != null) {
+        if (flightTrackManager.fileFormat != null) {
             Date date = new Date();
 
             // Formatear la fecha y hora en el formato deseado
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             String timestamp = sdf.format(date);
-            flightTrackScreen.fileFormat.addContent(timestamp,location);
+            flightTrackManager.fileFormat.addContent(timestamp,location);
         }
     }
     private void openMap(Uri uri) {
@@ -308,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
             view_map.setBuiltInZoomControls(true);
 
             /*
-             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with an
+             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with a
              * utility method.
              */
             TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
@@ -337,10 +354,10 @@ public class MainActivity extends AppCompatActivity {
 
             /*
              * The map also needs to know which area to display and at what zoom level.
-             * Note: this map position is specific to Berlin area.
+             * Note: this map position is specific to El Teide area.
              */
-            view_map.setCenter(new LatLong(52.517037, 13.38886));
-            view_map.setZoomLevel((byte) 12);
+            view_map.setCenter(new LatLong(28.272440, -16.642372));
+            view_map.setZoomLevel((byte) 8);
         } catch (Exception e) {
             /*
              * In case of map file errors avoid crash, but developers should handle these cases!

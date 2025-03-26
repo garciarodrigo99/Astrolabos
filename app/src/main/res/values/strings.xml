@@ -1,75 +1,113 @@
 <resources>
-    <string name="app_name">Test Astrolabos</string>
+    <string name="app_name">Astrolabos</string>
 
-    <!-- activity_main.xml  -->
-    <string name="tv_label_lat">Lat:</string>
-    <string name="tv_default_value">0.00</string>
-    <string name="tv_label_lon">Lon:</string>
-    <string name="tv_label_altitude">Altitude:</string>
-    <string name="tv_label_accuracy">Accuracy:</string>
-    <string name="tv_label_speed">Speed:</string>
-    <string name="tv_label_updates">Updates:</string>
-    <string name="sw_locations_updates">Location Updates</string>
-    <string name="sw_locations_updates_textOn">Location is being tracked</string>
-    <string name="sw_locations_updates_textOff">Location is NOT being tracked</string>
-    <string name="sw_gps">SavePower/GPS</string>
-    <string name="sw_gps_textOn">Using GPS sensors</string>
-    <string name="sw_gps_textOff">Using Cell Towers + Wifi</string>
-    <string name="tv_label_sensor">Sensor:</string>
+    <!--  .xml  -->
+        <!-- activity_main.xml  -->
+        <string name="tv_label_lat">Lat:</string>
+        <string name="tv_default_value">0.00</string>
+        <string name="tv_label_lon">Lon:</string>
+        <string name="tv_label_altitude">Altitude:</string>
+        <string name="tv_label_accuracy">Accuracy:</string>
+        <string name="tv_label_speed">Speed:</string>
+        <string name="tv_label_updates">Updates:</string>
+        <string name="sw_locations_updates">Location Updates</string>
+        <string name="sw_locations_updates_textOn">Location is being tracked</string>
+        <string name="sw_locations_updates_textOff">Location is NOT being tracked</string>
+        <string name="sw_gps">SavePower/GPS</string>
+        <string name="sw_gps_textOn">Using GPS sensors</string>
+        <string name="sw_gps_textOff">Using Cell Towers + Wifi</string>
+        <string name="tv_label_sensor">Sensor:</string>
+        <string name="ib_toggle_gps_info_panel_description">GPS Info</string>
+        <string name="ib_start_tracking_description">Start Tracking || Tracking config/action</string>
 
-    <!-- MainActivity.java -->
-    <!-- Toast warnings -->
-    <string name="location_permissions_granted">Location permissions successfully granted</string>
-    <string name="location_permissions_not_granted">This app requires permissions to work</string>
-    <string name="location_not_activated_toast">The location services are not activated</string>
-    <string name="location_updated">Location was updated</string>
+        <!-- flight_track_screen.xml -->
+        <!-- start_tracking_screen -->
+        <string name="btn_start_tracking">Start Tracking</string>
 
-    <!-- UI Label Warnings -->
-    <string name="location_permissions_not_available">Location permissions not available</string>
-    <string name="location_not_enabled_label">Location not activated</string>
-    <string name="not_tracking_location">Not tracking location</string>
-    <string name="not_tracking_location_2">Location is NOT being tracked</string>
-    <string name="location_is_null">Location null</string>
-    <string name="not_available_message">Not available</string>
-
-
-    <!-- flight_track_screen.xml -->
-    <!-- start_tracking_screen -->
-    <string name="btn_start_tracking">Start Tracking</string>
-
-    <!-- recording_tracking_screen -->
-    <string name="sw_speed_mode_onTextOn">Mode: Fast</string>
-    <string name="sw_speed_mode_onTextOff">Mode: Slow</string>
-    <string name="tv_tracking">Tracking:  </string>
-    <string name="tv_flight_name">flight_name</string>
-    <string name="btn_finish_save">Finish and save</string>
-    <string name="btn_cancel">Cancel</string>
+        <!-- recording_tracking_screen -->
+        <string name="sw_speed_mode_onTextOn">Mode: Fast</string>
+        <string name="sw_speed_mode_onTextOff">Mode: Slow</string>
+        <string name="tv_tracking">Tracking:  </string>
+        <string name="tv_flight_name">flight_name</string>
+        <string name="btn_finish_save">Finish and save</string>
+        <string name="btn_cancel">Cancel</string>
 
 
-    <!-- dialog_confirmation.xml -->
-    <string name="tv_dialog_confirmation_title_save_and_finish">@string/btn_finish_save</string>
-    <string name="tv_dialog_confirmation_question_save_and_finish">
-        Are you sure that you want to finish tracking and save registers?
-    </string>
-    <string name="tv_dialog_confirmation_toast_text_save_and_finish">Flight tracking saved</string>
+        <!-- dialog_confirmation.xml -->
+        <string name="tv_dialog_confirmation_title_save_and_finish">@string/btn_finish_save</string>
+        <string name="tv_dialog_confirmation_question_save_and_finish">
+            Are you sure that you want to finish tracking and save registers?
+        </string>
+        <string name="tv_dialog_confirmation_toast_text_save_and_finish">Flight tracking saved</string>
 
-    <string name="tv_dialog_confirmation_title_cancel_tracking">@string/btn_cancel</string>
-    <string name="tv_dialog_confirmation_question_cancel_tracking">
-        Are you sure that you want to finish tracking and save registers?
-    </string>
-    <string name="tv_dialog_confirmation_toast_text_cancel_tracking">Flight tracking cancelled</string>
+        <string name="tv_dialog_confirmation_title_cancel_tracking">@string/btn_cancel</string>
+        <string name="tv_dialog_confirmation_question_cancel_tracking">
+            Are you sure that you want to cancel tracking and not save registers?
+        </string>
+        <string name="tv_dialog_confirmation_toast_text_cancel_tracking">Flight tracking cancelled</string>
 
-    <!-- dialog_record_flight.xml -->
-    <string name="tv_dialog_record_flight_title">Record flight</string>
-    <string name="tv_dialog_record_flight_flight_name">Flight name</string>
-    <string name="et_dialog_record_flight_flight_name">Introduce flight name</string>
-    <string name="tv_dialog_record_flight_update_settings">Location updates settings</string>
-    <string name="tv_dialog_record_flight_slow_mode">Slow mode</string>
-    <string name="et_dialog_record_flight_slow_mode">60 sec</string>
-    <string name="tv_dialog_record_flight_fast_mode">Fast mode</string>
-    <string name="et_dialog_record_flight_fast_mode">5 sec</string>
+        <!-- dialog_record_flight.xml -->
+        <string name="tv_dialog_record_flight_title">Record flight</string>
+        <string name="tv_dialog_record_flight_flight_name">Flight name</string>
+        <string name="et_dialog_record_flight_flight_name">Introduce flight name</string>
+        <string name="tv_dialog_record_flight_update_settings">Update time</string>
+        <string name="tv_dialog_record_flight_slow_mode">Slow mode</string>
+        <string name="et_dialog_record_flight_slow_mode">60 sec</string>
+        <string name="tv_dialog_record_flight_fast_mode">Fast mode</string>
+        <string name="et_dialog_record_flight_fast_mode">5 sec</string>
+
+        <!-- dialog_tracking_action.xml -->
+        <string name="dialog_tracking_action_label_title">Choose an option</string>
+        <string name="dialog_tracking_action_btn_finish">Save tracking</string>
+        <string name="dialog_tracking_action_btn_cancel">Cancel tracking</string>
+        <string name="dialog_tracking_action_btn_exit">Exit dialog</string>
+
+        <!-- dialog_tracking_config.xml -->
+        <string name="dialog_tracking_config_label_title">Tracking config</string>
+        <string name="dialog_tracking_config_label_update_time">Update Time</string>
+        <string name="dialog_tracking_config_number_update_time">1</string>
+        <string name="dialog_tracking_config_rb_minutes">Min</string>
+        <string name="dialog_tracking_config_rb_seconds">Sec</string>
 
     <!--  Mapsforge  -->
     <string name="copyright_osm">Map data © OpenStreetMap contributors</string>
+
+    <!--  Java  -->
+        <!-- MainActivity.java -->
+        <!-- Toast warnings -->
+        <string name="location_permissions_granted">Location permissions successfully granted</string>
+        <string name="location_permissions_not_granted">This app requires permissions to work</string>
+        <string name="location_not_activated_toast">The location services are not activated</string>
+        <string name="location_updated">Location was updated</string>
+        <string name="file_save_successfully">File saved successfully</string>
+
+        <!-- UI Label Warnings -->
+        <string name="location_permissions_not_available">Location permissions not available</string>
+        <string name="location_not_enabled_label">Location not activated</string>
+        <string name="not_tracking_location">Not tracking location</string>
+        <string name="not_tracking_location_2">Location is NOT being tracked</string>
+        <string name="location_is_null">Location null</string>
+        <string name="not_available_message">Not available</string>
+
+
+        <!--  Dialogs.java  -->
+        <string name="dialogs_record_flight">Record flight</string>
+        <string name="dialogs_word_continue">Continue</string>
+        <string name="dialogs_word_yes">Yes</string>
+        <string name="dialogs_word_accept">Accept</string>
+        <string name="dialogs_word_cancel">Cancel</string>
+
+        <!--  FileFormat.java  -->
+        <string name="file_flight_name">Cancel</string>
+        <string name="file_max_value">Cancel</string>
+        <string name="file_min_value">Cancel</string>
+        <string name="file_info">Cancel</string>
+        <string name="file_timestamp">Cancel</string>
+        <string name="file_tracking">Cancel</string>
+        <string name="file_latitude">Cancel</string>
+        <string name="file_longitude">Cancel</string>
+        <string name="file_altitude">Cancel</string>
+        <string name="file_accuracy">Cancel</string>
+        <string name="file_speed">Cancel</string>
 
 </resources>
