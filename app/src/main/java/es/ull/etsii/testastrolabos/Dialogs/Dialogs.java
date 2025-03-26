@@ -24,12 +24,12 @@ public class Dialogs {
         final EditText minUpdateEditText = dialogView.findViewById(R.id.et_dialog_record_flight_slow_mode);
         final EditText maxUpdateEditText = dialogView.findViewById(R.id.et_dialog_record_flight_fast_mode);
 
-        title.setText("Record flight");
+        title.setText(R.string.dialogs_record_flight);
 
         minUpdateEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
         maxUpdateEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        builder.setPositiveButton("Continuar", (dialog, which) -> {
+        builder.setPositiveButton(R.string.dialogs_word_continue, (dialog, which) -> {
             String flightName = flightNameEditText.getText().toString();
 
             if (flightName.isEmpty()) {
@@ -54,7 +54,7 @@ public class Dialogs {
             action.accept(data);
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> action.cancel(null));
+        builder.setNegativeButton(R.string.dialogs_word_cancel, (dialog, which) -> action.cancel(null));
 
         builder.create().show();
     }
@@ -72,9 +72,9 @@ public class Dialogs {
         titleTextView.setText(title);
         messageTextView.setText(message);
 
-        builder.setPositiveButton("Yes", (dialog, which) -> action.accept(null));
+        builder.setPositiveButton(R.string.dialogs_word_yes, (dialog, which) -> action.accept(null));
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> action.cancel(null));
+        builder.setNegativeButton(R.string.dialogs_word_cancel, (dialog, which) -> action.cancel(null));
 
         builder.create().show();
     }
@@ -91,7 +91,7 @@ public class Dialogs {
         titleTextView.setText(title);
         messageTextView.setText(message);
 
-        builder.setPositiveButton("Accept", (dialog, which) -> action.accept(null));
+        builder.setPositiveButton(R.string.dialogs_word_accept, (dialog, which) -> action.accept(null));
 
         builder.create().show();
     }

@@ -167,17 +167,14 @@ public class MainActivity extends AppCompatActivity {
             if (flightTrackManager.getState() == TrackingManager.State.NOT_TRACKING) {
                 flightTrackManager.startTracking();
                 return;
-            } else {
-                //TODO: Launch config dialog
-                flightTrackManager.showTrackingSettings();
             }
+            flightTrackManager.showTrackingSettings();
         });
 
         btn_startTracking.setOnLongClickListener(v -> {
             if (flightTrackManager.getState() != TrackingManager.State.TRACKING) {
                 return true;
             }
-            // TODO: Launch action dialog
             TrackingActionDialog actionDialog = new TrackingActionDialog(flightTrackManager);
             actionDialog.show(getSupportFragmentManager(), "MiDialogo");
             return true;
@@ -219,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PermissionUtils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getData() != null) {
                 Uri uri = data.getData();
-                FileUtils.writeFileContent(this, uri, "Contenido del archivo");
+                FileUtils.writeFileContent(this, uri, getString(R.string.file_save_successfully));
                 Toast.makeText(this, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
             }
         }

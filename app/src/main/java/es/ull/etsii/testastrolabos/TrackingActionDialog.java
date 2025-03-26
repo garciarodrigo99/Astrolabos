@@ -22,25 +22,28 @@ public class TrackingActionDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_tracking_action, null);
 
-        // Obtener botones
+        // Create buttons
         Button btn1 = view.findViewById(R.id.dialog_tracking_action_btn_exit);
         Button btn2 = view.findViewById(R.id.dialog_tracking_action_btn_finish);
         Button btn3 = view.findViewById(R.id.dialog_tracking_action_btn_cancel);
 
-        // Configurar botones
+        // Set slots
         btn1.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.dialog_tracking_action_btn_exit,
+                    Toast.LENGTH_SHORT).show();
             dismiss();
         });
 
         btn2.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Finish and save", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.dialog_tracking_action_btn_finish,
+                    Toast.LENGTH_SHORT).show();
             trackingManager_.finishAndSave();
             dismiss();
         });
 
         btn3.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Cancel tracking", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.dialog_tracking_action_btn_cancel,
+                    Toast.LENGTH_SHORT).show();
             trackingManager_.cancel();
             dismiss();
         });

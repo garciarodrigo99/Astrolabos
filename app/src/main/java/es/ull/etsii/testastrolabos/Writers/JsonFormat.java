@@ -13,8 +13,6 @@ public class JsonFormat extends FileFormat {
     public static final String FORMAT_TYPE = ".json";
     private JsonObject jsonObject;
     private JsonObject infoObject;
-    private final Double DEFAULT_VALUE = 0.0;
-    private Boolean acceptUpdates = true;
     public JsonFormat(TrackSettings trackSettings) {
         super(trackSettings,FORMAT_TYPE);
         // Crear el objeto JSON principal
@@ -32,9 +30,9 @@ public class JsonFormat extends FileFormat {
 
     @Override
     public void addContent(String timeStamp, Location location) {
-        if (!acceptUpdates){
+        if (!acceptUpdates)
             return;
-        }
+
         // Crear un nuevo objeto JSON para el nuevo registro de seguimiento
         JsonObject newTrackingObject = new JsonObject();
         newTrackingObject.addProperty("timestamp", timeStamp);

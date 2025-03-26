@@ -8,6 +8,7 @@ public abstract class FileFormat {
     protected TrackSettings info;
     protected Boolean acceptUpdates;
     protected final String formatType;
+    protected final Double DEFAULT_VALUE = 0.0;
     public FileFormat(TrackSettings info, String formatType) {
         this.info = info;
         this.acceptUpdates = true;
@@ -15,10 +16,10 @@ public abstract class FileFormat {
     }
     public abstract void addContent(String timeStamp,
                                     Location location);
-    public void stopUpdates() {
+    final public void stopUpdates() {
         this.acceptUpdates = false;
     }
-    public boolean isUpdatesAvailable() {
+    final public boolean isUpdatesAvailable() {
         return this.acceptUpdates;
     }
 
