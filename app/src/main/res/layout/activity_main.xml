@@ -11,39 +11,8 @@
 >
 
     <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/sw_location_updates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sw_locations_updates"
-            android:textOn="@string/sw_locations_updates_textOn"
-            android:textOff="@string/sw_locations_updates_textOff"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:checked="false"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0.003"/>
-    <TextView
-            android:id="@+id/tv_label_updates"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_label_updates"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sw_location_updates"/>
-
-    <TextView
-            android:id="@+id/tv_updates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sw_locations_updates_textOff"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_updates"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_updates"/>
-
-    <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_gps"
-            android:layout_width="@+id/tv_updates"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/sw_gps"
@@ -51,9 +20,9 @@
             android:textOff="@string/sw_gps_textOff"
             android:layout_marginStart="10dp"
             android:enabled="false"
-            app:layout_constraintEnd_toEndOf="@+id/sw_location_updates"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_updates"
+            app:layout_constraintTop_toTopOf="parent"
             android:checked="true"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
@@ -105,23 +74,23 @@
 
     <ImageButton
             android:id="@+id/ib_toggle_gps_info_panel"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/round_button"
-            android:contentDescription="@+id/ib_toggle_gps_info_panel_description"
+            android:contentDescription="@string/ib_toggle_gps_info_panel_description"
             android:drawableTop="@drawable/round_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/satellite"
+            android:src="@drawable/data_exploration"
             app:tint="@color/round_button_gray"
     />
 
     <!-- TODO: refactor to image button -->
     <Button
             android:id="@+id/btn_start_tracking"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/round_button"
             android:drawableTop="@drawable/round_button"
             android:text="@string/ib_start_tracking_description"
@@ -129,5 +98,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageButton
+            android:id="@+id/ib_location_update_settings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_button"
+            android:contentDescription="@string/ib_location_update_settings_description"
+            android:drawableTop="@drawable/round_button"
+            app:layout_constraintStart_toStartOf="@+id/btn_start_tracking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_tracking"
+            android:layout_marginVertical="25dp"
+            android:src="@drawable/location_off"
+            app:tint="@color/round_button_gray"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

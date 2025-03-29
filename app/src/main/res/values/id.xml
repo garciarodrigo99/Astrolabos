@@ -4,7 +4,6 @@
         <!-- activity_main.xml -->
         <item name="sw_location_updates" type="id"/>
         <item name="tv_label_updates" type="id"/>
-        <item name="tv_updates" type="id"/>
         <item name="sw_gps" type="id"/>
         <item name="tv_label_sensor" type="id"/>
         <item name="tv_sensor" type="id"/>
@@ -13,9 +12,8 @@
         <item name="fl_map" type="id"/>
         <item name="ll_gps_info_panel" type="id"/>
         <item name="ib_toggle_gps_info_panel" type="id"/>
-        <item name="ib_toggle_gps_info_panel_description" type="id"/>
         <item name="btn_start_tracking" type="id"/>
-        <item name="ib_start_tracking_description" type="id"/>
+        <item name="ib_location_update_settings" type="id"/>
 
         <!-- recording_tracking_screen.xml -->
         <item name="recording_tracking_screen" type="id"/>

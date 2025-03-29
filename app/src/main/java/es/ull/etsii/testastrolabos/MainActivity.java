@@ -44,12 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private static final int SELECT_MAP_FILE = 0;
     private boolean isGPSInfoPanelVisible = false;
+    private boolean isLocationUpdateEnabled = false;
 
     // activity_main
-    TextView tv_sensor, tv_updates;
-    SwitchCompat sw_location_updates, sw_gps;
+    TextView tv_sensor;
+    SwitchCompat sw_gps;
     Button  btn_startTracking;
-    ImageButton ib_toggle_GPSInfoPanel;
+    ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings;
 
     AstrolabosLocationManager mLocationManager;
 
@@ -70,11 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Matching attributes with activity_main.xml
         tv_sensor = findViewById(R.id.tv_sensor);
-        tv_updates = findViewById(R.id.tv_updates);
-        sw_location_updates = findViewById(R.id.sw_location_updates);
         sw_gps = findViewById(R.id.sw_gps);
         ib_toggle_GPSInfoPanel = findViewById(R.id.ib_toggle_gps_info_panel);
         btn_startTracking = findViewById(R.id.btn_start_tracking);
+        ib_location_updates_settings = findViewById(R.id.ib_location_update_settings);
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         flightTrackManager = new TrackingManager(this);
@@ -107,20 +107,18 @@ public class MainActivity extends AppCompatActivity {
 
         mLocationManager = AstrolabosLocationManager.getInstance(this);
 
-        // Switches listeners
-        sw_location_updates.setOnClickListener(v -> {
-            boolean thisSwitchIsChecked = sw_location_updates.isChecked();
-            sw_gps.setEnabled(thisSwitchIsChecked);
-            if (thisSwitchIsChecked){
-                UIWriter.whenEnableSwitch(sw_gps,tv_sensor);
-                tv_updates.setText(sw_location_updates.getTextOn());
-                mLocationManager.startLocationUpdates();
-                updateLocation();
-            } else {
-                mLocationManager.stopLocationUpdates();
-                UIWriter.notTrackingLocation(this);
-            }
-        });
+//        // Switches listeners
+//        sw_location_updates.setOnClickListener(v -> {
+//            boolean thisSwitchIsChecked = sw_location_updates.isChecked();
+//            sw_gps.setEnabled(thisSwitchIsChecked);
+//            if (thisSwitchIsChecked){
+//                UIWriter.whenEnableSwitch(sw_gps,tv_sensor);
+//                tv_updates.setText(sw_location_updates.getTextOn());
+//                startLocationUpdates();
+//            } else {
+//                stopLocationUpdates();
+//            }
+//        });
 
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()){
@@ -157,6 +155,29 @@ public class MainActivity extends AppCompatActivity {
             actionDialog.show(getSupportFragmentManager(), "MiDialogo");
             return true;
         });
+
+        ib_location_updates_settings.setOnClickListener(v -> {
+            isLocationUpdateEnabled = !isLocationUpdateEnabled;
+            if (isLocationUpdateEnabled){
+                ib_location_updates_settings.setImageResource(R.drawable.location_on);
+                startLocationUpdates();
+            } else {
+                ib_location_updates_settings.setImageResource(R.drawable.location_off);
+                stopLocationUpdates();
+            }
+        });
+
+        ib_location_updates_settings.setOnLongClickListener(v -> {
+            if (flightTrackManager.getState() != TrackingManager.State.TRACKING) {
+                return true;
+            }
+            TrackingActionDialog actionDialog = new TrackingActionDialog(flightTrackManager);
+            actionDialog.show(getSupportFragmentManager(), "MiDialogo");
+            return true;
+        });
+
+        //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
+        updateGPS();
     }
 
     // Function to handle when certain permissions are granted or not
