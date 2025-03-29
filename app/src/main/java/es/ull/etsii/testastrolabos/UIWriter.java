@@ -13,31 +13,26 @@ public class UIWriter {
     public static void locationPermissionNotGranted(MainActivity activity){
         String warning = activity.getString(R.string.location_permissions_not_available);
         setWarningTextUIValues(activity,warning);
-        activity.sw_location_updates.setEnabled(false);
-        activity.tv_updates.setText(warning);
+        activity.ib_location_updates_settings.setEnabled(false);
         activity.sw_gps.setEnabled(false);
         activity.tv_sensor.setText(warning);
     }
     public static void locationNotEnabled(MainActivity activity){
         String warning = activity.getString(R.string.location_not_enabled_label);
         setWarningTextUIValues(activity,warning);
-        activity.sw_location_updates.setEnabled(false);
-        activity.tv_updates.setText(warning);
+        activity.ib_location_updates_settings.setEnabled(false);
         activity.sw_gps.setEnabled(false);
         activity.tv_sensor.setText(warning);
     }
     public static void notTrackingLocation(MainActivity activity){
         String warning = activity.getString(R.string.not_tracking_location);
         setWarningTextUIValues(activity,warning);
-        activity.tv_updates.setText(activity.getString(R.string.not_tracking_location_2));
         activity.sw_gps.setEnabled(false);
         activity.tv_sensor.setText(warning);
     }
     public static void locationNull(MainActivity activity){
         String warning = activity.getString(R.string.location_is_null);
         setWarningTextUIValues(activity,warning);
-        // TODO: Check if above whenEnableSwitch calls really do something
-        whenEnableSwitch(activity.sw_location_updates,activity.tv_updates);
         whenEnableSwitch(activity.sw_gps,activity.tv_sensor);
     }
     public static void writeLocation(MainActivity activity, Location location){
@@ -104,8 +99,4 @@ public class UIWriter {
         }
         return toReturn;
     }
-
-/*    private static Float convertMPStoKMH(){
-
-    }*/
 }

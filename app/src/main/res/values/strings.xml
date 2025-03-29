@@ -19,6 +19,7 @@
         <string name="tv_label_sensor">Sensor:</string>
         <string name="ib_toggle_gps_info_panel_description">GPS Info</string>
         <string name="ib_start_tracking_description">Start Tracking || Tracking config/action</string>
+        <string name="ib_location_update_settings_description">Location update setting</string>
 
         <!-- flight_track_screen.xml -->
         <!-- start_tracking_screen -->
