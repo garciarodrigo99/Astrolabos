@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PermissionUtils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getData() != null) {
                 Uri uri = data.getData();
-                FileUtils.writeFileContent(this, uri, getString(R.string.file_save_successfully));
+                FileUtils.writeFileContent(this, uri, flightTrackManager.fileFormat.toString());
                 Toast.makeText(this, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
             }
         }
