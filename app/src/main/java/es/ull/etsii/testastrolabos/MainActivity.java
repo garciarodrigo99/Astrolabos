@@ -107,19 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
         mLocationManager = AstrolabosLocationManager.getInstance(this);
 
-//        // Switches listeners
-//        sw_location_updates.setOnClickListener(v -> {
-//            boolean thisSwitchIsChecked = sw_location_updates.isChecked();
-//            sw_gps.setEnabled(thisSwitchIsChecked);
-//            if (thisSwitchIsChecked){
-//                UIWriter.whenEnableSwitch(sw_gps,tv_sensor);
-//                tv_updates.setText(sw_location_updates.getTextOn());
-//                startLocationUpdates();
-//            } else {
-//                stopLocationUpdates();
-//            }
-//        });
-
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()){
                 mLocationManager.setFastUpdateLocationRequest();
@@ -160,10 +147,12 @@ public class MainActivity extends AppCompatActivity {
             isLocationUpdateEnabled = !isLocationUpdateEnabled;
             if (isLocationUpdateEnabled){
                 ib_location_updates_settings.setImageResource(R.drawable.location_on);
-                startLocationUpdates();
+                mLocationManager.startLocationUpdates();
+                updateLocation();
             } else {
                 ib_location_updates_settings.setImageResource(R.drawable.location_off);
-                stopLocationUpdates();
+                mLocationManager.stopLocationUpdates();
+                UIWriter.notTrackingLocation(this);
             }
         });
 
@@ -175,9 +164,6 @@ public class MainActivity extends AppCompatActivity {
             actionDialog.show(getSupportFragmentManager(), "MiDialogo");
             return true;
         });
-
-        //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
-        updateGPS();
     }
 
     // Function to handle when certain permissions are granted or not
