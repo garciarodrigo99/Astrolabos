@@ -22,7 +22,6 @@ import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
-
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.datastore.MapDataStore;
@@ -34,6 +33,8 @@ import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,12 +51,7 @@ public class MainActivity extends AppCompatActivity {
     Button  btn_startTracking;
     ImageButton ib_toggle_GPSInfoPanel;
 
-    // Location request for location settings
-    LocationRequest appLocationRequest;
-    LocationCallback locationCallBack;
-
-    // Class to use location info
-    FusedLocationProviderClient fusedLocationProviderClient;
+    AstrolabosLocationManager mLocationManager;
 
     FrameLayout fl_map;
     LinearLayout ll_gps_info_panel;
@@ -107,29 +103,9 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("MapView is null");
         }
 
+        checkPermissions();
 
-        /* As LocationRequest method setPriority is deprecated outside the constructor/builder,
-        * two objects are created in this method to having them available to switch between each other
-        * in sw_gps.setOnClickListener method.*/
-        // Set properties of high accuracy request
-        LocationRequest highAccuracyLR = LocationAF.getFastUpdateLocationRequest();
-
-        // Set properties of power balance request
-        LocationRequest powerBalanceLR = LocationAF.getPowerBalanceLocationRequest();
-
-        // By default, the object would be initialized with high accuracy
-        appLocationRequest = highAccuracyLR;
-
-        // event that is trigger each interval is met to know the location
-        locationCallBack = new LocationCallback() {
-            // At this point location permissions are granted and location services activated
-            @Override
-            public void onLocationResult(@NonNull @NotNull LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                // save location
-                locationObtainedHandler(locationResult.getLastLocation());
-            }
-        };
+        mLocationManager = AstrolabosLocationManager.getInstance(this);
 
         // Switches listeners
         sw_location_updates.setOnClickListener(v -> {
@@ -138,18 +114,20 @@ public class MainActivity extends AppCompatActivity {
             if (thisSwitchIsChecked){
                 UIWriter.whenEnableSwitch(sw_gps,tv_sensor);
                 tv_updates.setText(sw_location_updates.getTextOn());
-                startLocationUpdates();
+                mLocationManager.startLocationUpdates();
+                updateLocation();
             } else {
-                stopLocationUpdates();
+                mLocationManager.stopLocationUpdates();
+                UIWriter.notTrackingLocation(this);
             }
         });
 
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()){
-                appLocationRequest = highAccuracyLR;
+                mLocationManager.setFastUpdateLocationRequest();
                 tv_sensor.setText(sw_gps.getTextOn());
             } else {
-                appLocationRequest = powerBalanceLR;
+                mLocationManager.setPowerBalanceLocationRequest();
                 tv_sensor.setText(sw_gps.getTextOff());
             }
         });
@@ -179,9 +157,6 @@ public class MainActivity extends AppCompatActivity {
             actionDialog.show(getSupportFragmentManager(), "MiDialogo");
             return true;
         });
-
-        //TODO: Resolve bug: why the application fails if updateGPS is not called onCreate method.
-        updateGPS();
     }
 
     // Function to handle when certain permissions are granted or not
@@ -196,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                             getString(R.string.location_permissions_granted),
                             Toast.LENGTH_SHORT).
                             show();
-                    updateGPS();
+                    updateLocation();
                     //checkLocationEnabled();
                 }
                 else {
@@ -213,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // TODO: refactor to switch
         if (requestCode == PermissionUtils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getData() != null) {
                 Uri uri = data.getData();
@@ -228,6 +204,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateLocation(){
+        Log.d("MainActivity", "updateLocation");
+        if(!checkPermissions()) return;
+        mLocationManager.getLastKnownLocation();
+    }
+
     /**
      * @return true if the location service is activated.
      * false if the location service is NOT activated.
@@ -237,37 +219,7 @@ public class MainActivity extends AppCompatActivity {
         return ((locationManager != null) && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)));
     }
 
-    /**
-     * Method that activate the trigger function locationCallBack with the LocationRequest settings
-     * @see  com.google.android.gms.location.LocationCallback
-     */
-    private void startLocationUpdates() {
-        tv_updates.setText(getString(R.string.sw_locations_updates_textOn));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationProviderClient.requestLocationUpdates(appLocationRequest, locationCallBack, null);
-        updateGPS();
-    }
-
-    /**
-     * Method that stop the trigger function locationCallBack
-     * @see  com.google.android.gms.location.LocationCallback
-     */
-    private void stopLocationUpdates() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallBack);
-        UIWriter.notTrackingLocation(MainActivity.this);
-    }
-
-    private void updateGPS(){
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+    private boolean checkPermissions() {
         // Permissions are not granted
         //TODO: Request for permissions
         if (!(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
@@ -275,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
             }
-            return;
+            return false;
         }
         // The location is not enabled
         //TODO: create a function that guides the user to activate location
@@ -285,36 +237,32 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).
                     show();
             UIWriter.locationNotEnabled(MainActivity.this);
-            return;
+            return false;
         }
-        // Location permissions is granted and location is enabled.
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
-            // We got permissions. Put the values in the GUI
-            Toast.makeText(MainActivity.this,
-                    getString(R.string.location_updated),
-                    Toast.LENGTH_SHORT).
-                    show();
+        return true;
+    }
 
-              locationObtainedHandler(location);
-        });
+    //TODO: move to future permissions manager class
+    public boolean hasLocationPermissions(){
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
 
     /**
      * Method to aisle the cases when location is obtained.
      * It could be null or valid values
      */
-    private void locationObtainedHandler(Location location){
-        // Write location values
+    public void writeLocation(Location location){
         //TODO:Implementar método observador
         UIWriter.writeLocation(MainActivity.this,location);
-        if (flightTrackManager.fileFormat != null) {
-            Date date = new Date();
+        if (flightTrackManager.fileFormat == null) return;
 
-            // Formatear la fecha y hora en el formato deseado
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            String timestamp = sdf.format(date);
-            flightTrackManager.fileFormat.addContent(timestamp,location);
-        }
+        Date date = new Date();
+
+        // Formatear la fecha y hora en el formato deseado
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String timestamp = sdf.format(date);
+        flightTrackManager.fileFormat.addContent(timestamp,location);
     }
     private void openMap(Uri uri) {
         try {

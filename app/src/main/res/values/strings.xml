@@ -69,6 +69,13 @@
         <string name="dialog_tracking_config_rb_minutes">Min</string>
         <string name="dialog_tracking_config_rb_seconds">Sec</string>
 
+        <!-- dialog_updates_config.xml -->
+        <string name="dialog_updates_config_label_title">Updates config</string>
+        <string name="dialog_updates_config_label_update_time">Update Time</string>
+        <string name="dialog_updates_config_sw_sensor_description">SavePower/GPS</string>
+        <string name="dialog_updates_config_sw_sensor_textOn">Using GPS sensors</string>
+        <string name="dialog_updates_config_sw_sensor_textOff">Using Cell Towers + Wifi</string>
+
     <!--  Mapsforge  -->
     <string name="copyright_osm">Map data © OpenStreetMap contributors</string>
 
