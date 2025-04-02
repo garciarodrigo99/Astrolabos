@@ -36,12 +36,18 @@ public class LocationUpdatesSettingsDialog extends DialogFragment {
         // Set slots
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()){
-//                appLocationRequest = highAccuracyLR;
                 sw_gps.setText(sw_gps.getTextOn());
             } else {
-//                appLocationRequest = powerBalanceLR;
                 sw_gps.setText(sw_gps.getTextOff());
             }
+        });
+
+        builder.setPositiveButton("Guardar",(dialog, which) -> {
+            // TODO: update time and sensor
+            //mLocationManager.setFastUpdateLocationRequest();
+            //mLocationManager.setPowerBalanceLocationRequest();
+        });
+        builder.setNegativeButton("Cancelar",(dialog, which) -> {
         });
 
         builder.setView(view);

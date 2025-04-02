@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.*;
+import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
@@ -47,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLocationUpdateEnabled = false;
 
     // activity_main
-    TextView tv_sensor;
-    SwitchCompat sw_gps;
     Button  btn_startTracking;
     ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings;
 
@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         AndroidGraphicFactory.createInstance(getApplication());
 
         // Matching attributes with activity_main.xml
-        tv_sensor = findViewById(R.id.tv_sensor);
-        sw_gps = findViewById(R.id.sw_gps);
         ib_toggle_GPSInfoPanel = findViewById(R.id.ib_toggle_gps_info_panel);
         btn_startTracking = findViewById(R.id.btn_start_tracking);
         ib_location_updates_settings = findViewById(R.id.ib_location_update_settings);
@@ -106,16 +104,6 @@ public class MainActivity extends AppCompatActivity {
         checkPermissions();
 
         mLocationManager = AstrolabosLocationManager.getInstance(this);
-
-        sw_gps.setOnClickListener(v -> {
-            if (sw_gps.isChecked()){
-                mLocationManager.setFastUpdateLocationRequest();
-                tv_sensor.setText(sw_gps.getTextOn());
-            } else {
-                mLocationManager.setPowerBalanceLocationRequest();
-                tv_sensor.setText(sw_gps.getTextOff());
-            }
-        });
 
         ib_toggle_GPSInfoPanel.setOnClickListener(v -> {
             if (isGPSInfoPanelVisible) {
@@ -157,12 +145,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ib_location_updates_settings.setOnLongClickListener(v -> {
-            if (flightTrackManager.getState() != TrackingManager.State.TRACKING) {
+            if (!isLocationUpdateEnabled) {
                 return true;
             }
-            TrackingActionDialog actionDialog = new TrackingActionDialog(flightTrackManager);
-            actionDialog.show(getSupportFragmentManager(), "MiDialogo");
+            LocationUpdatesSettingsDialog dialog = new LocationUpdatesSettingsDialog(this);
+            dialog.show(getSupportFragmentManager(), "MiDialogo");
             return true;
+
         });
     }
 

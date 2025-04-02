@@ -14,26 +14,19 @@ public class UIWriter {
         String warning = activity.getString(R.string.location_permissions_not_available);
         setWarningTextUIValues(activity,warning);
         activity.ib_location_updates_settings.setEnabled(false);
-        activity.sw_gps.setEnabled(false);
-        activity.tv_sensor.setText(warning);
     }
     public static void locationNotEnabled(MainActivity activity){
         String warning = activity.getString(R.string.location_not_enabled_label);
         setWarningTextUIValues(activity,warning);
         activity.ib_location_updates_settings.setEnabled(false);
-        activity.sw_gps.setEnabled(false);
-        activity.tv_sensor.setText(warning);
     }
     public static void notTrackingLocation(MainActivity activity){
         String warning = activity.getString(R.string.not_tracking_location);
         setWarningTextUIValues(activity,warning);
-        activity.sw_gps.setEnabled(false);
-        activity.tv_sensor.setText(warning);
     }
     public static void locationNull(MainActivity activity){
         String warning = activity.getString(R.string.location_is_null);
         setWarningTextUIValues(activity,warning);
-        whenEnableSwitch(activity.sw_gps,activity.tv_sensor);
     }
     public static void writeLocation(MainActivity activity, Location location){
         // If the GPS cannot set a valid location, the location value will be null.
