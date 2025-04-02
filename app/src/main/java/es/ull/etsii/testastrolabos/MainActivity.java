@@ -22,19 +22,26 @@ import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
+import org.mapsforge.core.graphics.Color;
+import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Style;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.datastore.MapDataStore;
+import org.mapsforge.map.layer.Layers;
 import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
 
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.util.Log;
 
@@ -302,6 +309,43 @@ public class MainActivity extends AppCompatActivity {
              */
             view_map.setCenter(new LatLong(28.272440, -16.642372));
             view_map.setZoomLevel((byte) 8);
+
+            LatLong simulatedPosition = new LatLong(30.675, -14.602);
+
+            Paint paintStroke = AndroidGraphicFactory.INSTANCE.createPaint();
+            paintStroke.setColor(Color.BLACK);
+            paintStroke.setStrokeWidth(5);
+            paintStroke.setStyle(Style.STROKE);
+            paintStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
+
+            // Crear la lista de coordenadas
+            List<LatLong> geoPoints = new ArrayList<>();
+            geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
+            geoPoints.add(new LatLong(28.1235, -15.4363)); // Las Palmas de Gran Canaria
+
+            // Crear la Polyline
+            Polyline polyline = new Polyline(paintStroke, AndroidGraphicFactory.INSTANCE);
+            polyline.setPoints(geoPoints);
+
+            // Agregar la línea a las capas del mapa
+            Layers layers = view_map.getLayerManager().getLayers();
+            layers.add(polyline);
+
+            Paint paintStroke2 = AndroidGraphicFactory.INSTANCE.createPaint();
+            paintStroke2.setColor(Color.RED);
+            paintStroke2.setStrokeWidth(4);
+            paintStroke2.setStyle(Style.STROKE);
+
+            // Crear la lista de coordenadas
+            List<LatLong> geoPoints2 = new ArrayList<>();
+            geoPoints2.add(new LatLong(28.1235, -15.4363)); // Las Palmas de Gran Canaria
+            geoPoints2.add(new LatLong(28.044444, -16.5725)); // TFS
+
+            // Crear la Polyline
+            Polyline polyline2 = new Polyline(paintStroke2, AndroidGraphicFactory.INSTANCE);
+            polyline2.setPoints(geoPoints2);
+            layers.add(polyline2);
+
         } catch (Exception e) {
             /*
              * In case of map file errors avoid crash, but developers should handle these cases!
