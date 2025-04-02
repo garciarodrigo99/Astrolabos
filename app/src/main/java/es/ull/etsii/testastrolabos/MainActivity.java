@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +25,7 @@ import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
@@ -32,6 +36,7 @@ import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.layer.Layers;
 import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.overlay.Marker;
 import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.reader.MapFile;
@@ -320,8 +325,8 @@ public class MainActivity extends AppCompatActivity {
 
             // Crear la lista de coordenadas
             List<LatLong> geoPoints = new ArrayList<>();
+            geoPoints.add(simulatedPosition);
             geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
-            geoPoints.add(new LatLong(28.1235, -15.4363)); // Las Palmas de Gran Canaria
 
             // Crear la Polyline
             Polyline polyline = new Polyline(paintStroke, AndroidGraphicFactory.INSTANCE);
@@ -338,13 +343,29 @@ public class MainActivity extends AppCompatActivity {
 
             // Crear la lista de coordenadas
             List<LatLong> geoPoints2 = new ArrayList<>();
-            geoPoints2.add(new LatLong(28.1235, -15.4363)); // Las Palmas de Gran Canaria
-            geoPoints2.add(new LatLong(28.044444, -16.5725)); // TFS
+            geoPoints2.add(new LatLong(40.472222, -3.560833)); // Las Palmas de Gran Canaria
+            geoPoints2.add(simulatedPosition); // TFS
 
             // Crear la Polyline
             Polyline polyline2 = new Polyline(paintStroke2, AndroidGraphicFactory.INSTANCE);
             polyline2.setPoints(geoPoints2);
             layers.add(polyline2);
+
+            // Cargar el icono desde los recursos con ContextCompat
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.airplane);
+
+            // Verificar que el drawable no sea nulo
+            if (drawable == null) {
+                return;
+            }
+
+            // Convertir el Drawable a Bitmap
+            Bitmap iconBitmap = AndroidGraphicFactory.convertToBitmap(drawable);
+            // Crear el marcador
+            Marker marker = new Marker(simulatedPosition, iconBitmap, 0, 0);
+
+            // Agregar el marcador al mapa
+            layers.add(marker);
 
         } catch (Exception e) {
             /*
