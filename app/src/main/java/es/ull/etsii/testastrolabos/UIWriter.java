@@ -5,6 +5,9 @@ import android.widget.TextView;
 import androidx.appcompat.widget.SwitchCompat;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Class that manage the actions to update the values of the UI
@@ -46,10 +49,19 @@ public class UIWriter {
             activity.gpsInfoPanel.setAltitude(activity.getString(R.string.not_available_message));
         }
         if (location.hasSpeed()){
-            activity.gpsInfoPanel.setSpeed(String.valueOf(location.getSpeed()));
+            activity.gpsInfoPanel.setSpeed(speedFormat(location.getSpeed()));
         } else {
             activity.gpsInfoPanel.setSpeed(activity.getString(R.string.not_available_message));
         }
+        if (location.hasBearing()){
+            activity.gpsInfoPanel.setBearing(String.valueOf(location.getBearing()));
+        } else {
+            activity.gpsInfoPanel.setBearing(activity.getString(R.string.not_available_message));
+        }
+        long timeInMillis = location.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String formattedTime = sdf.format(new Date(timeInMillis));
+        activity.gpsInfoPanel.setLastTime(formattedTime);
     }
 
     /**
@@ -78,18 +90,9 @@ public class UIWriter {
     private static String speedFormat(double speed){
         speed *= 3.6;
         Double formatedDouble = (double) speed;
-        DecimalFormat decimalFormat;
-        String toReturn;
-        if (speed < 10.0){
-            if (speed < 5.0){
-                decimalFormat = new DecimalFormat("#.##");
-            } else {
-                decimalFormat = new DecimalFormat("#.#");
-            }
-            toReturn = decimalFormat.format(formatedDouble);
-        } else {
-            toReturn = Integer.toString(formatedDouble.intValue());
+        if (speed >= 10.0){
+            return Integer.toString(formatedDouble.intValue());
         }
-        return toReturn;
+        return new DecimalFormat(speed < 5.0 ? "#.##" : "#.#").format(formatedDouble);
     }
 }

@@ -25,10 +25,7 @@ import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
-import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.graphics.Color;
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.graphics.*;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.core.model.LatLong;
@@ -61,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLocationUpdateEnabled = false;
 
     // activity_main
-    Button  btn_startTracking;
-    ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings;
+    //    Button  btn_startTracking;
+    ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings, ib_startTracking;
 
     AstrolabosLocationManager mLocationManager;
 
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Matching attributes with activity_main.xml
         ib_toggle_GPSInfoPanel = findViewById(R.id.ib_toggle_gps_info_panel);
-        btn_startTracking = findViewById(R.id.btn_start_tracking);
+        ib_startTracking = findViewById(R.id.ib_start_tracking);
         ib_location_updates_settings = findViewById(R.id.ib_location_update_settings);
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -126,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             isGPSInfoPanelVisible = !isGPSInfoPanelVisible;
         });
 
-        btn_startTracking.setOnClickListener(v -> {
+        ib_startTracking.setOnClickListener(v -> {
             if (flightTrackManager.getState() == TrackingManager.State.NOT_TRACKING) {
                 flightTrackManager.startTracking();
                 return;
@@ -134,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             flightTrackManager.showTrackingSettings();
         });
 
-        btn_startTracking.setOnLongClickListener(v -> {
+        ib_startTracking.setOnLongClickListener(v -> {
             if (flightTrackManager.getState() != TrackingManager.State.TRACKING) {
                 return true;
             }

@@ -9,6 +9,9 @@
         <string name="tv_label_altitude">Altitude:</string>
         <string name="tv_label_accuracy">Accuracy:</string>
         <string name="tv_label_speed">Speed:</string>
+        <string name="tv_label_bearing">Bearing:</string>
+        <string name="tv_label_last_time">Last time:</string>
+        <string name="tv_label_satellites">Pos/Sats:</string>
         <string name="tv_label_updates">Updates:</string>
         <string name="sw_locations_updates">Location Updates</string>
         <string name="sw_locations_updates_textOn">Location is being tracked</string>
@@ -23,7 +26,7 @@
 
         <!-- flight_track_screen.xml -->
         <!-- start_tracking_screen -->
-        <string name="btn_start_tracking">Start Tracking</string>
+        <string name="ib_start_tracking">Start Tracking</string>
 
         <!-- recording_tracking_screen -->
         <string name="sw_speed_mode_onTextOn">Mode: Fast</string>

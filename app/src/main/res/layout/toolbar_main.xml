@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryDark"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ib_location_update_settings"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/ib_location_update_settings_description"
+                android:src="@drawable/location_off"
+                android:background="@android:color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/ib_toggle_gps_info_panel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/data_exploration"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/ib_toggle_gps_info_panel_description" />
+
+            <ImageButton
+                android:id="@+id/ib_start_tracking"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/tracking"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/ib_start_tracking_description" />
+
+    </LinearLayout>
+</androidx.appcompat.widget.Toolbar>

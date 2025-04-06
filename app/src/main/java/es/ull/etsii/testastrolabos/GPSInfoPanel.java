@@ -1,7 +1,5 @@
 package es.ull.etsii.testastrolabos;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 
 import android.widget.TextView;
@@ -9,36 +7,50 @@ import android.widget.TextView;
 public class GPSInfoPanel {
     private final View view_;
 
-    private TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed;
+    private TextView mLatitudeTv, mLongitudeTv, mAltitudeTv, mAccuracyTv, mSpeedTv, mBearingTv, mSatelliteTv, mLastTimeTv;
 
     public GPSInfoPanel(MainActivity activity) {
         this.view_ = activity.ll_gps_info_panel;
 
-        tv_lat = this.view_.findViewById(R.id.tv_lat);
-        tv_lon = this.view_.findViewById(R.id.tv_lon);
-        tv_altitude = this.view_.findViewById(R.id.tv_altitude);
-        tv_accuracy = this.view_.findViewById(R.id.tv_accuracy);
-        tv_speed = this.view_.findViewById(R.id.tv_speed);
+        mLatitudeTv = this.view_.findViewById(R.id.tv_lat);
+        mLongitudeTv = this.view_.findViewById(R.id.tv_lon);
+        mAltitudeTv = this.view_.findViewById(R.id.tv_altitude);
+        mAccuracyTv = this.view_.findViewById(R.id.tv_accuracy);
+        mSpeedTv = this.view_.findViewById(R.id.tv_speed);
+        mBearingTv = this.view_.findViewById(R.id.tv_bearing);
+        mSatelliteTv = this.view_.findViewById(R.id.tv_satellites);
+        mLastTimeTv = this.view_.findViewById(R.id.tv_last_time);
     }
 
     public void setLatitude(String latitude) {
-        this.tv_lat.setText(latitude);
+        this.mLatitudeTv.setText(latitude);
     }
 
     public void setLongitude(String longitude) {
-        this.tv_lon.setText(longitude);
+        this.mLongitudeTv.setText(longitude);
     }
 
     public void setAltitude(String altitude) {
-        this.tv_altitude.setText(altitude);
+        this.mAltitudeTv.setText(altitude);
     }
 
     public void setAccuracy(String accuracy) {
-        this.tv_accuracy.setText(accuracy);
+        this.mAccuracyTv.setText(accuracy);
     }
 
     public void setSpeed(String speed) {
-        this.tv_speed.setText(speed);
+        this.mSpeedTv.setText(speed);
+    }
+
+    public void setBearing(String bearing) {
+        this.mBearingTv.setText(bearing);
+    }
+
+    public void setSatellite(String satellites) {
+        this.mSatelliteTv.setText(satellites);
+    }
+    public void setLastTime(String lastTime) {
+        this.mLastTimeTv.setText(lastTime);
     }
 }
 

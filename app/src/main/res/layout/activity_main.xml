@@ -10,13 +10,42 @@
         tools:layout_editor_absoluteX="-133dp"
 >
 
-    <FrameLayout
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?attr/colorPrimaryDark"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+<!--            xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+<!--        <ImageButton-->
+<!--                android:id="@+id/toolbar_ib_1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@android:drawable/ic_menu_search"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:contentDescription="Buscar" />-->
+
+<!--        <ImageButton-->
+<!--                android:id="@+id/toolbar_ib_2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@android:drawable/ic_menu_preferences"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:contentDescription="Configuración" />-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+    <!-- Incluir toolbar personalizada -->
+    <include
+            layout="@layout/toolbar_main"
             android:layout_width="match_parent"
-            android:id="@+id/fl_map"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="0dp">
-    </FrameLayout>
+            android:layout_alignParentBottom="true"
+    />
 
     <include
             android:id="@+id/ll_gps_info_panel"
@@ -25,50 +54,59 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ib_toggle_gps_info_panel"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar"
             android:layout_alignParentBottom="true"
     />
 
-    <ImageButton
-            android:id="@+id/ib_toggle_gps_info_panel"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/round_button"
-            android:contentDescription="@string/ib_toggle_gps_info_panel_description"
-            android:drawableTop="@drawable/round_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/data_exploration"
-            app:tint="@color/round_button_gray"
-    />
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:id="@+id/fl_map"
+            app:layout_constraintBottom_toTopOf="@+id/ll_gps_info_panel"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp">
+    </FrameLayout>
+
 
     <!-- TODO: refactor to image button -->
-    <Button
-            android:id="@+id/btn_start_tracking"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/round_button"
-            android:drawableTop="@drawable/round_button"
-            android:text="@string/ib_start_tracking_description"
-            android:textSize="11sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+<!--    <ImageButton-->
+<!--            android:id="@+id/ib_start_tracking"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/round_button"-->
+<!--            android:drawableTop="@drawable/round_button"-->
+<!--            android:contentDescription="@string/ib_start_tracking_description"-->
+<!--            android:textSize="11sp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-    <ImageButton
-            android:id="@+id/ib_location_update_settings"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/round_button"
-            android:contentDescription="@string/ib_location_update_settings_description"
-            android:drawableTop="@drawable/round_button"
-            app:layout_constraintStart_toStartOf="@+id/btn_start_tracking"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_start_tracking"
-            android:layout_marginVertical="25dp"
-            android:src="@drawable/location_off"
-            app:tint="@color/round_button_gray"
-    />
+<!--    <ImageButton-->
+<!--            android:id="@+id/ib_location_update_settings"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/round_button"-->
+<!--            android:contentDescription="@string/ib_location_update_settings_description"-->
+<!--            android:drawableTop="@drawable/round_button"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/btn_start_tracking"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/btn_start_tracking"-->
+<!--            android:layout_marginVertical="25dp"-->
+<!--            android:src="@drawable/location_off"-->
+<!--            app:tint="@color/round_button_gray"-->
+<!--    />-->
+
+<!--    <ImageButton-->
+<!--            android:id="@+id/ib_toggle_gps_info_panel"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginVertical="25dp"-->
+<!--            android:background="@drawable/round_button"-->
+<!--            android:contentDescription="@string/ib_toggle_gps_info_panel_description"-->
+<!--            android:drawableTop="@drawable/round_button"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/btn_start_tracking"-->
+<!--            app:layout_constraintStart_toStartOf="@id/btn_start_tracking"-->
+<!--            android:src="@drawable/data_exploration"-->
+<!--            app:tint="@color/round_button_gray"-->
+<!--    />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
