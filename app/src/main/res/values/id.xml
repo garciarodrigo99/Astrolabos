@@ -12,8 +12,13 @@
         <item name="fl_map" type="id"/>
         <item name="ll_gps_info_panel" type="id"/>
         <item name="ib_toggle_gps_info_panel" type="id"/>
-        <item name="btn_start_tracking" type="id"/>
+        <item name="ib_start_tracking" type="id"/>
         <item name="ib_location_update_settings" type="id"/>
+        <!-- toolbar -->
+        <item name="toolbar" type="id"/>
+        <item name="toolbar_ib_1" type="id"/>
+        <item name="toolbar_ib_2" type="id"/>
+        <item name="toolbar_ib_3" type="id"/>
 
         <!-- recording_tracking_screen.xml -->
         <item name="recording_tracking_screen" type="id"/>
@@ -49,6 +54,12 @@
         <item name="tv_accuracy" type="id"/>
         <item name="tv_label_speed" type="id"/>
         <item name="tv_speed" type="id"/>
+        <item name="tv_label_satellites" type="id"/>
+        <item name="tv_satellites" type="id"/>
+        <item name="tv_label_last_time" type="id"/>
+        <item name="tv_last_time" type="id"/>
+        <item name="tv_label_bearing" type="id"/>
+        <item name="tv_bearing" type="id"/>
         <item name="gps_info_panel_glh_50" type="id"/>
 
         <!-- dialog_tracking_action.xml -->
