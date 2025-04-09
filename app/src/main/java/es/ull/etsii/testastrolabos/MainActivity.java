@@ -50,13 +50,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLocationUpdatesEnabled = false;
 
     private MainActivityViewManager mViewManager;
+    private ActivityResultHandler mActivityResultHandler;
 
     AstrolabosLocationManager mLocationManager;
 
     FrameLayout fl_map;
 
     MapView view_map;
-    TrackingManager flightTrackManager;
+    TrackingManager mFlightTrackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mViewManager = new MainActivityViewManager(this);
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        flightTrackManager = new TrackingManager(this);
+        mFlightTrackManager = new TrackingManager(this);
 
         // Referenciar el FrameLayout donde se agregará el MapView
         fl_map = findViewById(R.id.fl_map);
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("MapView is null");
         }
+
+        mActivityResultHandler = new ActivityResultHandler(this,mFlightTrackManager);
 
         checkPermissions();
 
@@ -125,20 +128,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // TODO: refactor to switch
-        if (requestCode == PermissionUtils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (data != null && data.getData() != null) {
-                Uri uri = data.getData();
-                FileUtils.writeFileContent(this, uri, flightTrackManager.fileFormat.toString());
-                Toast.makeText(this, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (requestCode == SELECT_MAP_FILE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                Uri uri = data.getData();
-                openMap(uri);
-            }
-        }
+        mActivityResultHandler.handle(requestCode, resultCode, data);
     }
 
     public void updateLocation(){
@@ -193,16 +183,16 @@ public class MainActivity extends AppCompatActivity {
     public void writeLocation(Location location){
         //TODO:Implementar método observador
         mViewManager.writeLocation(location);
-        if (flightTrackManager.fileFormat == null) return;
+        if (mFlightTrackManager.fileFormat == null) return;
 
         Date date = new Date();
 
         // Formatear la fecha y hora en el formato deseado
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String timestamp = sdf.format(date);
-        flightTrackManager.fileFormat.addContent(timestamp,location);
+        mFlightTrackManager.fileFormat.addContent(timestamp,location);
     }
-    private void openMap(Uri uri) {
+    public void openMap(Uri uri) {
         try {
             /*
              * We then make some simple adjustments, such as showing a scale bar and zoom controls.
@@ -306,15 +296,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTracking(){
-        flightTrackManager.startTracking();
+        mFlightTrackManager.startTracking();
     }
 
     public void launchTrackingDialog(){
-        flightTrackManager.showTrackingSettings();
+        mFlightTrackManager.showTrackingSettings();
     }
 
     public boolean isTracking(){
-        return flightTrackManager.getState() == TrackingManager.State.TRACKING;
+        return mFlightTrackManager.getState() == TrackingManager.State.TRACKING;
     }
 
     public void startLocationUpdates(){

@@ -65,7 +65,7 @@ public class MainActivityViewManager {
 
     private boolean showTrackingActionDialog() {
         if (mActivity.isTracking()) {
-            TrackingActionDialog actionDialog = new TrackingActionDialog(mActivity.flightTrackManager);
+            TrackingActionDialog actionDialog = new TrackingActionDialog(mActivity.mFlightTrackManager);
             actionDialog.show(mActivity.getSupportFragmentManager(), "MiDialogo");
         }
         return true;
