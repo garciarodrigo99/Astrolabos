@@ -5,21 +5,21 @@ import android.view.View;
 import android.widget.TextView;
 
 public class GPSInfoPanel {
-    private final View view_;
+    private MainActivity mActivity;
 
     private TextView mLatitudeTv, mLongitudeTv, mAltitudeTv, mAccuracyTv, mSpeedTv, mBearingTv, mSatelliteTv, mLastTimeTv;
 
     public GPSInfoPanel(MainActivity activity) {
-        this.view_ = activity.ll_gps_info_panel;
+        this.mActivity = activity;
 
-        mLatitudeTv = this.view_.findViewById(R.id.tv_lat);
-        mLongitudeTv = this.view_.findViewById(R.id.tv_lon);
-        mAltitudeTv = this.view_.findViewById(R.id.tv_altitude);
-        mAccuracyTv = this.view_.findViewById(R.id.tv_accuracy);
-        mSpeedTv = this.view_.findViewById(R.id.tv_speed);
-        mBearingTv = this.view_.findViewById(R.id.tv_bearing);
-        mSatelliteTv = this.view_.findViewById(R.id.tv_satellites);
-        mLastTimeTv = this.view_.findViewById(R.id.tv_last_time);
+        mLatitudeTv = this.mActivity.findViewById(R.id.tv_lat);
+        mLongitudeTv = this.mActivity.findViewById(R.id.tv_lon);
+        mAltitudeTv = this.mActivity.findViewById(R.id.tv_altitude);
+        mAccuracyTv = this.mActivity.findViewById(R.id.tv_accuracy);
+        mSpeedTv = this.mActivity.findViewById(R.id.tv_speed);
+        mBearingTv = this.mActivity.findViewById(R.id.tv_bearing);
+        mSatelliteTv = this.mActivity.findViewById(R.id.tv_satellites);
+        mLastTimeTv = this.mActivity.findViewById(R.id.tv_last_time);
     }
 
     public void setLatitude(String latitude) {

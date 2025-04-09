@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 import es.ull.etsii.testastrolabos.Utils.FileUtils;
 import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
@@ -46,24 +45,18 @@ import android.util.Log;
 public class MainActivity extends AppCompatActivity {
 
     private static final int FILE_READING_REQUEST_CODE = 1001;
-    private static final int FAST_UPDATE = 1;
-    private static final int DEFAULT_UPDATE = 30;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private static final int SELECT_MAP_FILE = 0;
-    private boolean isGPSInfoPanelVisible = false;
-    private boolean isLocationUpdateEnabled = false;
+    private boolean isLocationUpdatesEnabled = false;
 
-    // activity_main
-    ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings, ib_startTracking;
+    private MainActivityViewManager mViewManager;
 
     AstrolabosLocationManager mLocationManager;
 
     FrameLayout fl_map;
-    LinearLayout ll_gps_info_panel;
 
     MapView view_map;
     TrackingManager flightTrackManager;
-    GPSInfoPanel gpsInfoPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -73,16 +66,10 @@ public class MainActivity extends AppCompatActivity {
 
         AndroidGraphicFactory.createInstance(getApplication());
 
-        // Matching attributes with activity_main.xml
-        ib_toggle_GPSInfoPanel = findViewById(R.id.ib_toggle_gps_info_panel);
-        ib_startTracking = findViewById(R.id.ib_start_tracking);
-        ib_location_updates_settings = findViewById(R.id.ib_location_update_settings);
+        mViewManager = new MainActivityViewManager(this);
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         flightTrackManager = new TrackingManager(this);
-
-        ll_gps_info_panel = findViewById(R.id.ll_gps_info_panel);
-        gpsInfoPanel = new GPSInfoPanel(this);
 
         // Referenciar el FrameLayout donde se agregará el MapView
         fl_map = findViewById(R.id.fl_map);
@@ -108,55 +95,6 @@ public class MainActivity extends AppCompatActivity {
         checkPermissions();
 
         mLocationManager = AstrolabosLocationManager.getInstance(this);
-
-        ib_toggle_GPSInfoPanel.setOnClickListener(v -> {
-            if (isGPSInfoPanelVisible) {
-                ll_gps_info_panel.setVisibility(View.GONE);
-            } else {
-                ll_gps_info_panel.setVisibility(View.VISIBLE);
-            }
-            isGPSInfoPanelVisible = !isGPSInfoPanelVisible;
-        });
-
-        ib_startTracking.setOnClickListener(v -> {
-            if (flightTrackManager.getState() == TrackingManager.State.NOT_TRACKING) {
-                flightTrackManager.startTracking();
-                return;
-            }
-            flightTrackManager.showTrackingSettings();
-        });
-
-        ib_startTracking.setOnLongClickListener(v -> {
-            if (flightTrackManager.getState() != TrackingManager.State.TRACKING) {
-                return true;
-            }
-            TrackingActionDialog actionDialog = new TrackingActionDialog(flightTrackManager);
-            actionDialog.show(getSupportFragmentManager(), "MiDialogo");
-            return true;
-        });
-
-        ib_location_updates_settings.setOnClickListener(v -> {
-            isLocationUpdateEnabled = !isLocationUpdateEnabled;
-            if (isLocationUpdateEnabled){
-                ib_location_updates_settings.setImageResource(R.drawable.location_on);
-                mLocationManager.startLocationUpdates();
-                updateLocation();
-            } else {
-                ib_location_updates_settings.setImageResource(R.drawable.location_off);
-                mLocationManager.stopLocationUpdates();
-                UIWriter.notTrackingLocation(this);
-            }
-        });
-
-        ib_location_updates_settings.setOnLongClickListener(v -> {
-            if (!isLocationUpdateEnabled) {
-                return true;
-            }
-            LocationUpdatesSettingsDialog dialog = new LocationUpdatesSettingsDialog(this);
-            dialog.show(getSupportFragmentManager(), "MiDialogo");
-            return true;
-
-        });
     }
 
     // Function to handle when certain permissions are granted or not
@@ -172,14 +110,13 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).
                             show();
                     updateLocation();
-                    //checkLocationEnabled();
                 }
                 else {
                     Toast.makeText(MainActivity.this,
                                     getString(R.string.location_permissions_not_granted),
                             Toast.LENGTH_LONG).
                             show();
-                    UIWriter.locationPermissionNotGranted(MainActivity.this);
+                    mViewManager.locationPermissionNotGranted();
                     //finish();
                 }
                 break;
@@ -204,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateLocation(){
+    public void updateLocation(){
         Log.d("MainActivity", "updateLocation");
         if(!checkPermissions()) return;
         mLocationManager.getLastKnownLocation();
@@ -236,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     getString(R.string.location_not_enabled_label),
                     Toast.LENGTH_LONG).
                     show();
-            UIWriter.locationNotEnabled(MainActivity.this);
+            mViewManager.locationNotEnabled();
             return false;
         }
         return true;
@@ -250,11 +187,12 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Method to aisle the cases when location is obtained.
-     * It could be null or valid values
+     * It could be null or valid values.
+     * It is call, when enable location updates, from mLocationManager recurrently
      */
     public void writeLocation(Location location){
         //TODO:Implementar método observador
-        UIWriter.writeLocation(MainActivity.this,location);
+        mViewManager.writeLocation(location);
         if (flightTrackManager.fileFormat == null) return;
 
         Date date = new Date();
@@ -366,6 +304,35 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void startTracking(){
+        flightTrackManager.startTracking();
+    }
+
+    public void launchTrackingDialog(){
+        flightTrackManager.showTrackingSettings();
+    }
+
+    public boolean isTracking(){
+        return flightTrackManager.getState() == TrackingManager.State.TRACKING;
+    }
+
+    public void startLocationUpdates(){
+        mLocationManager.startLocationUpdates();
+    }
+
+    public void stopLocationUpdates(){
+        mLocationManager.stopLocationUpdates();
+    }
+
+    public boolean isLocationUpdatesEnabled() {
+        return isLocationUpdatesEnabled;
+    }
+
+    public void setLocationUpdates(boolean enabled) {
+        isLocationUpdatesEnabled = enabled;
+    }
+
 
     @Override
     protected void onDestroy() {
