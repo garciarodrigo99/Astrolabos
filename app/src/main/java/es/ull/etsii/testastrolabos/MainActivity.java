@@ -35,8 +35,6 @@ import java.util.List;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int SELECT_MAP_FILE = 0;
     private boolean isLocationUpdatesEnabled = false;
 
     private MainActivityViewManager mViewManager;
@@ -74,12 +72,7 @@ public class MainActivity extends AppCompatActivity {
         view_map = mapViewLayout.findViewById(R.id.mapView);
 
         if(view_map != null){
-            // Configurar el MapView
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("*/*");
-            startActivityForResult(intent, SELECT_MAP_FILE);
-
+            FileManager.openDocumentIntent(this);
             fl_map.addView(mapViewLayout);
         } else {
             System.out.println("MapView is null");
@@ -172,64 +165,64 @@ public class MainActivity extends AppCompatActivity {
              */
             view_map.getLayerManager().getLayers().add(tileRendererLayer);
 
-            /*
-             * The map also needs to know which area to display and at what zoom level.
-             * Note: this map position is specific to El Teide area.
-             */
-            view_map.setCenter(new LatLong(28.272440, -16.642372));
-            view_map.setZoomLevel((byte) 8);
-
-            LatLong simulatedPosition = new LatLong(30.675, -14.602);
-
-            Paint paintStroke = AndroidGraphicFactory.INSTANCE.createPaint();
-            paintStroke.setColor(Color.BLACK);
-            paintStroke.setStrokeWidth(5);
-            paintStroke.setStyle(Style.STROKE);
-            paintStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
-
-            // Crear la lista de coordenadas
-            List<LatLong> geoPoints = new ArrayList<>();
-            geoPoints.add(simulatedPosition);
-            geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
-
-            // Crear la Polyline
-            Polyline polyline = new Polyline(paintStroke, AndroidGraphicFactory.INSTANCE);
-            polyline.setPoints(geoPoints);
-
-            // Agregar la línea a las capas del mapa
-            Layers layers = view_map.getLayerManager().getLayers();
-            layers.add(polyline);
-
-            Paint paintStroke2 = AndroidGraphicFactory.INSTANCE.createPaint();
-            paintStroke2.setColor(Color.RED);
-            paintStroke2.setStrokeWidth(4);
-            paintStroke2.setStyle(Style.STROKE);
-
-            // Crear la lista de coordenadas
-            List<LatLong> geoPoints2 = new ArrayList<>();
-            geoPoints2.add(new LatLong(40.472222, -3.560833)); // Las Palmas de Gran Canaria
-            geoPoints2.add(simulatedPosition); // TFS
-
-            // Crear la Polyline
-            Polyline polyline2 = new Polyline(paintStroke2, AndroidGraphicFactory.INSTANCE);
-            polyline2.setPoints(geoPoints2);
-            layers.add(polyline2);
-
-            // Cargar el icono desde los recursos con ContextCompat
-            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.airplane);
-
-            // Verificar que el drawable no sea nulo
-            if (drawable == null) {
-                return;
-            }
-
-            // Convertir el Drawable a Bitmap
-            Bitmap iconBitmap = AndroidGraphicFactory.convertToBitmap(drawable);
-            // Crear el marcador
-            Marker marker = new Marker(simulatedPosition, iconBitmap, 0, 0);
-
-            // Agregar el marcador al mapa
-            layers.add(marker);
+//            /*
+//             * The map also needs to know which area to display and at what zoom level.
+//             * Note: this map position is specific to El Teide area.
+//             */
+//            view_map.setCenter(new LatLong(28.272440, -16.642372));
+//            view_map.setZoomLevel((byte) 8);
+//
+//            LatLong simulatedPosition = new LatLong(30.675, -14.602);
+//
+//            Paint paintStroke = AndroidGraphicFactory.INSTANCE.createPaint();
+//            paintStroke.setColor(Color.BLACK);
+//            paintStroke.setStrokeWidth(5);
+//            paintStroke.setStyle(Style.STROKE);
+//            paintStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
+//
+//            // Crear la lista de coordenadas
+//            List<LatLong> geoPoints = new ArrayList<>();
+//            geoPoints.add(simulatedPosition);
+//            geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
+//
+//            // Crear la Polyline
+//            Polyline polyline = new Polyline(paintStroke, AndroidGraphicFactory.INSTANCE);
+//            polyline.setPoints(geoPoints);
+//
+//            // Agregar la línea a las capas del mapa
+//            Layers layers = view_map.getLayerManager().getLayers();
+//            layers.add(polyline);
+//
+//            Paint paintStroke2 = AndroidGraphicFactory.INSTANCE.createPaint();
+//            paintStroke2.setColor(Color.RED);
+//            paintStroke2.setStrokeWidth(4);
+//            paintStroke2.setStyle(Style.STROKE);
+//
+//            // Crear la lista de coordenadas
+//            List<LatLong> geoPoints2 = new ArrayList<>();
+//            geoPoints2.add(new LatLong(40.472222, -3.560833)); // Las Palmas de Gran Canaria
+//            geoPoints2.add(simulatedPosition); // TFS
+//
+//            // Crear la Polyline
+//            Polyline polyline2 = new Polyline(paintStroke2, AndroidGraphicFactory.INSTANCE);
+//            polyline2.setPoints(geoPoints2);
+//            layers.add(polyline2);
+//
+//            // Cargar el icono desde los recursos con ContextCompat
+//            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.airplane);
+//
+//            // Verificar que el drawable no sea nulo
+//            if (drawable == null) {
+//                return;
+//            }
+//
+//            // Convertir el Drawable a Bitmap
+//            Bitmap iconBitmap = AndroidGraphicFactory.convertToBitmap(drawable);
+//            // Crear el marcador
+//            Marker marker = new Marker(simulatedPosition, iconBitmap, 0, 0);
+//
+//            // Agregar el marcador al mapa
+//            layers.add(marker);
 
         } catch (Exception e) {
             /*

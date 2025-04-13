@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
-import es.ull.etsii.testastrolabos.Utils.FileUtils;
 
 public class ActivityResultHandler {
     private static final int PERMISSIONS_FINE_LOCATION = 99;
@@ -22,9 +21,7 @@ public class ActivityResultHandler {
         this.mMainActivity = activity;
     }
 
-
     public void handle(int requestCode, int resultCode, Intent data) {
-        // TODO: refactor to switch
         if (resultCode != Activity.RESULT_OK) return;
         switch (requestCode) {
             case CREATE_FILE_RC:
@@ -49,7 +46,7 @@ public class ActivityResultHandler {
     private void handleFileWriting(Intent data) {
         if (data != null && data.getData() != null) {
             Uri uri = data.getData();
-            FileUtils.writeFileContent(mMainActivity, uri, mTrackingManager.fileFormat.toString());
+            FileManager.writeFileContent(mMainActivity,uri,mTrackingManager.fileFormat.toString());
             Toast.makeText(mMainActivity, "Archivo guardado con éxito", Toast.LENGTH_SHORT).show();
         }
     }
