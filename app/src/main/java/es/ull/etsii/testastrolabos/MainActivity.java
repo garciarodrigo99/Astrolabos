@@ -1,7 +1,6 @@
 package es.ull.etsii.testastrolabos;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,8 +16,6 @@ import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import es.ull.etsii.testastrolabos.Utils.FileUtils;
-import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.core.graphics.*;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
@@ -44,13 +41,12 @@ import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int FILE_READING_REQUEST_CODE = 1001;
-    private static final int PERMISSIONS_FINE_LOCATION = 99;
     private static final int SELECT_MAP_FILE = 0;
     private boolean isLocationUpdatesEnabled = false;
 
     private MainActivityViewManager mViewManager;
     private ActivityResultHandler mActivityResultHandler;
+    private PermissionResultHandler mPermissionResultHandler;
 
     AstrolabosLocationManager mLocationManager;
 
@@ -94,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mActivityResultHandler = new ActivityResultHandler(this,mFlightTrackManager);
+        mPermissionResultHandler = new PermissionResultHandler(this);
 
         checkPermissions();
 
@@ -104,26 +101,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //TODO: manejar cuando hay permisos de localización, pero la localización está desactivada
-        switch (requestCode){
-            case PERMISSIONS_FINE_LOCATION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(MainActivity.this,
-                            getString(R.string.location_permissions_granted),
-                            Toast.LENGTH_SHORT).
-                            show();
-                    updateLocation();
-                }
-                else {
-                    Toast.makeText(MainActivity.this,
-                                    getString(R.string.location_permissions_not_granted),
-                            Toast.LENGTH_LONG).
-                            show();
-                    mViewManager.locationPermissionNotGranted();
-                    //finish();
-                }
-                break;
-        }
+        mPermissionResultHandler.handlePermissionResult(requestCode, grantResults);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -152,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         if (!(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             // Request permissions if the OS version is supported
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_FINE_LOCATION);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, mPermissionResultHandler.PERMISSIONS_FINE_LOCATION);
             }
             return false;
         }
@@ -323,6 +301,9 @@ public class MainActivity extends AppCompatActivity {
         isLocationUpdatesEnabled = enabled;
     }
 
+    public void onLocationPermissionDenied() {
+        mViewManager.locationPermissionNotGranted();
+    }
 
     @Override
     protected void onDestroy() {
