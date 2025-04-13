@@ -1,10 +1,8 @@
 package es.ull.etsii.testastrolabos;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.core.graphics.*;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(view_map != null){
             // Configurar el MapView
-            Intent intent = new Intent(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("*/*");
             startActivityForResult(intent, SELECT_MAP_FILE);
