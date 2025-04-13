@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
-import es.ull.etsii.testastrolabos.Utils.PermissionUtils;
 import es.ull.etsii.testastrolabos.Writers.*;
 import es.ull.etsii.testastrolabos.Dialogs.*;
 
@@ -79,7 +78,7 @@ public class TrackingManager {
         Runnable finishAndSave = new Runnable() {
             @Override
             public void run() {
-                PermissionUtils.openFilePicker(activity);
+                FileManager.createDocumentIntent(activity);
                 state_ = State.NOT_TRACKING;
             }
         };
