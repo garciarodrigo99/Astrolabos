@@ -1,10 +1,8 @@
 package es.ull.etsii.testastrolabos;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityViewManager mViewManager;
     private ActivityResultHandler mActivityResultHandler;
     private PermissionResultHandler mPermissionResultHandler;
+    private PermissionManager mPermissionManager;
 
     AstrolabosLocationManager mLocationManager;
 
@@ -91,8 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         mActivityResultHandler = new ActivityResultHandler(this,mFlightTrackManager);
         mPermissionResultHandler = new PermissionResultHandler(this);
+        mPermissionManager = new PermissionManager(this,mPermissionResultHandler,mViewManager);
 
-        checkPermissions();
+        mPermissionManager.checkLocationPermission();
 
         mLocationManager = AstrolabosLocationManager.getInstance(this);
     }
@@ -111,46 +111,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateLocation(){
         Log.d("MainActivity", "updateLocation");
-        if(!checkPermissions()) return;
+        if(!mPermissionManager.checkLocationPermission()) return;
         mLocationManager.getLastKnownLocation();
-    }
-
-    /**
-     * @return true if the location service is activated.
-     * false if the location service is NOT activated.
-     */
-    public boolean isLocationActivated(){
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        return ((locationManager != null) && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)));
-    }
-
-    private boolean checkPermissions() {
-        // Permissions are not granted
-        //TODO: Request for permissions
-        if (!(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            // Request permissions if the OS version is supported
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, mPermissionResultHandler.PERMISSIONS_FINE_LOCATION);
-            }
-            return false;
-        }
-        // The location is not enabled
-        //TODO: create a function that guides the user to activate location
-        if (!(isLocationActivated())) {
-            Toast.makeText(MainActivity.this,
-                    getString(R.string.location_not_enabled_label),
-                    Toast.LENGTH_LONG).
-                    show();
-            mViewManager.locationNotEnabled();
-            return false;
-        }
-        return true;
     }
 
     //TODO: move to future permissions manager class
     public boolean hasLocationPermissions(){
-        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+        return mPermissionManager.isLocationPermissionGranted();
     }
 
     /**
@@ -160,9 +127,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void writeLocation(Location location){
         //TODO:Implementar método observador
+
+        // UI
         mViewManager.writeLocation(location);
         if (mFlightTrackManager.fileFormat == null) return;
-
+        // FILE
         Date date = new Date();
 
         // Formatear la fecha y hora en el formato deseado
