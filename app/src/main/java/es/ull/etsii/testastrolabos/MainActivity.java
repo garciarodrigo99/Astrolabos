@@ -7,30 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import org.jetbrains.annotations.NotNull;
-import org.mapsforge.core.graphics.*;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.android.util.AndroidUtil;
-import org.mapsforge.map.datastore.MapDataStore;
-import org.mapsforge.map.layer.Layers;
-import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.layer.overlay.Marker;
-import org.mapsforge.map.layer.overlay.Polyline;
-import org.mapsforge.map.layer.renderer.TileRendererLayer;
-import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
-
-import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.util.Log;
 
@@ -48,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     MapView view_map;
     TrackingManager mFlightTrackManager;
+    private MapViewManager mMapViewManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -70,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Obtener la instancia del MapView
         view_map = mapViewLayout.findViewById(R.id.mapView);
+        mMapViewManager = new MapViewManager(this, view_map);
 
         if(view_map != null){
             FileManager.openDocumentIntent(this);
@@ -129,107 +114,8 @@ public class MainActivity extends AppCompatActivity {
         String timestamp = sdf.format(date);
         mFlightTrackManager.fileFormat.addContent(timestamp,location);
     }
-    public void openMap(Uri uri) {
-        try {
-            /*
-             * We then make some simple adjustments, such as showing a scale bar and zoom controls.
-             */
-            view_map.getMapScaleBar().setVisible(true);
-            view_map.setBuiltInZoomControls(true);
-
-            /*
-             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with a
-             * utility method.
-             */
-            TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
-                    view_map.getModel().displayModel.getTileSize(), 1f,
-                    view_map.getModel().frameBufferModel.getOverdrawFactor());
-
-            /*
-             * Now we need to set up the process of displaying a map. A map can have several layers,
-             * stacked on top of each other. A layer can be a map or some visual elements, such as
-             * markers. Here we only show a map based on a mapsforge map file. For this we need a
-             * TileRendererLayer. A TileRendererLayer needs a TileCache to hold the generated map
-             * tiles, a map file from which the tiles are generated and Rendertheme that defines the
-             * appearance of the map.
-             */
-            FileInputStream fis = (FileInputStream) getContentResolver().openInputStream(uri);
-            MapDataStore mapDataStore = new MapFile(fis);
-            TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore,
-                    view_map.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
-            tileRendererLayer.setXmlRenderTheme(MapsforgeThemes.MOTORIDER);
-
-            /*
-             * On its own a tileRendererLayer does not know where to display the map, so we need to
-             * associate it with our mapView.
-             */
-            view_map.getLayerManager().getLayers().add(tileRendererLayer);
-
-//            /*
-//             * The map also needs to know which area to display and at what zoom level.
-//             * Note: this map position is specific to El Teide area.
-//             */
-//            view_map.setCenter(new LatLong(28.272440, -16.642372));
-//            view_map.setZoomLevel((byte) 8);
-//
-//            LatLong simulatedPosition = new LatLong(30.675, -14.602);
-//
-//            Paint paintStroke = AndroidGraphicFactory.INSTANCE.createPaint();
-//            paintStroke.setColor(Color.BLACK);
-//            paintStroke.setStrokeWidth(5);
-//            paintStroke.setStyle(Style.STROKE);
-//            paintStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
-//
-//            // Crear la lista de coordenadas
-//            List<LatLong> geoPoints = new ArrayList<>();
-//            geoPoints.add(simulatedPosition);
-//            geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
-//
-//            // Crear la Polyline
-//            Polyline polyline = new Polyline(paintStroke, AndroidGraphicFactory.INSTANCE);
-//            polyline.setPoints(geoPoints);
-//
-//            // Agregar la línea a las capas del mapa
-//            Layers layers = view_map.getLayerManager().getLayers();
-//            layers.add(polyline);
-//
-//            Paint paintStroke2 = AndroidGraphicFactory.INSTANCE.createPaint();
-//            paintStroke2.setColor(Color.RED);
-//            paintStroke2.setStrokeWidth(4);
-//            paintStroke2.setStyle(Style.STROKE);
-//
-//            // Crear la lista de coordenadas
-//            List<LatLong> geoPoints2 = new ArrayList<>();
-//            geoPoints2.add(new LatLong(40.472222, -3.560833)); // Las Palmas de Gran Canaria
-//            geoPoints2.add(simulatedPosition); // TFS
-//
-//            // Crear la Polyline
-//            Polyline polyline2 = new Polyline(paintStroke2, AndroidGraphicFactory.INSTANCE);
-//            polyline2.setPoints(geoPoints2);
-//            layers.add(polyline2);
-//
-//            // Cargar el icono desde los recursos con ContextCompat
-//            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.airplane);
-//
-//            // Verificar que el drawable no sea nulo
-//            if (drawable == null) {
-//                return;
-//            }
-//
-//            // Convertir el Drawable a Bitmap
-//            Bitmap iconBitmap = AndroidGraphicFactory.convertToBitmap(drawable);
-//            // Crear el marcador
-//            Marker marker = new Marker(simulatedPosition, iconBitmap, 0, 0);
-//
-//            // Agregar el marcador al mapa
-//            layers.add(marker);
-
-        } catch (Exception e) {
-            /*
-             * In case of map file errors avoid crash, but developers should handle these cases!
-             */
-            e.printStackTrace();
-        }
+    public void loadMap(Uri uri) {
+        mMapViewManager.loadMap(uri);
     }
 
     public void startTracking(){

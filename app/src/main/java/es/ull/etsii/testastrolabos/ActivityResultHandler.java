@@ -40,7 +40,7 @@ public class ActivityResultHandler {
            return;
         }
         Uri uri = data.getData();
-        mMainActivity.openMap(uri);
+        mMainActivity.loadMap(uri);
     }
 
     private void handleFileWriting(Intent data) {
