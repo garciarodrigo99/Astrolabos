@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         mMapViewManager = new MapViewManager(this, view_map);
 
         if(view_map != null){
-            FileManager.openDocumentIntent(this);
             fl_map.addView(mapViewLayout);
+            FileManager.openDocumentIntent(this);
         } else {
             System.out.println("MapView is null");
         }

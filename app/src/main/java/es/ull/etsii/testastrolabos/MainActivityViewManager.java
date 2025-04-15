@@ -16,7 +16,7 @@ public class MainActivityViewManager {
     final private MainActivity mActivity;
 
     // activity_main
-    private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings, ib_startTracking;
+    private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings, ib_startTracking, ib_addLayer;
     LinearLayout ll_gps_info_panel;
     final private GPSInfoPanel mGpsInfoPanel;
 
@@ -31,6 +31,7 @@ public class MainActivityViewManager {
         ib_toggle_GPSInfoPanel = mActivity.findViewById(R.id.ib_toggle_gps_info_panel);
         ib_startTracking = mActivity.findViewById(R.id.ib_start_tracking);
         ib_location_updates_settings = mActivity.findViewById(R.id.ib_location_update_settings);
+        ib_addLayer = mActivity.findViewById(R.id.ib_add_layer);
         ll_gps_info_panel = mActivity.findViewById(R.id.ll_gps_info_panel);
     }
 
@@ -53,6 +54,7 @@ public class MainActivityViewManager {
 
         ib_location_updates_settings.setOnLongClickListener(v ->
                 showLocationUpdatesSettingsDialog());
+        ib_addLayer.setOnClickListener(v -> addLayer());
     }
 
     private boolean showLocationUpdatesSettingsDialog() {
@@ -91,6 +93,10 @@ public class MainActivityViewManager {
             ll_gps_info_panel.setVisibility(View.VISIBLE);
         }
         mIsGPSInfoPanelVisible = !mIsGPSInfoPanelVisible;
+    }
+
+    private void addLayer() {
+        FileManager.openDocumentIntent(mActivity);
     }
 
     public void locationPermissionNotGranted(){
