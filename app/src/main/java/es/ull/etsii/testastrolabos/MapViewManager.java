@@ -3,16 +3,15 @@ package es.ull.etsii.testastrolabos;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import androidx.core.content.ContextCompat;
-import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.graphics.Color;
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.graphics.*;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MapDataStore;
+import org.mapsforge.map.datastore.MultiMapDataStore;
 import org.mapsforge.map.layer.Layers;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.overlay.Marker;
@@ -26,52 +25,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapViewManager {
-    private Activity mActivity;
-    private MapView mMapView;
-
+    private final Activity mActivity;
+    private final MapView mMapView;
+    private final GraphicFactory mGraphicFactory;
+    private final List<TileRendererLayer> mLayers;
+    private MultiMapDataStore mMultiMapDataStore;
+    private TileRendererLayer mTileRendererLayer;
+    private TileCache mTileCache;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
-    }
-
-    public void loadMap(Uri uri){
+        this.mGraphicFactory = AndroidGraphicFactory.INSTANCE;
+        this.mLayers = new ArrayList<>();
+        mMultiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.DEDUPLICATE); // Check if problems
+        mTileCache = AndroidUtil.createTileCache(
+                mActivity,
+                "multi_tilecache",
+                mapView.getModel().displayModel.getTileSize(),
+                1.0f,
+                mapView.getModel().frameBufferModel.getOverdrawFactor()
+        );
         try {
-            /*
-             * We then make some simple adjustments, such as showing a scale bar and zoom controls.
-             */
             mMapView.getMapScaleBar().setVisible(true);
             mMapView.setBuiltInZoomControls(true);
 
-            Layers layers = mMapView.getLayerManager().getLayers();
+        } catch (Exception e) {
+            Log.e("MapViewManager", "Error al inicializar el objeto", e);
+        }
+    }
 
+    public void loadMap(Uri uri){
+        Log.d("MapViewManager", "URI: " + uri.toString());
+        try {
             FileInputStream fis = (FileInputStream) mActivity.getContentResolver().openInputStream(uri);
-            /*
-             * To avoid redrawing all the tiles all the time, we need to set up a tile cache with a
-             * utility method.
-             */
-            TileCache tileCache = AndroidUtil.createTileCache(mActivity, "mapcache_" + uri,
-                    mMapView.getModel().displayModel.getTileSize(), 1f,
-                    mMapView.getModel().frameBufferModel.getOverdrawFactor());
 
-            /*
-             * Now we need to set up the process of displaying a map. A map can have several layers,
-             * stacked on top of each other. A layer can be a map or some visual elements, such as
-             * markers. Here we only show a map based on a mapsforge map file. For this we need a
-             * TileRendererLayer. A TileRendererLayer needs a TileCache to hold the generated map
-             * tiles, a map file from which the tiles are generated and Rendertheme that defines the
-             * appearance of the map.
-             */
+            MapDataStore newMap = new MapFile(fis);
+//            boolean isFirstElement = mLayers.isEmpty();
+//            mMultiMapDataStore.addMapDataStore(newMap,!isFirstElement,!isFirstElement);
+            mMultiMapDataStore.addMapDataStore(newMap,false,false);
+            if (mTileRendererLayer != null) {
+                mMapView.getLayerManager().getLayers().remove(mTileRendererLayer);
+            }
+            mTileRendererLayer = new TileRendererLayer(
+                    mTileCache,
+                    mMultiMapDataStore,
+                    mMapView.getModel().mapViewPosition,
+                    AndroidGraphicFactory.INSTANCE);
 
-            MapDataStore mapDataStore = new MapFile(fis);
-            TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore,
-                    mMapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
-            tileRendererLayer.setXmlRenderTheme(MapsforgeThemes.DEFAULT);
+            mTileRendererLayer.setXmlRenderTheme(MapsforgeThemes.DEFAULT);
 
             /*
              * On its own a tileRendererLayer does not know where to display the map, so we need to
              * associate it with our mapView.
              */
-            mMapView.getLayerManager().getLayers().add(tileRendererLayer);
+            mMapView.getLayerManager().getLayers().add(mTileRendererLayer);
+//            mLayers.add(mTileRendererLayer);
+            Log.i("MapViewManager", "Capa añadida correctamente desde URI: " + uri.toString());
 
 //            /*
 //             * The map also needs to know which area to display and at what zoom level.
@@ -132,10 +141,7 @@ public class MapViewManager {
 //            layers.add(marker);
 
         } catch (Exception e) {
-            /*
-             * In case of map file errors avoid crash, but developers should handle these cases!
-             */
-            e.printStackTrace();
+            Log.e("MapViewManager", "Error al añadir mapa desde URI", e);
         }
     }
 }

@@ -11,14 +11,13 @@
         <item name="fl_flight_track" type="id"/>
         <item name="fl_map" type="id"/>
         <item name="ll_gps_info_panel" type="id"/>
+
+        <!-- toolbar -->
+        <item name="toolbar" type="id"/>
         <item name="ib_toggle_gps_info_panel" type="id"/>
         <item name="ib_start_tracking" type="id"/>
         <item name="ib_location_update_settings" type="id"/>
-        <!-- toolbar -->
-        <item name="toolbar" type="id"/>
-        <item name="toolbar_ib_1" type="id"/>
-        <item name="toolbar_ib_2" type="id"/>
-        <item name="toolbar_ib_3" type="id"/>
+        <item name="ib_add_layer" type="id"/>
 
         <!-- recording_tracking_screen.xml -->
         <item name="recording_tracking_screen" type="id"/>
