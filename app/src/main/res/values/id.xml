@@ -18,6 +18,7 @@
         <item name="ib_start_tracking" type="id"/>
         <item name="ib_location_update_settings" type="id"/>
         <item name="ib_add_layer" type="id"/>
+        <item name="ib_center_on_location" type="id"/>
 
         <!-- recording_tracking_screen.xml -->
         <item name="recording_tracking_screen" type="id"/>

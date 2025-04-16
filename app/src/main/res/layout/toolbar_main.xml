@@ -24,15 +24,6 @@
                 android:background="@android:color/transparent"/>
 
             <ImageButton
-                android:id="@+id/ib_toggle_gps_info_panel"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:src="@drawable/data_exploration"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/ib_toggle_gps_info_panel_description" />
-
-            <ImageButton
                 android:id="@+id/ib_start_tracking"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -42,6 +33,15 @@
                 android:contentDescription="@string/ib_start_tracking_description" />
 
             <ImageButton
+                android:id="@+id/ib_toggle_gps_info_panel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/data_exploration"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/ib_toggle_gps_info_panel_description" />
+
+            <ImageButton
                 android:id="@+id/ib_add_layer"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -49,6 +49,16 @@
                 android:src="@drawable/map"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/ib_add_layer_description" />
+
+            <ImageButton
+                android:id="@+id/ib_center_on_location"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/center_map_in_location_on"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/ib_add_layer_description"
+            />
 
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

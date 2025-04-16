@@ -103,12 +103,13 @@ public class MainActivity extends AppCompatActivity {
     public void writeLocation(Location location){
         //TODO:Implementar método observador
 
-        // UI
+        // GPS INFO PANEL
         mViewManager.writeLocation(location);
-        if (mFlightTrackManager.fileFormat == null) return;
+        // MAP VIEW
+        mMapViewManager.updateLocation(location);
         // FILE
+        if (mFlightTrackManager.fileFormat == null) return;
         Date date = new Date();
-
         // Formatear la fecha y hora en el formato deseado
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String timestamp = sdf.format(date);
@@ -163,5 +164,9 @@ public class MainActivity extends AppCompatActivity {
         view_map.destroyAll();
         AndroidGraphicFactory.clearResourceMemoryCache();
         super.onDestroy();
+    }
+
+    public void centerMapOnLocation(boolean hasToCenterMapOnPosition) {
+        mMapViewManager.setCenterMapOnLocation(hasToCenterMapOnPosition);
     }
 }

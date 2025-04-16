@@ -2,6 +2,7 @@ package es.ull.etsii.testastrolabos;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
@@ -12,6 +13,7 @@ import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.datastore.MultiMapDataStore;
+import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.Layers;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.overlay.Marker;
@@ -28,26 +30,45 @@ public class MapViewManager {
     private final Activity mActivity;
     private final MapView mMapView;
     private final GraphicFactory mGraphicFactory;
-    private final List<TileRendererLayer> mLayers;
+    private final List<Layer> mLayers;
     private MultiMapDataStore mMultiMapDataStore;
     private TileRendererLayer mTileRendererLayer;
     private TileCache mTileCache;
+    private boolean mHasToCenterMap = false;
+    private Marker mUserMarker;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
         this.mGraphicFactory = AndroidGraphicFactory.INSTANCE;
         this.mLayers = new ArrayList<>();
-        mMultiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.DEDUPLICATE); // Check if problems
-        mTileCache = AndroidUtil.createTileCache(
-                mActivity,
-                "multi_tilecache",
-                mapView.getModel().displayModel.getTileSize(),
-                1.0f,
-                mapView.getModel().frameBufferModel.getOverdrawFactor()
-        );
         try {
+            mMultiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL); // Check if problems
+            mTileCache = AndroidUtil.createTileCache(
+                    mActivity,
+                    "multi_tilecache",
+                    mapView.getModel().displayModel.getTileSize(),
+                    1.0f,
+                    mapView.getModel().frameBufferModel.getOverdrawFactor()
+            );
+
             mMapView.getMapScaleBar().setVisible(true);
             mMapView.setBuiltInZoomControls(true);
+
+            // Posición inicial ficticia
+//            LatLong initialPos = new LatLong(0, 0);
+            LatLong initialPos = new LatLong(40.618808, -4.844359);
+            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.navigation);
+            if (drawable == null) {
+//                return;
+                Log.e("MapViewManager", "Drawable current location is null");
+            }
+            Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(drawable);
+
+            // Crear el marcador
+            mUserMarker = new Marker(initialPos, bitmap, 0, 0);
+
+            // Añadir directamente al LayerManager
+            mapView.getLayerManager().getLayers().add(mUserMarker);
 
         } catch (Exception e) {
             Log.e("MapViewManager", "Error al inicializar el objeto", e);
@@ -77,11 +98,20 @@ public class MapViewManager {
              * associate it with our mapView.
              */
             mMapView.getLayerManager().getLayers().add(mTileRendererLayer);
+            bringPaintingsToFront();
             Log.i("MapViewManager", "Capa añadida correctamente desde URI: " + uri.toString());
 
         } catch (Exception e) {
             Log.e("MapViewManager", "Error al añadir mapa desde URI", e);
         }
+    }
+
+    private void bringPaintingsToFront() {
+        if (mUserMarker == null) {
+            return;
+        }
+        mMapView.getLayerManager().getLayers().remove(mUserMarker,false);
+        mMapView.getLayerManager().getLayers().add(mUserMarker);
     }
 
     public void paintIcons(){
@@ -147,6 +177,30 @@ public class MapViewManager {
         } catch (Exception e){
             Log.e("MapViewManager", "Error al iconos al mapa", e);
         }
+    }
+
+    public void updateLocation(Location location) {
+        if (location == null){
+            Log.d("MapViewManager", "Location is null");
+            return;
+        }
+        Log.d("MapViewManager", location.getLatitude() + " " + location.getLongitude());
+        if (mUserMarker == null){
+            Log.d("MapViewManager", "User marker is null");
+            return;
+        }
+        LatLong latLong = new LatLong(location.getLatitude(), location.getLongitude());
+        mUserMarker.setLatLong(latLong);
+        if (mHasToCenterMap){
+            mMapView.setCenter(latLong);
+        }
+        mUserMarker.requestRedraw();
+        mMapView.repaint();
+        Log.d("MapViewManager", "Updated location icon in map: ");
+    }
+
+    public void setCenterMapOnLocation(boolean centerMapOnLocation) {
+        this.mHasToCenterMap = centerMapOnLocation;
     }
 }
 

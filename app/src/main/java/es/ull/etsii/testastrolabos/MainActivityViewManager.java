@@ -13,12 +13,14 @@ import java.util.Locale;
 public class MainActivityViewManager {
 
     private boolean mIsGPSInfoPanelVisible = false;
-    final private MainActivity mActivity;
+    private boolean mHasToCenterMapOnPosition = false;
+    private final MainActivity mActivity;
 
     // activity_main
-    private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings, ib_startTracking, ib_addLayer;
+    private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings,
+            ib_startTracking, ib_addLayer,ib_center_on_location;
     LinearLayout ll_gps_info_panel;
-    final private GPSInfoPanel mGpsInfoPanel;
+    private final GPSInfoPanel mGpsInfoPanel;
 
     public MainActivityViewManager(MainActivity activity) {
         this.mActivity = activity;
@@ -32,6 +34,7 @@ public class MainActivityViewManager {
         ib_startTracking = mActivity.findViewById(R.id.ib_start_tracking);
         ib_location_updates_settings = mActivity.findViewById(R.id.ib_location_update_settings);
         ib_addLayer = mActivity.findViewById(R.id.ib_add_layer);
+        ib_center_on_location = mActivity.findViewById(R.id.ib_center_on_location);
         ll_gps_info_panel = mActivity.findViewById(R.id.ll_gps_info_panel);
     }
 
@@ -59,6 +62,17 @@ public class MainActivityViewManager {
             mActivity.paintIcons();
             return true;
         });
+        ib_center_on_location.setOnClickListener(v -> onCenterOnLocationPressed());
+    }
+
+    private void onCenterOnLocationPressed() {
+        mHasToCenterMapOnPosition = !mHasToCenterMapOnPosition;
+        if (mHasToCenterMapOnPosition){
+            ib_center_on_location.setImageResource(R.drawable.center_map_in_location_on);
+        } else {
+            ib_center_on_location.setImageResource(R.drawable.center_map_in_location_off);
+        }
+        mActivity.centerMapOnLocation(mHasToCenterMapOnPosition);
     }
 
     private boolean showLocationUpdatesSettingsDialog() {
