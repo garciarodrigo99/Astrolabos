@@ -28,6 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/toolbar"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
     />
 
     <FrameLayout
