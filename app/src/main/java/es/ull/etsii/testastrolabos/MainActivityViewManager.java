@@ -55,6 +55,10 @@ public class MainActivityViewManager {
         ib_location_updates_settings.setOnLongClickListener(v ->
                 showLocationUpdatesSettingsDialog());
         ib_addLayer.setOnClickListener(v -> addLayer());
+        ib_addLayer.setOnLongClickListener(v -> {
+            mActivity.paintIcons();
+            return true;
+        });
     }
 
     private boolean showLocationUpdatesSettingsDialog() {

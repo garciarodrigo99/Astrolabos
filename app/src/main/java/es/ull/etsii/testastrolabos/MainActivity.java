@@ -150,6 +150,10 @@ public class MainActivity extends AppCompatActivity {
         mViewManager.locationPermissionNotGranted();
     }
 
+    public void paintIcons(){
+        mMapViewManager.paintIcons();
+    }
+
     @Override
     protected void onDestroy() {
         /*

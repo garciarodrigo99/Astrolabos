@@ -60,8 +60,6 @@ public class MapViewManager {
             FileInputStream fis = (FileInputStream) mActivity.getContentResolver().openInputStream(uri);
 
             MapDataStore newMap = new MapFile(fis);
-//            boolean isFirstElement = mLayers.isEmpty();
-//            mMultiMapDataStore.addMapDataStore(newMap,!isFirstElement,!isFirstElement);
             mMultiMapDataStore.addMapDataStore(newMap,false,false);
             if (mTileRendererLayer != null) {
                 mMapView.getLayerManager().getLayers().remove(mTileRendererLayer);
@@ -70,7 +68,7 @@ public class MapViewManager {
                     mTileCache,
                     mMultiMapDataStore,
                     mMapView.getModel().mapViewPosition,
-                    AndroidGraphicFactory.INSTANCE);
+                    mGraphicFactory);
 
             mTileRendererLayer.setXmlRenderTheme(MapsforgeThemes.DEFAULT);
 
@@ -79,69 +77,75 @@ public class MapViewManager {
              * associate it with our mapView.
              */
             mMapView.getLayerManager().getLayers().add(mTileRendererLayer);
-//            mLayers.add(mTileRendererLayer);
             Log.i("MapViewManager", "Capa añadida correctamente desde URI: " + uri.toString());
-
-//            /*
-//             * The map also needs to know which area to display and at what zoom level.
-//             * Note: this map position is specific to El Teide area.
-//             */
-//            mMapView.setCenter(new LatLong(28.272440, -16.642372));
-//            mMapView.setZoomLevel((byte) 8);
-//
-//            LatLong simulatedPosition = new LatLong(30.675, -14.602);
-//
-//            Paint paintStroke = AndroidGraphicFactory.INSTANCE.createPaint();
-//            paintStroke.setColor(Color.BLACK);
-//            paintStroke.setStrokeWidth(5);
-//            paintStroke.setStyle(Style.STROKE);
-//            paintStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
-//
-//            // Crear la lista de coordenadas
-//            List<LatLong> geoPoints = new ArrayList<>();
-//            geoPoints.add(simulatedPosition);
-//            geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
-//
-//            // Crear la Polyline
-//            Polyline polyline = new Polyline(paintStroke, AndroidGraphicFactory.INSTANCE);
-//            polyline.setPoints(geoPoints);
-//
-//            // Agregar la línea a las capas del mapa
-//            layers.add(polyline);
-//
-//            Paint paintStroke2 = AndroidGraphicFactory.INSTANCE.createPaint();
-//            paintStroke2.setColor(Color.RED);
-//            paintStroke2.setStrokeWidth(4);
-//            paintStroke2.setStyle(Style.STROKE);
-//
-//            // Crear la lista de coordenadas
-//            List<LatLong> geoPoints2 = new ArrayList<>();
-//            geoPoints2.add(new LatLong(40.472222, -3.560833)); // Las Palmas de Gran Canaria
-//            geoPoints2.add(simulatedPosition); // TFS
-//
-//            // Crear la Polyline
-//            Polyline polyline2 = new Polyline(paintStroke2, AndroidGraphicFactory.INSTANCE);
-//            polyline2.setPoints(geoPoints2);
-//            layers.add(polyline2);
-//
-//            // Cargar el icono desde los recursos con ContextCompat
-//            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.airplane);
-//
-//            // Verificar que el drawable no sea nulo
-//            if (drawable == null) {
-//                return;
-//            }
-//
-//            // Convertir el Drawable a Bitmap
-//            Bitmap iconBitmap = AndroidGraphicFactory.convertToBitmap(drawable);
-//            // Crear el marcador
-//            Marker marker = new Marker(simulatedPosition, iconBitmap, 0, 0);
-//
-//            // Agregar el marcador al mapa
-//            layers.add(marker);
 
         } catch (Exception e) {
             Log.e("MapViewManager", "Error al añadir mapa desde URI", e);
+        }
+    }
+
+    public void paintIcons(){
+        try {
+            /*
+             * The map also needs to know which area to display and at what zoom level.
+             * Note: this map position is specific to El Teide area.
+             */
+            mMapView.setCenter(new LatLong(28.272440, -16.642372));
+            mMapView.setZoomLevel((byte) 8);
+
+            LatLong simulatedPosition = new LatLong(30.675, -14.602);
+
+            Paint paintStroke = mGraphicFactory.createPaint();
+            paintStroke.setColor(Color.BLACK);
+            paintStroke.setStrokeWidth(5);
+            paintStroke.setStyle(Style.STROKE);
+            paintStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
+
+            // Crear la lista de coordenadas
+            List<LatLong> geoPoints = new ArrayList<>();
+            geoPoints.add(simulatedPosition);
+            geoPoints.add(new LatLong(28.4636, -16.2518)); // Santa Cruz de Tenerife
+
+            // Crear la Polyline
+            Polyline polyline = new Polyline(paintStroke, mGraphicFactory);
+            polyline.setPoints(geoPoints);
+
+            // Agregar la línea a las capas del mapa
+            Layers layers = mMapView.getLayerManager().getLayers();
+            layers.add(polyline);
+
+            Paint paintStroke2 = mGraphicFactory.createPaint();
+            paintStroke2.setColor(Color.RED);
+            paintStroke2.setStrokeWidth(4);
+            paintStroke2.setStyle(Style.STROKE);
+
+            // Crear la lista de coordenadas
+            List<LatLong> geoPoints2 = new ArrayList<>();
+            geoPoints2.add(new LatLong(40.472222, -3.560833)); // Las Palmas de Gran Canaria
+            geoPoints2.add(simulatedPosition); // TFS
+
+            // Crear la Polyline
+            Polyline polyline2 = new Polyline(paintStroke2, mGraphicFactory);
+            polyline2.setPoints(geoPoints2);
+            layers.add(polyline2);
+
+            // Cargar el icono desde los recursos con ContextCompat
+            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.airplane);
+
+            // Verificar que el drawable no sea nulo
+            if (drawable == null) {
+                return;
+            }
+
+            // Convertir el Drawable a Bitmap
+            Bitmap iconBitmap = AndroidGraphicFactory.convertToBitmap(drawable);
+            // Crear el marcador
+            Marker marker = new Marker(simulatedPosition, iconBitmap, 0, 0);
+
+            // Agregar el marcador al mapa
+            layers.add(marker);
+        } catch (Exception e){
+            Log.e("MapViewManager", "Error al iconos al mapa", e);
         }
     }
 }
