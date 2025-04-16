@@ -1,12 +1,19 @@
 package es.ull.etsii.testastrolabos;
 
 import android.app.Activity;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
-import org.mapsforge.core.graphics.*;
+import org.mapsforge.core.graphics.Bitmap;
+import org.mapsforge.core.graphics.GraphicFactory;
+import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Color;
+import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
@@ -36,6 +43,7 @@ public class MapViewManager {
     private TileCache mTileCache;
     private boolean mHasToCenterMap = false;
     private Marker mUserMarker;
+    private Bitmap mLocationIcon;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
@@ -62,10 +70,10 @@ public class MapViewManager {
 //                return;
                 Log.e("MapViewManager", "Drawable current location is null");
             }
-            Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(drawable);
-
+            Bitmap originalLocationIcon = AndroidGraphicFactory.convertToBitmap(drawable);
+            this.mLocationIcon = originalLocationIcon;
             // Crear el marcador
-            mUserMarker = new Marker(initialPos, bitmap, 0, 0);
+            mUserMarker = new Marker(initialPos, originalLocationIcon, 0, 0);
 
             // Añadir directamente al LayerManager
             mapView.getLayerManager().getLayers().add(mUserMarker);
@@ -179,6 +187,39 @@ public class MapViewManager {
         }
     }
 
+    private org.mapsforge.core.graphics.Bitmap getRotatedUserIcon(float angle) {
+        // 1. Obtener el drawable normal
+        Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.navigation);
+
+        if (drawable == null) {
+            Log.e("MapViewManager", "Drawable navigation es null");
+            return null;
+        }
+
+        // 2. Convertir a android.graphics.Bitmap
+        android.graphics.Bitmap androidBitmap = android.graphics.Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                android.graphics.Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(androidBitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        // 3. Rotar el bitmap usando Matrix
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);  // 'bearing' es el rumbo en grados
+
+        android.graphics.Bitmap rotatedAndroidBitmap = android.graphics.Bitmap.createBitmap(
+                androidBitmap, 0, 0,
+                androidBitmap.getWidth(),
+                androidBitmap.getHeight(),
+                matrix, true);
+
+        // 4. Convertir de nuevo a org.mapsforge.core.graphics.Bitmap
+        BitmapDrawable rotatedDrawable = new BitmapDrawable(mActivity.getResources(), rotatedAndroidBitmap);
+        return AndroidGraphicFactory.convertToBitmap(rotatedDrawable);
+    }
+
     public void updateLocation(Location location) {
         if (location == null){
             Log.d("MapViewManager", "Location is null");
@@ -191,6 +232,15 @@ public class MapViewManager {
         }
         LatLong latLong = new LatLong(location.getLatitude(), location.getLongitude());
         mUserMarker.setLatLong(latLong);
+
+        if(location.hasBearing()){
+            float bearing = location.getBearing();
+            org.mapsforge.core.graphics.Bitmap rotatedIcon = getRotatedUserIcon(bearing);
+            if (rotatedIcon != null) {
+                mUserMarker.setBitmap(rotatedIcon);
+            }
+        }
+
         if (mHasToCenterMap){
             mMapView.setCenter(latLong);
         }
