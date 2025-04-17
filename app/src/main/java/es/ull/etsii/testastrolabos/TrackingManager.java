@@ -13,7 +13,7 @@ import es.ull.etsii.testastrolabos.Dialogs.*;
 public class TrackingManager {
 
     private Context context_;
-    private Activity activity;
+    private MainActivity activity;
 
     public enum State {
         TRACKING,
@@ -80,6 +80,7 @@ public class TrackingManager {
             public void run() {
                 FileManager.createDocumentIntent(activity);
                 state_ = State.NOT_TRACKING;
+                activity.stopTracking();
             }
         };
         showConfirmationDialog(
@@ -96,6 +97,7 @@ public class TrackingManager {
             public void run() {
                 fileFormat = null;
                 state_ = State.NOT_TRACKING;
+                activity.stopTracking();
             }
         };
 

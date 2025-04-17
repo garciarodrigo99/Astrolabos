@@ -44,6 +44,9 @@ public class MapViewManager {
     private boolean mHasToCenterMap = false;
     private Marker mUserMarker;
     private Bitmap mLocationIcon;
+    private Polyline mTrackPathPolyline;
+    private List<LatLong> mTrackPathPoints;
+    private boolean mIsTracking = false;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
@@ -244,6 +247,13 @@ public class MapViewManager {
         if (mHasToCenterMap){
             mMapView.setCenter(latLong);
         }
+
+        if(mIsTracking){
+            mUserMarker.setLatLong(latLong);
+
+            mTrackPathPoints.add(latLong);
+            mTrackPathPolyline.setPoints(mTrackPathPoints);
+        }
         mUserMarker.requestRedraw();
         mMapView.repaint();
         Log.d("MapViewManager", "Updated location icon in map: ");
@@ -251,6 +261,28 @@ public class MapViewManager {
 
     public void setCenterMapOnLocation(boolean centerMapOnLocation) {
         this.mHasToCenterMap = centerMapOnLocation;
+    }
+
+    public void startTracking() {
+        try {
+            Paint paintStroke = mGraphicFactory.createPaint();
+            paintStroke.setColor(Color.RED);
+            paintStroke.setStrokeWidth(4);
+            paintStroke.setStyle(Style.STROKE);
+            mTrackPathPoints = new ArrayList<>();
+            mTrackPathPolyline = new Polyline(paintStroke, mGraphicFactory);
+            mTrackPathPolyline.setPoints(mTrackPathPoints);
+            mMapView.getLayerManager().getLayers().add(mTrackPathPolyline);
+            this.mIsTracking = true;
+        } catch (Exception e){
+            Log.e("MapViewManager", "Error starting tracking", e);
+        }
+    }
+    public void stopTracking() {
+        this.mIsTracking = false;
+        mMapView.getLayerManager().getLayers().remove(mTrackPathPolyline);
+        mTrackPathPolyline = null;
+        mTrackPathPoints = null;
     }
 }
 

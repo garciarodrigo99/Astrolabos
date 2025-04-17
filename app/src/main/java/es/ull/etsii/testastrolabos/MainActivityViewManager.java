@@ -105,12 +105,12 @@ public class MainActivityViewManager {
     }
 
     private void toggleGPSInfoPanel() {
-        if (mIsGPSInfoPanelVisible) {
-            ll_gps_info_panel.setVisibility(View.GONE);
-        } else {
-            ll_gps_info_panel.setVisibility(View.VISIBLE);
-        }
         mIsGPSInfoPanelVisible = !mIsGPSInfoPanelVisible;
+        if (mIsGPSInfoPanelVisible) {
+            ll_gps_info_panel.setVisibility(View.VISIBLE);
+        } else {
+            ll_gps_info_panel.setVisibility(View.GONE);
+        }
     }
 
     private void addLayer() {
