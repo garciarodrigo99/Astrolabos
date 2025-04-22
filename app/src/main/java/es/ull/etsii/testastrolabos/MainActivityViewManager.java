@@ -1,13 +1,16 @@
 package es.ull.etsii.testastrolabos;
 
+import android.app.AlertDialog;
 import android.location.Location;
 import android.view.View;
 import android.widget.*;
+import es.ull.etsii.testastrolabos.Airport.Airport;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivityViewManager {
@@ -18,7 +21,7 @@ public class MainActivityViewManager {
 
     // activity_main
     private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings,
-            ib_startTracking, ib_addLayer,ib_center_on_location;
+            ib_startTracking, ib_addLayer,ib_center_on_location, ib_showAirports;
     LinearLayout ll_gps_info_panel;
     private final GPSInfoPanel mGpsInfoPanel;
 
@@ -35,6 +38,7 @@ public class MainActivityViewManager {
         ib_location_updates_settings = mActivity.findViewById(R.id.ib_location_update_settings);
         ib_addLayer = mActivity.findViewById(R.id.ib_add_layer);
         ib_center_on_location = mActivity.findViewById(R.id.ib_center_on_location);
+        ib_showAirports = mActivity.findViewById(R.id.temp_ib_showAirports);
         ll_gps_info_panel = mActivity.findViewById(R.id.ll_gps_info_panel);
     }
 
@@ -63,6 +67,25 @@ public class MainActivityViewManager {
             return true;
         });
         ib_center_on_location.setOnClickListener(v -> onCenterOnLocationPressed());
+        ib_showAirports.setOnClickListener(v -> showAirports());
+    }
+
+    private void showAirports() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        List<Airport> airports =  mActivity.mAirportDAO.getAllAirports();
+        ArrayAdapter<Airport> adapter = new ArrayAdapter<>(
+                mActivity,
+                android.R.layout.simple_list_item_1,
+                airports // se va a usar toString() para mostrar cada ítem
+        );
+
+        // Setear la lista sin interacción
+        builder.setAdapter(adapter, null);
+
+        // Botón de cerrar
+        builder.setNegativeButton("Cerrar", (dialog, which) -> dialog.dismiss());
+
+        builder.show();
     }
 
     private void onCenterOnLocationPressed() {

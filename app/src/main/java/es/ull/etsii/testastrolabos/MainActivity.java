@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     MapView view_map;
     TrackingManager mFlightTrackManager;
     private MapViewManager mMapViewManager;
-    private AirportDAO mAirportDAO;
+    AirportDAO mAirportDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

@@ -62,5 +62,15 @@
                 android:contentDescription="@string/ib_add_layer_description"
             />
 
+            <ImageButton
+                    android:id="@+id/temp_ib_showAirports"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/airplane"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/ib_add_layer_description"
+            />
+
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

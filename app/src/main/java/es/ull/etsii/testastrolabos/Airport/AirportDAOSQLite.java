@@ -88,18 +88,18 @@ public class AirportDAOSQLite implements AirportDAO {
 
         if (cursor.moveToFirst()) {
             do {
-                String iataCode = cursor.getString(1);
-                String icaoCode = cursor.getString(2);
-                String name = cursor.getString(3);
-                double latitude = cursor.getDouble(4);
-                double longitude = cursor.getDouble(5);
-                int elevation = cursor.getInt(6);
-                String timeZone = cursor.getString(7);
-                String cityCode = cursor.getString(8);
-                String country = cursor.getString(9);
-                String city = cursor.getString(10);
-                String state = cursor.getString(11);
-                String county = cursor.getString(12);
+                String iataCode = cursor.getString(0);
+                String icaoCode = cursor.getString(1);
+                String name = cursor.getString(2);
+                double latitude = cursor.getDouble(3);
+                double longitude = cursor.getDouble(4);
+                int elevation = cursor.getInt(5);
+                String timeZone = cursor.getString(6);
+                String cityCode = cursor.getString(7);
+                String country = cursor.getString(8);
+                String city = cursor.getString(9);
+                String state = cursor.getString(10);
+                String county = cursor.getString(11);
 
                 Airport airport = new Airport(
                         iataCode,icaoCode,name,latitude,longitude,elevation,

@@ -25,6 +25,7 @@
         <string name="ib_location_update_settings_description">Location update setting</string>
         <string name="ib_add_layer_description">Add map layer</string>
         <string name="ib_center_on_location_description">Center view on current location</string>
+        <string name="tmp_ib_showAirports">Show Airports</string>
 
         <!-- flight_track_screen.xml -->
         <!-- start_tracking_screen -->
