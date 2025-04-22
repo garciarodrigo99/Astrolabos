@@ -6,7 +6,9 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryDark"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+>
 
     <LinearLayout
             android:layout_width="match_parent"

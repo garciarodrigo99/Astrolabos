@@ -43,7 +43,6 @@ public class MapViewManager {
     private TileCache mTileCache;
     private boolean mHasToCenterMap = false;
     private Marker mUserMarker;
-    private Bitmap mLocationIcon;
     private Polyline mTrackPathPolyline;
     private List<LatLong> mTrackPathPoints;
     private boolean mIsTracking = false;
@@ -66,15 +65,12 @@ public class MapViewManager {
             mMapView.setBuiltInZoomControls(true);
 
             // Posición inicial ficticia
-//            LatLong initialPos = new LatLong(0, 0);
-            LatLong initialPos = new LatLong(40.618808, -4.844359);
+            LatLong initialPos = new LatLong(0, 0);
             Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.navigation);
             if (drawable == null) {
-//                return;
                 Log.e("MapViewManager", "Drawable current location is null");
             }
             Bitmap originalLocationIcon = AndroidGraphicFactory.convertToBitmap(drawable);
-            this.mLocationIcon = originalLocationIcon;
             // Crear el marcador
             mUserMarker = new Marker(initialPos, originalLocationIcon, 0, 0);
 

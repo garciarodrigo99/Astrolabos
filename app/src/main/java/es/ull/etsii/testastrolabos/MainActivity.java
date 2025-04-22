@@ -9,11 +9,18 @@ import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import es.ull.etsii.testastrolabos.Airport.AirportDAO;
+import es.ull.etsii.testastrolabos.Airport.AirportDAOSQLite;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import android.util.Log;
 
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     MapView view_map;
     TrackingManager mFlightTrackManager;
     private MapViewManager mMapViewManager;
+    private AirportDAO mAirportDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mPermissionManager.checkLocationPermission();
 
         mLocationManager = AstrolabosLocationManager.getInstance(this);
+        mAirportDAO = new AirportDAOSQLite(this);
     }
 
     // Function to handle when certain permissions are granted or not
