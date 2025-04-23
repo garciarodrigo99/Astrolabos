@@ -91,9 +91,9 @@ public class MainActivityViewManager {
     private void onCenterOnLocationPressed() {
         mHasToCenterMapOnPosition = !mHasToCenterMapOnPosition;
         if (mHasToCenterMapOnPosition){
-            ib_center_on_location.setImageResource(R.drawable.center_map_in_location_on);
+            ib_center_on_location.setImageResource(R.drawable.ic_center_map_in_location_on);
         } else {
-            ib_center_on_location.setImageResource(R.drawable.center_map_in_location_off);
+            ib_center_on_location.setImageResource(R.drawable.ic_center_map_in_location_off);
         }
         mActivity.centerMapOnLocation(mHasToCenterMapOnPosition);
     }
@@ -117,11 +117,11 @@ public class MainActivityViewManager {
     private void defineLocationUpdates() {
         mActivity.setLocationUpdates(!mActivity.isLocationUpdatesEnabled());
         if (mActivity.isLocationUpdatesEnabled()){
-            ib_location_updates_settings.setImageResource(R.drawable.location_on);
+            ib_location_updates_settings.setImageResource(R.drawable.ic_location_on);
             mActivity.startLocationUpdates();
             mActivity.updateLocation();
         } else {
-            ib_location_updates_settings.setImageResource(R.drawable.location_off);
+            ib_location_updates_settings.setImageResource(R.drawable.ic_location_off);
             mActivity.stopLocationUpdates();
             notTrackingLocation();
         }

@@ -22,7 +22,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/ib_location_update_settings_description"
-                android:src="@drawable/location_off"
+                android:src="@drawable/ic_location_off"
                 android:background="@android:color/transparent"/>
 
             <ImageButton
@@ -30,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/tracking"
+                android:src="@drawable/ic_tracking"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/ib_start_tracking_description" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/data_exploration"
+                android:src="@drawable/ic_data_exploration"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/ib_toggle_gps_info_panel_description" />
 
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/map"
+                android:src="@drawable/ic_map"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/ib_add_layer_description" />
 
@@ -57,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/center_map_in_location_off"
+                android:src="@drawable/ic_center_map_in_location_off"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/ib_add_layer_description"
             />
@@ -67,7 +67,7 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:src="@drawable/airplane"
+                    android:src="@drawable/ic_airplane"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/ib_add_layer_description"
             />

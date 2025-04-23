@@ -66,7 +66,7 @@ public class MapViewManager {
 
             // Posición inicial ficticia
             LatLong initialPos = new LatLong(0, 0);
-            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.navigation);
+            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.ic_navigation);
             if (drawable == null) {
                 Log.e("MapViewManager", "Drawable current location is null");
             }
@@ -167,7 +167,7 @@ public class MapViewManager {
             layers.add(polyline2);
 
             // Cargar el icono desde los recursos con ContextCompat
-            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.airplane);
+            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.ic_airplane);
 
             // Verificar que el drawable no sea nulo
             if (drawable == null) {
@@ -188,7 +188,7 @@ public class MapViewManager {
 
     private org.mapsforge.core.graphics.Bitmap getRotatedUserIcon(float angle) {
         // 1. Obtener el drawable normal
-        Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.navigation);
+        Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.ic_navigation);
 
         if (drawable == null) {
             Log.e("MapViewManager", "Drawable navigation es null");
