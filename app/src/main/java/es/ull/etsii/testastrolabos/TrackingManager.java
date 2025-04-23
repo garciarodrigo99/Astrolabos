@@ -22,10 +22,12 @@ public class TrackingManager {
 
     private State state_ = State.NOT_TRACKING;
     FileFormat fileFormat;
+    private StartTrackingDialog startTrackingDialog;
 
     public TrackingManager(MainActivity activity) {
         this.activity = activity;
         this.context_ = activity;
+        this.startTrackingDialog = new StartTrackingDialog(activity);
     }
 
     public State getState() {
@@ -33,31 +35,23 @@ public class TrackingManager {
     }
 
     public void startTracking() {
-        // Lógica para iniciar el seguimiento
-        Dialogs.showRecordFlightDialog(this.context_, new AcceptCancelActions<TrackSettings>() {
-            @Override
-            public void accept(TrackSettings data) {
-                // Aquí puedes realizar la acción específica según los datos proporcionados
-                if (data != null) {
-                    // Por ejemplo, guardar los datos en una base de datos o hacer algo más
-                    //recordFlightData = data;
-                    //TODO: uncomment
-                    Toast.makeText(context_, data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
-                    //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
-                    //TODO: uncomment
-                    fileFormat = new JsonFormat(data);
-                } else {
-                    // Si el usuario cancela el diálogo, no se hace nada
-                    Toast.makeText(context_, "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
-                }
-                state_ = State.TRACKING;
+        startTrackingDialog.setAcceptAction(data -> {
+            // Aquí puedes realizar la acción específica según los datos proporcionados
+            if (data != null) {
+                // Por ejemplo, guardar los datos en una base de datos o hacer algo más
+                //recordFlightData = data;
+                //TODO: uncomment
+                Toast.makeText(context_, data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
+                //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
+                //TODO: uncomment
+                fileFormat = new JsonFormat(data);
+            } else {
+                // Si el usuario cancela el diálogo, no se hace nada
+                Toast.makeText(context_, "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            public void cancel(TrackSettings data) {
-                Toast.makeText(context_, "Flight tracking cancelled", Toast.LENGTH_SHORT).show();
-            }
+            state_ = State.TRACKING;
         });
+        startTrackingDialog.show(activity.getSupportFragmentManager(), "StartTrackingDialog");
     }
 
     public void showTrackingSettings() {

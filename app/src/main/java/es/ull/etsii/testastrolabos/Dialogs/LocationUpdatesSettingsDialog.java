@@ -13,7 +13,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 import es.ull.etsii.testastrolabos.MainActivity;
 import es.ull.etsii.testastrolabos.R;
-import es.ull.etsii.testastrolabos.TrackingManager;
 
 public class LocationUpdatesSettingsDialog extends DialogFragment {
     private Context context_;

@@ -39,6 +39,12 @@
         <item name="et_dialog_record_flight_slow_mode" type="id"/>
         <item name="tv_dialog_record_flight_fast_mode" type="id"/>
         <item name="et_dialog_record_flight_fast_mode" type="id"/>
+        <item name="cb_free_tracking" type="id"/>
+        <item name="layout_airport_config" type="id"/>
+        <item name="tv_origin_airport" type="id"/>
+        <item name="ac_origin_airport" type="id"/>
+        <item name="tv_destination_airport" type="id"/>
+        <item name="ac_destination_airport" type="id"/>
 
         <!--  MapsForge  -->
         <item name="mapView" type="id"/>
