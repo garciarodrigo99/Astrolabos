@@ -8,40 +8,23 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
+import androidx.annotation.CheckResult;
 import androidx.core.content.ContextCompat;
-import es.ull.etsii.testastrolabos.Airport.Airport;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.GraphicFactory;
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Color;
-import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MapDataStore;
-import org.mapsforge.map.datastore.MultiMapDataStore;
-import org.mapsforge.map.layer.Layer;
-import org.mapsforge.map.layer.Layers;
-import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.overlay.Marker;
-import org.mapsforge.map.layer.overlay.Polyline;
-import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapViewManager {
     final Activity mActivity;
     final MapView mMapView;
-    final GraphicFactory mGraphicFactory;
-    final List<Layer> mLayers;
-    MultiMapDataStore mMultiMapDataStore;
-    TileRendererLayer mTileRendererLayer;
-    TileCache mTileCache;
+    private MapViewRenderer mMapViewRenderer;
     private boolean mHasToCenterMap = false;
     Marker mUserMarker;
     private boolean mIsTracking = false;
@@ -49,37 +32,39 @@ public class MapViewManager {
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
-        this.mGraphicFactory = AndroidGraphicFactory.INSTANCE;
-        this.mLayers = new ArrayList<>();
         try {
-            mMultiMapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL); // Check if problems
-            mTileCache = AndroidUtil.createTileCache(
-                    mActivity,
-                    "multi_tilecache",
-                    mapView.getModel().displayModel.getTileSize(),
-                    1.0f,
-                    mapView.getModel().frameBufferModel.getOverdrawFactor()
-            );
+            mMapViewRenderer = new MapViewRenderer(this);
 
             mMapView.getMapScaleBar().setVisible(true);
             mMapView.setBuiltInZoomControls(true);
 
-            // Posición inicial ficticia
             LatLong initialPos = new LatLong(0, 0);
-            Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.ic_navigation);
-            if (drawable == null) {
-                Log.e("MapViewManager", "Drawable current location is null");
-            }
-            Bitmap originalLocationIcon = AndroidGraphicFactory.convertToBitmap(drawable);
-            // Crear el marcador
-            mUserMarker = new Marker(initialPos, originalLocationIcon, 0, 0);
-
-            // Añadir directamente al LayerManager
-            mMapView.getLayerManager().getLayers().add(mUserMarker);
-
+            mUserMarker = insertIconInMap(initialPos,R.drawable.ic_navigation);
         } catch (Exception e) {
-            Log.e("MapViewManager", "Error al inicializar el objeto", e);
+            Log.e("MapViewManager", "Error creating map view manager", e);
         }
+    }
+
+    @CheckResult
+    Marker insertIconInMap(LatLong latLong, int id) {
+        Marker marker = null;
+        try {
+            Drawable drawable = ContextCompat.getDrawable(mActivity, id);
+            if (drawable == null) {
+                Log.e("MapViewManager", "Drawable icon is null");
+                return marker;
+            }
+            Bitmap originLocationIcon = AndroidGraphicFactory.convertToBitmap(drawable);
+            marker = new Marker(latLong, originLocationIcon, 0, 0);
+            mMapView.getLayerManager().getLayers().add(marker);
+        } catch (Exception e){
+            Log.e("MapViewManager", "Error trying to insert icon into Map View", e);
+        }
+        return marker;
+    }
+
+    public GraphicFactory getGraphicFactory() {
+        return mMapViewRenderer.getGraphicFactory();
     }
 
     public void loadMap(Uri uri){
@@ -88,26 +73,19 @@ public class MapViewManager {
             FileInputStream fis = (FileInputStream) mActivity.getContentResolver().openInputStream(uri);
 
             MapDataStore newMap = new MapFile(fis);
-            mMultiMapDataStore.addMapDataStore(newMap,false,false);
-            if (mTileRendererLayer != null) {
-                mMapView.getLayerManager().getLayers().remove(mTileRendererLayer);
+            mMapViewRenderer.getMultiMapDataStore().addMapDataStore(newMap,false,false);
+            if (mMapViewRenderer.getTileRendererLayer() != null) {
+                mMapView.getLayerManager().getLayers().remove(mMapViewRenderer.getTileRendererLayer());
             }
-            mTileRendererLayer = new TileRendererLayer(
-                    mTileCache,
-                    mMultiMapDataStore,
-                    mMapView.getModel().mapViewPosition,
-                    mGraphicFactory);
-
-            mTileRendererLayer.setXmlRenderTheme(MapsforgeThemes.DEFAULT);
+            mMapViewRenderer.initTileRendererLayer();
 
             /*
              * On its own a tileRendererLayer does not know where to display the map, so we need to
              * associate it with our mapView.
              */
-            mMapView.getLayerManager().getLayers().add(mTileRendererLayer);
+            mMapView.getLayerManager().getLayers().add(mMapViewRenderer.getTileRendererLayer());
             bringPaintingsToFront();
             Log.i("MapViewManager", "Capa añadida correctamente desde URI: " + uri.toString());
-
         } catch (Exception e) {
             Log.e("MapViewManager", "Error al añadir mapa desde URI", e);
         }

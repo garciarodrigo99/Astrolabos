@@ -43,12 +43,12 @@ public class AirTrackingView extends TrackingViewManager{
         mDestinationPoints = new ArrayList<>();
         mDestinationPoints.add(new LatLong(mOriginAirport.getLatitude(), mOriginAirport.getLongitude()));
         mDestinationPoints.add(new LatLong(mDestinationAirport.getLatitude(), mDestinationAirport.getLongitude()));
-        Paint destinationStroke = mMapViewManager.mGraphicFactory.createPaint();
+        Paint destinationStroke = mMapViewManager.getGraphicFactory().createPaint();
         destinationStroke.setColor(Color.BLACK);
         destinationStroke.setStrokeWidth(5);
         destinationStroke.setStyle(Style.STROKE);
         destinationStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
-        mDestinationPolyline = new Polyline(destinationStroke,mMapViewManager.mGraphicFactory);
+        mDestinationPolyline = new Polyline(destinationStroke,mMapViewManager.getGraphicFactory());
         mDestinationPolyline.setPoints(mDestinationPoints);
         mMapViewManager.mMapView.getLayerManager().getLayers().add(mDestinationPolyline);
     }
@@ -63,9 +63,9 @@ public class AirTrackingView extends TrackingViewManager{
 
     private void paintAirports(Airport origin, Airport destination) {
         try {
-            mOriginMarker = insertIconInMap(new LatLong(origin.getLatitude(), origin.getLongitude()),
+            mOriginMarker = mMapViewManager.insertIconInMap(new LatLong(origin.getLatitude(), origin.getLongitude()),
                     R.drawable.ic_flight_takeoff);
-            mDestinationMarker = insertIconInMap(new LatLong(destination.getLatitude(), destination.getLongitude()),
+            mDestinationMarker = mMapViewManager.insertIconInMap(new LatLong(destination.getLatitude(), destination.getLongitude()),
                     R.drawable.ic_flight_land);
         } catch (Exception e){
             Log.e("AirTrackingView", "Error painting airports", e);
