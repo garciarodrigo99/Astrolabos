@@ -21,7 +21,7 @@ public class MainActivityViewManager {
 
     // activity_main
     private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings,
-            ib_startTracking, ib_addLayer,ib_center_on_location, ib_showAirports;
+            ib_startTracking, ib_addLayer,ib_center_on_location;
     LinearLayout ll_gps_info_panel;
     private final GPSInfoPanel mGpsInfoPanel;
 
@@ -38,7 +38,6 @@ public class MainActivityViewManager {
         ib_location_updates_settings = mActivity.findViewById(R.id.ib_location_update_settings);
         ib_addLayer = mActivity.findViewById(R.id.ib_add_layer);
         ib_center_on_location = mActivity.findViewById(R.id.ib_center_on_location);
-        ib_showAirports = mActivity.findViewById(R.id.temp_ib_showAirports);
         ll_gps_info_panel = mActivity.findViewById(R.id.ll_gps_info_panel);
     }
 
@@ -62,30 +61,7 @@ public class MainActivityViewManager {
         ib_location_updates_settings.setOnLongClickListener(v ->
                 showLocationUpdatesSettingsDialog());
         ib_addLayer.setOnClickListener(v -> addLayer());
-        ib_addLayer.setOnLongClickListener(v -> {
-            mActivity.paintIcons();
-            return true;
-        });
         ib_center_on_location.setOnClickListener(v -> onCenterOnLocationPressed());
-        ib_showAirports.setOnClickListener(v -> showAirports());
-    }
-
-    private void showAirports() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        List<Airport> airports =  mActivity.mAirportDAO.getAllAirports();
-        ArrayAdapter<Airport> adapter = new ArrayAdapter<>(
-                mActivity,
-                android.R.layout.simple_list_item_1,
-                airports // se va a usar toString() para mostrar cada ítem
-        );
-
-        // Setear la lista sin interacción
-        builder.setAdapter(adapter, null);
-
-        // Botón de cerrar
-        builder.setNegativeButton("Cerrar", (dialog, which) -> dialog.dismiss());
-
-        builder.show();
     }
 
     private void onCenterOnLocationPressed() {

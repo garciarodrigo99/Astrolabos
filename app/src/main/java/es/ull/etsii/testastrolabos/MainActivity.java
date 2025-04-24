@@ -166,10 +166,6 @@ public class MainActivity extends AppCompatActivity {
         mViewManager.locationPermissionNotGranted();
     }
 
-    public void paintIcons(){
-        mMapViewManager.paintIcons();
-    }
-
     public AirportDAO getAirportDAO() {
         return mAirportDAO;
     }
