@@ -35,21 +35,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapViewManager {
-    private final Activity mActivity;
-    private final MapView mMapView;
-    private final GraphicFactory mGraphicFactory;
-    private final List<Layer> mLayers;
-    private MultiMapDataStore mMultiMapDataStore;
-    private TileRendererLayer mTileRendererLayer;
-    private TileCache mTileCache;
+    final Activity mActivity;
+    final MapView mMapView;
+    final GraphicFactory mGraphicFactory;
+    final List<Layer> mLayers;
+    MultiMapDataStore mMultiMapDataStore;
+    TileRendererLayer mTileRendererLayer;
+    TileCache mTileCache;
     private boolean mHasToCenterMap = false;
-    private Marker mUserMarker;
-    private Polyline mTrackPathPolyline;
-    private List<LatLong> mTrackPathPoints;
-    private Polyline mDestinationPolyline;
-    private List<LatLong> mDestinationPoints;
+    Marker mUserMarker;
     private boolean mIsTracking = false;
-    private TrackSettings mTrackSettings = null;
+    private TrackingViewManager mTrackingViewManager = null;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
@@ -183,14 +179,8 @@ public class MapViewManager {
             mMapView.setCenter(latLong);
         }
 
-        if(mIsTracking){
-            mUserMarker.setLatLong(latLong);
-            mTrackPathPoints.add(latLong);
-            mTrackPathPolyline.setPoints(mTrackPathPoints);
-
-            mDestinationPoints.set(0,latLong);
-            mDestinationPolyline.setPoints(mDestinationPoints);
-
+        if(mTrackingViewManager != null){
+            mTrackingViewManager.updateLocation(latLong);
         }
         mUserMarker.requestRedraw();
         mMapView.repaint();
@@ -202,75 +192,21 @@ public class MapViewManager {
     }
 
     public void startTracking(TrackSettings trackSettings) {
-        this.mTrackSettings = trackSettings;
-        try {
-            if (!mTrackSettings.isFreeTracking()){
-                paintAirports(mTrackSettings);
-            }
-            Paint pathStroke = mGraphicFactory.createPaint();
-            pathStroke.setColor(Color.RED);
-            pathStroke.setStrokeWidth(4);
-            pathStroke.setStyle(Style.STROKE);
-            mTrackPathPoints = new ArrayList<>();
-            if (!mTrackSettings.isFreeTracking()){
-                LatLong origin = new LatLong(mTrackSettings.getOriginAirport().getLatitude(),
-                        mTrackSettings.getOriginAirport().getLongitude());
-                mTrackPathPoints.add(origin);
-                mDestinationPoints = new ArrayList<>();
-                mDestinationPoints.add(origin);
-                mDestinationPoints.add(new LatLong(mTrackSettings.getDestinationAirport().getLatitude(),
-                        mTrackSettings.getDestinationAirport().getLongitude()));
-                Paint destinationStroke = mGraphicFactory.createPaint();
-                destinationStroke.setColor(Color.BLACK);
-                destinationStroke.setStrokeWidth(5);
-                destinationStroke.setStyle(Style.STROKE);
-                destinationStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
-                mDestinationPolyline = new Polyline(destinationStroke,mGraphicFactory);
-                mDestinationPolyline.setPoints(mDestinationPoints);
-                mMapView.getLayerManager().getLayers().add(mDestinationPolyline);
-            }
-            mTrackPathPolyline = new Polyline(pathStroke, mGraphicFactory);
-            mTrackPathPolyline.setPoints(mTrackPathPoints);
-            mMapView.getLayerManager().getLayers().add(mTrackPathPolyline);
-            this.mIsTracking = true;
-        } catch (Exception e){
-            Log.e("MapViewManager", "Error starting tracking", e);
+        if (!trackSettings.isFreeTracking()){
+            mTrackingViewManager = new AirTrackingView(
+                    this,
+                    trackSettings.getOriginAirport(),
+                    trackSettings.getDestinationAirport());
+        } else {
+            mTrackingViewManager = new FreeTrackingView(this);
         }
-    }
-
-    private void paintAirports(TrackSettings trackSettings) {
-        try {
-            insertIconInMap(new LatLong(trackSettings.getOriginAirport().getLatitude(),
-                                        trackSettings.getOriginAirport().getLongitude()),
-                            R.drawable.ic_flight_takeoff);
-            insertIconInMap(new LatLong(trackSettings.getDestinationAirport().getLatitude(),
-                                        trackSettings.getDestinationAirport().getLongitude()),
-                    R.drawable.ic_flight_land);
-        } catch (Exception e){
-            Log.e("MapViewManager", "Error painting airports", e);
-        }
+        mTrackingViewManager.startTracking();
     }
 
     public void stopTracking() {
+        mTrackingViewManager.stopTracking();
+        mTrackingViewManager = null;
         this.mIsTracking = false;
-        mMapView.getLayerManager().getLayers().remove(mTrackPathPolyline);
-        mTrackPathPolyline = null;
-        mTrackPathPoints = null;
-        mTrackSettings = null;
-    }
-
-    private void insertIconInMap(LatLong latLong, int id) {
-        try {
-            Drawable drawable = ContextCompat.getDrawable(mActivity, id);
-            if (drawable == null) {
-                Log.e("MapViewManager", "Drawable icon is null");
-            }
-            Bitmap originLocationIcon = AndroidGraphicFactory.convertToBitmap(drawable);
-            Marker marker = new Marker(latLong, originLocationIcon, 0, 0);
-            mMapView.getLayerManager().getLayers().add(marker);
-        } catch (Exception e){
-            Log.e("MapViewManager", "Error trying to insert icon into Map View", e);
-        }
     }
 }
 
