@@ -46,7 +46,10 @@ public class MapViewManager {
     private Marker mUserMarker;
     private Polyline mTrackPathPolyline;
     private List<LatLong> mTrackPathPoints;
+    private Polyline mDestinationPolyline;
+    private List<LatLong> mDestinationPoints;
     private boolean mIsTracking = false;
+    private TrackSettings mTrackSettings = null;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
@@ -247,9 +250,12 @@ public class MapViewManager {
 
         if(mIsTracking){
             mUserMarker.setLatLong(latLong);
-
             mTrackPathPoints.add(latLong);
             mTrackPathPolyline.setPoints(mTrackPathPoints);
+
+            mDestinationPoints.set(0,latLong);
+            mDestinationPolyline.setPoints(mDestinationPoints);
+
         }
         mUserMarker.requestRedraw();
         mMapView.repaint();
@@ -261,16 +267,34 @@ public class MapViewManager {
     }
 
     public void startTracking(TrackSettings trackSettings) {
+        this.mTrackSettings = trackSettings;
         try {
-            if (!trackSettings.isFreeTracking()){
-                paintAirports(trackSettings);
+            if (!mTrackSettings.isFreeTracking()){
+                paintAirports(mTrackSettings);
             }
-            Paint paintStroke = mGraphicFactory.createPaint();
-            paintStroke.setColor(Color.RED);
-            paintStroke.setStrokeWidth(4);
-            paintStroke.setStyle(Style.STROKE);
+            Paint pathStroke = mGraphicFactory.createPaint();
+            pathStroke.setColor(Color.RED);
+            pathStroke.setStrokeWidth(4);
+            pathStroke.setStyle(Style.STROKE);
             mTrackPathPoints = new ArrayList<>();
-            mTrackPathPolyline = new Polyline(paintStroke, mGraphicFactory);
+            if (!mTrackSettings.isFreeTracking()){
+                LatLong origin = new LatLong(mTrackSettings.getOriginAirport().getLatitude(),
+                        mTrackSettings.getOriginAirport().getLongitude());
+                mTrackPathPoints.add(origin);
+                mDestinationPoints = new ArrayList<>();
+                mDestinationPoints.add(origin);
+                mDestinationPoints.add(new LatLong(mTrackSettings.getDestinationAirport().getLatitude(),
+                        mTrackSettings.getDestinationAirport().getLongitude()));
+                Paint destinationStroke = mGraphicFactory.createPaint();
+                destinationStroke.setColor(Color.BLACK);
+                destinationStroke.setStrokeWidth(5);
+                destinationStroke.setStyle(Style.STROKE);
+                destinationStroke.setDashPathEffect(new float[]{20, 20}); // Línea segmentada
+                mDestinationPolyline = new Polyline(destinationStroke,mGraphicFactory);
+                mDestinationPolyline.setPoints(mDestinationPoints);
+                mMapView.getLayerManager().getLayers().add(mDestinationPolyline);
+            }
+            mTrackPathPolyline = new Polyline(pathStroke, mGraphicFactory);
             mTrackPathPolyline.setPoints(mTrackPathPoints);
             mMapView.getLayerManager().getLayers().add(mTrackPathPolyline);
             this.mIsTracking = true;
@@ -297,6 +321,7 @@ public class MapViewManager {
         mMapView.getLayerManager().getLayers().remove(mTrackPathPolyline);
         mTrackPathPolyline = null;
         mTrackPathPoints = null;
+        mTrackSettings = null;
     }
 
     private void insertIconInMap(LatLong latLong, int id) {
