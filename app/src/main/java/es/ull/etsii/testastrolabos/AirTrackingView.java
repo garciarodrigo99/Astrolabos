@@ -6,6 +6,7 @@ import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.layer.overlay.Marker;
 import org.mapsforge.map.layer.overlay.Polyline;
 
 import java.util.ArrayList;
@@ -14,8 +15,10 @@ import java.util.List;
 public class AirTrackingView extends TrackingViewManager{
     private Polyline mDestinationPolyline;
     private List<LatLong> mDestinationPoints;
-    private Airport mOriginAirport;
-    private Airport mDestinationAirport;
+    private final Airport mOriginAirport;
+    private final Airport mDestinationAirport;
+    private Marker mOriginMarker = null;
+    private Marker mDestinationMarker = null;
     public AirTrackingView(MapViewManager mapViewManager, Airport origin, Airport destination) {
         super(mapViewManager);
         this.mOriginAirport = origin;
@@ -52,18 +55,20 @@ public class AirTrackingView extends TrackingViewManager{
 
     @Override
     public void stopTracking() {
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationPolyline);
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mOriginMarker);
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationMarker);
         super.stopTracking();
-        mDestinationPolyline.setPoints(mDestinationPoints);
     }
 
     private void paintAirports(Airport origin, Airport destination) {
         try {
-            insertIconInMap(new LatLong(origin.getLatitude(), origin.getLongitude()),
+            mOriginMarker = insertIconInMap(new LatLong(origin.getLatitude(), origin.getLongitude()),
                     R.drawable.ic_flight_takeoff);
-            insertIconInMap(new LatLong(destination.getLatitude(), destination.getLongitude()),
+            mDestinationMarker = insertIconInMap(new LatLong(destination.getLatitude(), destination.getLongitude()),
                     R.drawable.ic_flight_land);
         } catch (Exception e){
-            Log.e("TrackingViewManager", "Error painting airports", e);
+            Log.e("AirTrackingView", "Error painting airports", e);
         }
     }
 
