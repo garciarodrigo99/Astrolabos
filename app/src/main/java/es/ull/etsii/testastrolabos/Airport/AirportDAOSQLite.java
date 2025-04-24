@@ -95,7 +95,6 @@ public class AirportDAOSQLite implements AirportDAO {
                 double longitude = cursor.getDouble(4);
                 int elevation = cursor.getInt(5);
                 String timeZone = cursor.getString(6);
-                String cityCode = cursor.getString(7);
                 String country = cursor.getString(8);
                 String city = cursor.getString(9);
                 String state = cursor.getString(10);
@@ -103,7 +102,7 @@ public class AirportDAOSQLite implements AirportDAO {
 
                 Airport airport = new Airport(
                         iataCode,icaoCode,name,latitude,longitude,elevation,
-                        timeZone,cityCode,country,city,state,county);
+                        timeZone,city,county,state,country);
                 list.add(airport);
             } while (cursor.moveToNext());
         }

@@ -20,9 +20,15 @@ public class JsonFormat extends FileFormat {
 
         // Crear el objeto "info" con los datos correspondientes
         infoObject = new JsonObject();
-        infoObject.addProperty("nombre_vuelo", this.info.getFlightName());
-        infoObject.addProperty("max_valor", this.info.getMaxValue());
-        infoObject.addProperty("min_valor", this.info.getMinValue());
+        infoObject.addProperty("fligh_name", this.info.getFlightName());
+        infoObject.addProperty("max_update_time", this.info.getMaxValue());
+        infoObject.addProperty("min_update_time", this.info.getMinValue());
+        if (!trackSettings.isFreeTracking()){
+            infoObject.addProperty("origin_latitude", this.info.getOriginAirport().getLatitude());
+            infoObject.addProperty("origin_longitude", this.info.getOriginAirport().getLongitude());
+            infoObject.addProperty("destination_latitude", this.info.getDestinationAirport().getLatitude());
+            infoObject.addProperty("destination_longitude", this.info.getDestinationAirport().getLongitude());
+        }
 
         // Agregar el objeto "info" al JSON principal
         jsonObject.add("info",infoObject);

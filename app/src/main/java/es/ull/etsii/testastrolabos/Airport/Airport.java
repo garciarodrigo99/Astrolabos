@@ -11,7 +11,6 @@ public class Airport{
     private final int mElevation;
     private final String mTimezone;
     private final String mCityName;
-    private final String mCityCode;
     private final String mCountyName;
     private final String mStateName;
     private final String mCountryCode;
@@ -25,7 +24,6 @@ public class Airport{
         this.mElevation = 0;
         this.mTimezone = "";
         this.mCityName = "";
-        this.mCityCode = "";
         this.mCountyName = "";
         this.mStateName = "";
         this.mCountryCode = "";
@@ -33,7 +31,7 @@ public class Airport{
 
     public Airport(String iataCode, String icaoCode, String airportName,
                    Double latitude, Double longitude, int elevation,
-                   String timezone, String cityName, String cityCode,
+                   String timezone, String cityName,
                    String countyName, String stateName, String countryCode) {
         this.mIATACode = iataCode;
         this.mICAOCode = icaoCode;
@@ -43,7 +41,6 @@ public class Airport{
         this.mElevation = elevation;
         this.mTimezone = timezone;
         this.mCityName = cityName;
-        this.mCityCode = cityCode;
         this.mCountyName = countyName;
         this.mStateName = stateName;
         this.mCountryCode = countryCode;
@@ -78,10 +75,6 @@ public class Airport{
 
     public String getCityName() {
         return mCityName;
-    }
-
-    public String getCityCode() {
-        return mCityCode;
     }
 
     public String getCountyName() {

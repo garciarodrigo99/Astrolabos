@@ -9,6 +9,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
+import es.ull.etsii.testastrolabos.Airport.Airport;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.graphics.Paint;
@@ -75,7 +76,7 @@ public class MapViewManager {
             mUserMarker = new Marker(initialPos, originalLocationIcon, 0, 0);
 
             // Añadir directamente al LayerManager
-            mapView.getLayerManager().getLayers().add(mUserMarker);
+            mMapView.getLayerManager().getLayers().add(mUserMarker);
 
         } catch (Exception e) {
             Log.e("MapViewManager", "Error al inicializar el objeto", e);
@@ -259,8 +260,11 @@ public class MapViewManager {
         this.mHasToCenterMap = centerMapOnLocation;
     }
 
-    public void startTracking() {
+    public void startTracking(TrackSettings trackSettings) {
         try {
+            if (!trackSettings.isFreeTracking()){
+                paintAirports(trackSettings);
+            }
             Paint paintStroke = mGraphicFactory.createPaint();
             paintStroke.setColor(Color.RED);
             paintStroke.setStrokeWidth(4);
@@ -274,11 +278,39 @@ public class MapViewManager {
             Log.e("MapViewManager", "Error starting tracking", e);
         }
     }
+
+    private void paintAirports(TrackSettings trackSettings) {
+        try {
+            insertIconInMap(new LatLong(trackSettings.getOriginAirport().getLatitude(),
+                                        trackSettings.getOriginAirport().getLongitude()),
+                            R.drawable.ic_flight_takeoff);
+            insertIconInMap(new LatLong(trackSettings.getDestinationAirport().getLatitude(),
+                                        trackSettings.getDestinationAirport().getLongitude()),
+                    R.drawable.ic_flight_land);
+        } catch (Exception e){
+            Log.e("MapViewManager", "Error painting airports", e);
+        }
+    }
+
     public void stopTracking() {
         this.mIsTracking = false;
         mMapView.getLayerManager().getLayers().remove(mTrackPathPolyline);
         mTrackPathPolyline = null;
         mTrackPathPoints = null;
+    }
+
+    private void insertIconInMap(LatLong latLong, int id) {
+        try {
+            Drawable drawable = ContextCompat.getDrawable(mActivity, id);
+            if (drawable == null) {
+                Log.e("MapViewManager", "Drawable icon is null");
+            }
+            Bitmap originLocationIcon = AndroidGraphicFactory.convertToBitmap(drawable);
+            Marker marker = new Marker(latLong, originLocationIcon, 0, 0);
+            mMapView.getLayerManager().getLayers().add(marker);
+        } catch (Exception e){
+            Log.e("MapViewManager", "Error trying to insert icon into Map View", e);
+        }
     }
 }
 

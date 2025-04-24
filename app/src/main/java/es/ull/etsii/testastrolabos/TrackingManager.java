@@ -10,10 +10,13 @@ import androidx.appcompat.app.AlertDialog;
 import es.ull.etsii.testastrolabos.Writers.*;
 import es.ull.etsii.testastrolabos.Dialogs.*;
 
+import java.util.function.Consumer;
+
 public class TrackingManager {
 
     private Context context_;
     private MainActivity activity;
+    private TrackSettings mTrackSettings;
 
     public enum State {
         TRACKING,
@@ -34,24 +37,26 @@ public class TrackingManager {
         return state_;
     }
 
-    public void startTracking() {
+    public TrackSettings startTracking(Consumer<TrackSettings> onAccepted) {
         startTrackingDialog.setAcceptAction(data -> {
-            // Aquí puedes realizar la acción específica según los datos proporcionados
-            if (data != null) {
+            this.mTrackSettings = data;
+            if (mTrackSettings != null) {
                 // Por ejemplo, guardar los datos en una base de datos o hacer algo más
                 //recordFlightData = data;
                 //TODO: uncomment
-                Toast.makeText(context_, data.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context_, mTrackSettings.getFlightName() + " tracking started", Toast.LENGTH_SHORT).show();
                 //fileWriter = new FileWriter(data.getFlightName(),data.getMaxUpdate(),data.getMinUpdate());
                 //TODO: uncomment
-                fileFormat = new JsonFormat(data);
+                fileFormat = new JsonFormat(mTrackSettings);
+                state_ = State.TRACKING;
+                onAccepted.accept(mTrackSettings);
             } else {
                 // Si el usuario cancela el diálogo, no se hace nada
-                Toast.makeText(context_, "Cancelando en accept data=null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context_, "Cancelando en accept mTrackSettings=null", Toast.LENGTH_SHORT).show();
             }
-            state_ = State.TRACKING;
         });
         startTrackingDialog.show(activity.getSupportFragmentManager(), "StartTrackingDialog");
+        return mTrackSettings;
     }
 
     public void showTrackingSettings() {
@@ -91,6 +96,7 @@ public class TrackingManager {
             public void run() {
                 fileFormat = null;
                 state_ = State.NOT_TRACKING;
+                mTrackSettings = null;
                 activity.stopTracking();
             }
         };
@@ -117,6 +123,10 @@ public class TrackingManager {
                     public void cancel(Void data) {}
 
                 });
+    }
+
+    public TrackSettings getTrackSettings() {
+        return mTrackSettings;
     }
 }
 

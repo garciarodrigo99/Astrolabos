@@ -129,8 +129,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTracking(){
-        mFlightTrackManager.startTracking();
-        mMapViewManager.startTracking();
+        mFlightTrackManager.startTracking(trackSettings -> {
+            mMapViewManager.startTracking(trackSettings);
+        });
     }
 
     public void stopTracking(){
@@ -167,6 +168,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void paintIcons(){
         mMapViewManager.paintIcons();
+    }
+
+    public AirportDAO getAirportDAO() {
+        return mAirportDAO;
     }
 
     @Override
