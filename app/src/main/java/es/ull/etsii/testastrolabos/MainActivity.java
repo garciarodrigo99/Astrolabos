@@ -5,22 +5,20 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import es.ull.etsii.testastrolabos.Airport.AirportDAO;
 import es.ull.etsii.testastrolabos.Airport.AirportDAOSQLite;
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 import android.util.Log;
 
@@ -31,15 +29,35 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultHandler mActivityResultHandler;
     private PermissionResultHandler mPermissionResultHandler;
     private PermissionManager mPermissionManager;
-
     AstrolabosLocationManager mLocationManager;
-
     FrameLayout fl_map;
-
     MapView view_map;
     TrackingManager mFlightTrackManager;
     private MapViewManager mMapViewManager;
     AirportDAO mAirportDAO;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.menu_info) {
+            startActivity(new Intent(this, InfoActivity.class));
+            return true;
+        } else if (id == R.id.menu_share) {
+            startActivity(new Intent(this, ShareActivity.class));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

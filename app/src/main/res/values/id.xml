@@ -81,6 +81,20 @@
         <item name="dialog_tracking_config_rb_minutes" type="id"/>
         <item name="dialog_tracking_config_rb_seconds" type="id"/>
 
+        <!-- menu_main_activity.xml -->
+        <item name="menu_settings" type="id"/>
+        <item name="menu_share" type="id"/>
+        <item name="menu_info" type="id"/>
+
+        <!-- activity_info.xml -->
+        <item name="info_title" type="id"/>
+
+        <!-- activity_settings.xml -->
+        <item name="settings_title" type="id"/>
+
+        <!-- activity_share.xml -->
+        <item name="share_title" type="id"/>
+
     <!--  .java  -->
         <!--  FileFormat  -->
         <item name="file_flight_name" type="id"/>

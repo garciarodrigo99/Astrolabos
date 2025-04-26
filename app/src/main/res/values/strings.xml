@@ -86,6 +86,20 @@
         <string name="dialog_updates_config_sw_sensor_textOn">Using GPS sensors</string>
         <string name="dialog_updates_config_sw_sensor_textOff">Using Cell Towers + Wifi</string>
 
+        <!-- menu_main_activity.xml -->
+        <string name="menu_settings">Settings</string>
+        <string name="menu_share">Share</string>
+        <string name="menu_info">Info</string>
+
+        <!-- activity_info.xml -->
+        <string name="info_title">Info page</string>
+
+        <!-- activity_share.xml -->
+        <string name="share_title">Share page</string>
+
+        <!-- activity_settings.xml -->
+        <string name="settings_title">Settings page</string>
+
     <!--  Mapsforge  -->
     <string name="copyright_osm">Map data © OpenStreetMap contributors</string>
 
