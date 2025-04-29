@@ -3,11 +3,12 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:background="#80000000"
-              android:padding="20dp">
+              android:background="#000000"
+              android:padding="10dp">
 
     <!-- Contenedor principal con dos columnas -->
     <LinearLayout
+            android:id="@+id/text_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -21,79 +22,80 @@
 
             <!-- Latitude -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    style="@style/LocationInfoPanelFieldLayout">
                 <TextView
                         android:id="@+id/tv_label_lat"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_lat"/>
+                        android:layout_width="@dimen/location_info_panel_icons_width"
+                        android:layout_height="@dimen/location_info_panel_icons_height"
+                        android:text="@string/tv_label_lat"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                />
                 <TextView
                         android:id="@+id/tv_lat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
 
             <!-- Bearing -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
+                    style="@style/LocationInfoPanelFieldLayout">
+                <ImageView
                         android:id="@+id/tv_label_bearing"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_bearing"/>
+                        android:contentDescription="@string/tv_label_bearing"
+                        android:src="@drawable/info_panel_ic_compass"
+                        style="@style/LocationInfoPanelIcon"
+                />
                 <TextView
                         android:id="@+id/tv_bearing"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
 
             <!-- Speed -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
+                    style="@style/LocationInfoPanelFieldLayout">
+                <ImageView
                         android:id="@+id/tv_label_speed"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_speed"/>
+                        android:contentDescription="@string/tv_label_speed"
+                        android:src="@drawable/info_panel_ic_speed"
+                        style="@style/LocationInfoPanelIcon"
+                />
                 <TextView
                         android:id="@+id/tv_speed"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
 
             <!-- Last time -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
+                    style="@style/LocationInfoPanelFieldLayout">
+                <ImageView
                         android:id="@+id/tv_label_last_time"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_last_time"/>
+                        android:contentDescription="@string/tv_label_last_time"
+                        android:src="@drawable/info_panel_ic_last_time"
+                        style="@style/LocationInfoPanelIcon"
+                />
                 <TextView
                         android:id="@+id/tv_last_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
         </LinearLayout>
 
         <!-- Separador vertical -->
         <View
                 android:id="@+id/gps_info_panel_glh_50"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/black"/>
+                android:layout_width="@dimen/location_info_panel_icons_width"
+                android:layout_height="@id/text_layout"
+                android:background="@color/black"
+                android:textColor="#FFFFFF"
+        />
 
         <!-- Columna derecha -->
         <LinearLayout
@@ -104,71 +106,77 @@
 
             <!-- Longitude -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    style="@style/LocationInfoPanelFieldLayout">
                 <TextView
                         android:id="@+id/tv_label_lon"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_lon"/>
+                        android:layout_width="@dimen/location_info_panel_icons_width"
+                        android:layout_height="@dimen/location_info_panel_icons_height"
+                        android:text="@string/tv_label_lon"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                />
                 <TextView
                         android:id="@+id/tv_lon"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
 
             <!-- Altitude -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
+                    style="@style/LocationInfoPanelFieldLayout">
+                <ImageView
                         android:id="@+id/tv_label_altitude"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_altitude"/>
+                        android:contentDescription="@string/tv_label_altitude"
+                        android:src="@drawable/info_panel_ic_altitude"
+                        style="@style/LocationInfoPanelIcon"
+                />
                 <TextView
                         android:id="@+id/tv_altitude"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
 
-            <!-- Sats -->
+            <!-- Satellites -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
+                    style="@style/LocationInfoPanelFieldLayout">
+                <ImageView
                         android:id="@+id/tv_label_satellites"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_satellites"/>
+                        android:contentDescription="@string/tv_label_satellites"
+                        android:src="@drawable/info_panel_ic_satellite"
+                        style="@style/LocationInfoPanelIcon"
+                />
                 <TextView
                         android:id="@+id/tv_satellites"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
 
             <!-- Accuracy -->
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
+                    style="@style/LocationInfoPanelFieldLayout">
+                <ImageView
                         android:id="@+id/tv_label_accuracy"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_label_accuracy"/>
+                        android:contentDescription="@string/tv_label_accuracy"
+                        android:src="@drawable/info_panel_ic_accuracy"
+                        style="@style/LocationInfoPanelIcon"
+                />
                 <TextView
                         android:id="@+id/tv_accuracy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_default_value"/>
+                        android:text="@string/tv_default_value"
+                        style="@style/LocationInfoPanelText"
+                />
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
+    <!-- LÍNEA BLANCA -->
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFFFFF"
+    />
 </LinearLayout>

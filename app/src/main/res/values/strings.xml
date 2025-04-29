@@ -3,16 +3,16 @@
 
     <!--  .xml  -->
         <!-- activity_main.xml  -->
-        <string name="tv_label_lat">Lat:</string>
+        <string name="tv_label_lat">LAT</string>
         <string name="tv_default_value">0.00</string>
-        <string name="tv_label_lon">Lon:</string>
-        <string name="tv_label_altitude">Altitude:</string>
-        <string name="tv_label_accuracy">Accuracy:</string>
-        <string name="tv_label_speed">Speed:</string>
-        <string name="tv_label_bearing">Bearing:</string>
-        <string name="tv_label_last_time">Last time:</string>
-        <string name="tv_label_satellites">Pos/Sats:</string>
-        <string name="tv_label_updates">Updates:</string>
+        <string name="tv_label_lon">LON</string>
+        <string name="tv_label_altitude">Altitude</string>
+        <string name="tv_label_accuracy">Accuracy</string>
+        <string name="tv_label_speed">Speed</string>
+        <string name="tv_label_bearing">Bearing</string>
+        <string name="tv_label_last_time">Last time</string>
+        <string name="tv_label_satellites">Pos/Sats</string>
+        <string name="tv_label_updates">Updates</string>
         <string name="sw_locations_updates">Location Updates</string>
         <string name="sw_locations_updates_textOn">Location is being tracked</string>
         <string name="sw_locations_updates_textOff">Location is NOT being tracked</string>
@@ -118,7 +118,7 @@
         <string name="not_tracking_location">Not tracking location</string>
         <string name="not_tracking_location_2">Location is NOT being tracked</string>
         <string name="location_is_null">Location null</string>
-        <string name="not_available_message">Not available</string>
+        <string name="not_available_message">-</string>
 
 
         <!--  Dialogs.java  -->

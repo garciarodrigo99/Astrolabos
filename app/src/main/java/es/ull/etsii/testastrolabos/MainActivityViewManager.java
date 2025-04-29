@@ -1,16 +1,13 @@
 package es.ull.etsii.testastrolabos;
 
-import android.app.AlertDialog;
 import android.location.Location;
 import android.view.View;
 import android.widget.*;
-import es.ull.etsii.testastrolabos.Airport.Airport;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivityViewManager {
@@ -23,12 +20,12 @@ public class MainActivityViewManager {
     private ImageButton ib_toggle_GPSInfoPanel, ib_location_updates_settings,
             ib_startTracking, ib_addLayer,ib_center_on_location;
     LinearLayout ll_gps_info_panel;
-    private final GPSInfoPanel mGpsInfoPanel;
+    private final LocationInfoPanel mLocationInfoPanel;
 
     public MainActivityViewManager(MainActivity activity) {
         this.mActivity = activity;
         initializeButtons();
-        mGpsInfoPanel = new GPSInfoPanel(mActivity);
+        mLocationInfoPanel = new LocationInfoPanel(mActivity);
         setupButtonsListeners();
     }
 
@@ -142,29 +139,29 @@ public class MainActivityViewManager {
             locationNull();
             return;
         }
-        mGpsInfoPanel.setLatitude(String.valueOf(location.getLatitude()));
-        mGpsInfoPanel.setLongitude(String.valueOf(location.getLongitude()));
-        mGpsInfoPanel.setAccuracy(String.valueOf(location.getAccuracy()));
+        mLocationInfoPanel.setLatitude(String.valueOf(location.getLatitude()));
+        mLocationInfoPanel.setLongitude(String.valueOf(location.getLongitude()));
+        mLocationInfoPanel.setAccuracy(String.valueOf(location.getAccuracy()));
 
         if (location.hasAltitude()){
-            mGpsInfoPanel.setAltitude(String.valueOf(location.getAltitude()));
+            mLocationInfoPanel.setAltitude(String.valueOf(location.getAltitude()));
         } else {
-            mGpsInfoPanel.setAltitude(mActivity.getString(R.string.not_available_message));
+            mLocationInfoPanel.setAltitude(mActivity.getString(R.string.not_available_message));
         }
         if (location.hasSpeed()){
-            mGpsInfoPanel.setSpeed(speedFormat(location.getSpeed()));
+            mLocationInfoPanel.setSpeed(speedFormat(location.getSpeed()));
         } else {
-            mGpsInfoPanel.setSpeed(mActivity.getString(R.string.not_available_message));
+            mLocationInfoPanel.setSpeed(mActivity.getString(R.string.not_available_message));
         }
         if (location.hasBearing()){
-            mGpsInfoPanel.setBearing(String.valueOf(location.getBearing()));
+            mLocationInfoPanel.setBearing(String.valueOf(location.getBearing()));
         } else {
-            mGpsInfoPanel.setBearing(mActivity.getString(R.string.not_available_message));
+            mLocationInfoPanel.setBearing(mActivity.getString(R.string.not_available_message));
         }
         long timeInMillis = location.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         String formattedTime = sdf.format(new Date(timeInMillis));
-        mGpsInfoPanel.setLastTime(formattedTime);
+        mLocationInfoPanel.setLastTime(formattedTime);
     }
 
     /**
@@ -173,11 +170,11 @@ public class MainActivityViewManager {
      * @param warning String with the warning to show in each element of the GUI
      */
     private void setWarningTextUIValues(String warning){
-        mGpsInfoPanel.setLatitude(warning);
-        mGpsInfoPanel.setLongitude(warning);
-        mGpsInfoPanel.setAccuracy(warning);
-        mGpsInfoPanel.setAltitude(warning);
-        mGpsInfoPanel.setSpeed(warning);
+        mLocationInfoPanel.setLatitude(warning);
+        mLocationInfoPanel.setLongitude(warning);
+        mLocationInfoPanel.setAccuracy(warning);
+        mLocationInfoPanel.setAltitude(warning);
+        mLocationInfoPanel.setSpeed(warning);
     }
 
     private String speedFormat(double speed){

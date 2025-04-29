@@ -1,15 +1,13 @@
 package es.ull.etsii.testastrolabos;
 
-import android.view.View;
-
 import android.widget.TextView;
 
-public class GPSInfoPanel {
+public class LocationInfoPanel {
     private MainActivity mActivity;
 
     private TextView mLatitudeTv, mLongitudeTv, mAltitudeTv, mAccuracyTv, mSpeedTv, mBearingTv, mSatelliteTv, mLastTimeTv;
 
-    public GPSInfoPanel(MainActivity activity) {
+    public LocationInfoPanel(MainActivity activity) {
         this.mActivity = activity;
 
         mLatitudeTv = this.mActivity.findViewById(R.id.tv_lat);
