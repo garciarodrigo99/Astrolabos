@@ -1,12 +1,18 @@
 package es.ull.etsii.testastrolabos;
 
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import es.ull.etsii.testastrolabos.Airport.Airport;
+import org.mapsforge.core.model.LatLong;
 
 public class LocationInfoPanel {
     private MainActivity mActivity;
 
     private TextView mLatitudeTv, mLongitudeTv, mAltitudeTv, mAccuracyTv, mSpeedTv, mBearingTv, mSatelliteTv, mLastTimeTv;
 
+    private FlightInfoPanel mFlightInfoPanel;
+    private final LinearLayout mFlightInfoPanelLayout;
     public LocationInfoPanel(MainActivity activity) {
         this.mActivity = activity;
 
@@ -18,6 +24,7 @@ public class LocationInfoPanel {
         mBearingTv = this.mActivity.findViewById(R.id.tv_bearing);
         mSatelliteTv = this.mActivity.findViewById(R.id.tv_satellites);
         mLastTimeTv = this.mActivity.findViewById(R.id.tv_last_time);
+        this.mFlightInfoPanelLayout = this.mActivity.findViewById(R.id.ll_flight_info_panel);
     }
 
     public void setLatitude(String latitude) {
@@ -49,6 +56,22 @@ public class LocationInfoPanel {
     }
     public void setLastTime(String lastTime) {
         this.mLastTimeTv.setText(lastTime);
+    }
+
+    public void startAirportTracking(Airport origin, Airport destination) {
+        this.mFlightInfoPanel = new FlightInfoPanel(this.mActivity, origin, destination);
+        mFlightInfoPanelLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void stopAirportTracking() {
+        this.mFlightInfoPanel = null;
+        mFlightInfoPanelLayout.setVisibility(View.GONE);
+    }
+
+    public void updateFlightInfoPanel(LatLong latLong) {
+        if (this.mFlightInfoPanel != null) {
+            mFlightInfoPanel.updateLocation(latLong);
+        }
     }
 }
 

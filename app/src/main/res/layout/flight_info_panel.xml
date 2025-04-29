@@ -23,7 +23,7 @@
             <LinearLayout
                     style="@style/LocationInfoPanelFieldLayout">
                 <ImageView
-                        android:id="@+id/tv_label_originAirport"
+                        android:id="@+id/iv_travel"
                         android:layout_width="@dimen/location_info_panel_icons_width"
                         android:layout_height="@dimen/location_info_panel_icons_height"
                         android:src="@drawable/info_panel_ic_travel"
@@ -31,7 +31,7 @@
                         android:gravity="center"
                 />
                 <TextView
-                        android:id="@+id/tv_lat"
+                        android:id="@+id/tv_originAirport"
                         android:text="@string/tv_default_value"
                         style="@style/LocationInfoPanelText"
                 />
@@ -90,7 +90,7 @@
             <LinearLayout
                     style="@style/LocationInfoPanelFieldLayout">
                 <TextView
-                        android:id="@+id/tv_label_destinationAirport"
+                        android:id="@+id/tv_destinationAirport"
                         android:text="@string/tv_default_value"
                         style="@style/LocationInfoPanelText"
                 />

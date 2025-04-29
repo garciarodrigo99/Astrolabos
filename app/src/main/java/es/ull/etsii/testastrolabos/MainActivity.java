@@ -149,11 +149,13 @@ public class MainActivity extends AppCompatActivity {
     public void startTracking(){
         mFlightTrackManager.startTracking(trackSettings -> {
             mMapViewManager.startTracking(trackSettings);
+            mViewManager.startTracking(trackSettings);
         });
     }
 
     public void stopTracking(){
         mMapViewManager.stopTracking();
+        mViewManager.stopTracking();
     }
 
     public void launchTrackingDialog(){

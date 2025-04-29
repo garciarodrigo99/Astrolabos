@@ -173,7 +173,7 @@
         </LinearLayout>
     </LinearLayout>
     <include
-            android:id="@+id/ll_gps_info_panel"
+            android:id="@+id/ll_flight_info_panel"
             layout="@layout/flight_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

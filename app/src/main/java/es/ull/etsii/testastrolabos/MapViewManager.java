@@ -175,6 +175,7 @@ public class MapViewManager {
                     this,
                     trackSettings.getOriginAirport(),
                     trackSettings.getDestinationAirport());
+
         } else {
             mTrackingViewManager = new FreeTrackingView(this);
         }

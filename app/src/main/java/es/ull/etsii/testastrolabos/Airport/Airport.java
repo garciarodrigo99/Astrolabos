@@ -1,6 +1,7 @@
 package es.ull.etsii.testastrolabos.Airport;
 
 import org.jetbrains.annotations.NotNull;
+import org.mapsforge.core.model.LatLong;
 
 public class Airport{
     private final String mIATACode;
@@ -65,6 +66,9 @@ public class Airport{
         return mLongitude;
     }
 
+    public LatLong getLatLong() {
+        return new LatLong(mLatitude, mLongitude);
+    }
     public int getElevation() {
         return mElevation;
     }

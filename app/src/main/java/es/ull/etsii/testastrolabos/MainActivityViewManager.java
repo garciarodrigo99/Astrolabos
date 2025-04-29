@@ -3,7 +3,9 @@ package es.ull.etsii.testastrolabos;
 import android.location.Location;
 import android.view.View;
 import android.widget.*;
+import es.ull.etsii.testastrolabos.Airport.Airport;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
+import org.mapsforge.core.model.LatLong;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -162,6 +164,19 @@ public class MainActivityViewManager {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         String formattedTime = sdf.format(new Date(timeInMillis));
         mLocationInfoPanel.setLastTime(formattedTime);
+        mLocationInfoPanel.updateFlightInfoPanel(new LatLong(location.getLatitude(), location.getLongitude()));
+    }
+
+    public void startTracking(TrackSettings trackSettings){
+        if ((trackSettings == null) || (trackSettings.isFreeTracking())){
+            return;
+        }
+        mLocationInfoPanel.startAirportTracking(trackSettings.getOriginAirport(),
+                trackSettings.getDestinationAirport());
+    }
+
+    public void stopTracking(){
+        mLocationInfoPanel.stopAirportTracking();
     }
 
     /**
