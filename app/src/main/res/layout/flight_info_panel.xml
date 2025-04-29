@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar"
-            android:progress="95"
+            android:progress="0"
             android:progressBackgroundTint="#ffd"
     />
 </LinearLayout>
