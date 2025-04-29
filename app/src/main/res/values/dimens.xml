@@ -6,5 +6,5 @@
     <dimen name="controls_margin">8dp</dimen>
     <dimen name="location_info_panel_icons_width">30dp</dimen>
     <dimen name="location_info_panel_icons_height">24dp</dimen>
-
+    <dimen name="flight_info_panel_icons_height">16dp</dimen>
 </resources>

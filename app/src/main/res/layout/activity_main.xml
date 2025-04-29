@@ -21,7 +21,7 @@
 
     <include
             android:id="@+id/ll_gps_info_panel"
-            layout="@layout/gps_info_panel"
+            layout="@layout/location_info_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

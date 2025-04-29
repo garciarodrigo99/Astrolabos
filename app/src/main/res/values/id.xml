@@ -5,7 +5,6 @@
         <item name="sw_location_updates" type="id"/>
         <item name="tv_label_updates" type="id"/>
         <item name="sw_gps" type="id"/>
-        <item name="tv_label_sensor" type="id"/>
         <item name="tv_sensor" type="id"/>
         <item name="hdv_1" type="id"/>
         <item name="fl_flight_track" type="id"/>
@@ -49,24 +48,33 @@
         <!--  MapsForge  -->
         <item name="mapView" type="id"/>
 
-        <!--  gps_info_panel.xml  -->
+        <!--  location_info_panel.xml  -->
         <item name="tv_label_lat" type="id"/>
         <item name="tv_lat" type="id"/>
         <item name="tv_label_lon" type="id"/>
         <item name="tv_lon" type="id"/>
-        <item name="tv_label_altitude" type="id"/>
+        <item name="iv_icon_altitude" type="id"/>
         <item name="tv_altitude" type="id"/>
-        <item name="tv_label_accuracy" type="id"/>
+        <item name="iv_icon_accuracy" type="id"/>
         <item name="tv_accuracy" type="id"/>
-        <item name="tv_label_speed" type="id"/>
+        <item name="iv_icon_speed" type="id"/>
         <item name="tv_speed" type="id"/>
-        <item name="tv_label_satellites" type="id"/>
+        <item name="iv_icon_satellites" type="id"/>
         <item name="tv_satellites" type="id"/>
-        <item name="tv_label_last_time" type="id"/>
+        <item name="iv_icon_last_time" type="id"/>
         <item name="tv_last_time" type="id"/>
-        <item name="tv_label_bearing" type="id"/>
+        <item name="iv_icon_bearing" type="id"/>
         <item name="tv_bearing" type="id"/>
         <item name="gps_info_panel_glh_50" type="id"/>
+        <!--  flight_info_panel.xml  -->
+        <item name="tv_label_originAirport" type="id"/>
+        <item name="tv_label_destinationAirport" type="id"/>
+        <item name="iv_icon_time" type="id"/>
+        <item name="tv_timeFromStartTracking" type="id"/>
+        <item name="tv_timeToDestination" type="id"/>
+        <item name="iv_icon_distance" type="id"/>
+        <item name="tv_distanceFromOrigin" type="id"/>
+        <item name="tv_distanceToDestination" type="id"/>
 
         <!-- dialog_tracking_action.xml -->
         <item name="dialog_tracking_action_label_title" type="id"/>
