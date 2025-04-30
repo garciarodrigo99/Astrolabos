@@ -4,6 +4,7 @@ import android.location.Location;
 import android.view.View;
 import android.widget.*;
 import es.ull.etsii.testastrolabos.Airport.Airport;
+import es.ull.etsii.testastrolabos.DataModels.AstrolabosLocationModel;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
 import org.mapsforge.core.model.LatLong;
 
@@ -141,30 +142,8 @@ public class MainActivityViewManager {
             locationNull();
             return;
         }
-        mLocationInfoPanel.setLatitude(String.valueOf(location.getLatitude()));
-        mLocationInfoPanel.setLongitude(String.valueOf(location.getLongitude()));
-        mLocationInfoPanel.setAccuracy(String.valueOf(location.getAccuracy()));
-
-        if (location.hasAltitude()){
-            mLocationInfoPanel.setAltitude(String.valueOf(location.getAltitude()));
-        } else {
-            mLocationInfoPanel.setAltitude(mActivity.getString(R.string.not_available_message));
-        }
-        if (location.hasSpeed()){
-            mLocationInfoPanel.setSpeed(speedFormat(location.getSpeed()));
-        } else {
-            mLocationInfoPanel.setSpeed(mActivity.getString(R.string.not_available_message));
-        }
-        if (location.hasBearing()){
-            mLocationInfoPanel.setBearing(String.valueOf(location.getBearing()));
-        } else {
-            mLocationInfoPanel.setBearing(mActivity.getString(R.string.not_available_message));
-        }
-        long timeInMillis = location.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        String formattedTime = sdf.format(new Date(timeInMillis));
-        mLocationInfoPanel.setLastTime(formattedTime);
-        mLocationInfoPanel.updateFlightInfoPanel(new LatLong(location.getLatitude(), location.getLongitude()));
+        mLocationInfoPanel.closeWarning();
+        mLocationInfoPanel.updateLocation(location);
     }
 
     public void startTracking(TrackSettings trackSettings){
@@ -185,19 +164,13 @@ public class MainActivityViewManager {
      * @param warning String with the warning to show in each element of the GUI
      */
     private void setWarningTextUIValues(String warning){
-        mLocationInfoPanel.setLatitude(warning);
-        mLocationInfoPanel.setLongitude(warning);
-        mLocationInfoPanel.setAccuracy(warning);
-        mLocationInfoPanel.setAltitude(warning);
-        mLocationInfoPanel.setSpeed(warning);
-    }
-
-    private String speedFormat(double speed){
-        speed *= 3.6;
-        Double formatedDouble = speed;
-        if (speed >= 10.0){
-            return Integer.toString(formatedDouble.intValue());
-        }
-        return new DecimalFormat(speed < 5.0 ? "#.##" : "#.#").format(formatedDouble);
+        mLocationInfoPanel.setWarning(warning);
+        mLocationInfoPanel.setLatitude(AstrolabosLocationModel.UNAVAILABLE_DATA);
+        mLocationInfoPanel.setLongitude(AstrolabosLocationModel.UNAVAILABLE_DATA);
+        mLocationInfoPanel.setBearing(AstrolabosLocationModel.UNAVAILABLE_DATA);
+        mLocationInfoPanel.setAltitude(AstrolabosLocationModel.UNAVAILABLE_DATA);
+        mLocationInfoPanel.setSpeed(AstrolabosLocationModel.UNAVAILABLE_DATA);
+        mLocationInfoPanel.setLastTime(AstrolabosLocationModel.UNAVAILABLE_DATA);
+        mLocationInfoPanel.setAccuracy(AstrolabosLocationModel.UNAVAILABLE_DATA);
     }
 }

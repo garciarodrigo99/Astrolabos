@@ -67,6 +67,9 @@
         <item name="tv_bearing" type="id"/>
         <item name="gps_info_panel_glh_50" type="id"/>
         <item name="ll_flight_info_panel" type="id"/>
+        <item name="ll_warning" type="id"/>
+        <item name="iv_icon_warning" type="id"/>
+        <item name="tv_warning" type="id"/>
         <!--  flight_info_panel.xml  -->
         <item name="iv_travel" type="id"/>
         <item name="tv_originAirport" type="id"/>

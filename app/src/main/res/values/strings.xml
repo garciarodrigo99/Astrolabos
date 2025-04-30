@@ -11,6 +11,7 @@
         <string name="iv_icon_speed">Speed</string>
         <string name="iv_icon_bearing">Bearing</string>
         <string name="iv_icon_last_time">Last time</string>
+        <string name="iv_icon_warning">Location status warning</string>
         <string name="iv_icon_satellites">Pos/Sats</string>
         <string name="iv_icon_updates">Updates</string>
         <string name="iv_icon_travel">Updates</string>

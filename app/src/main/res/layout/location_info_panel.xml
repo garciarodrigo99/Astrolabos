@@ -172,6 +172,23 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <!-- Last time -->
+    <LinearLayout
+            android:id="@+id/ll_warning"
+            android:visibility="gone"
+            style="@style/LocationInfoPanelFieldLayout">
+        <ImageView
+                android:id="@+id/iv_icon_warning"
+                android:contentDescription="@string/iv_icon_last_time"
+                android:src="@drawable/info_panel_ic_warning"
+                style="@style/LocationInfoPanelIcon"
+        />
+        <TextView
+                android:id="@+id/tv_warning"
+                android:text="@string/tv_default_value"
+                style="@style/LocationInfoPanelText"
+        />
+    </LinearLayout>
     <include
             android:id="@+id/ll_flight_info_panel"
             layout="@layout/flight_info_panel"
