@@ -159,9 +159,9 @@ public class MainActivityViewManager {
     }
 
     /**
-     * When some the location information can not be shown in each element of the GUI, a string is set in all of those
-     * elements of the GUI to help the user what is going on with location.
-     * @param warning String with the warning to show in each element of the GUI
+     * When the location callback is null, a warning string is set in the
+     * warning text view to indicate location update status.
+     * @param warning String with the warning to show in warning text view.
      */
     private void setWarningTextUIValues(String warning){
         mLocationInfoPanel.setWarning(warning);

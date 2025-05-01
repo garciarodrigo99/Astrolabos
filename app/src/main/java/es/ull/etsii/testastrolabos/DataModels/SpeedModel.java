@@ -33,9 +33,6 @@ public class SpeedModel {
      */
     public SpeedModel(){}
 
-    public
-
-
     void setSpeed(double speed){
         mKilometersPerHourSpeed = speed;
     }

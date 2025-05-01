@@ -1,6 +1,7 @@
 package es.ull.etsii.testastrolabos.DataModels;
 
 import android.location.Location;
+import android.os.Build;
 import org.mapsforge.core.model.LatLong;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +49,11 @@ public class AstrolabosLocationModel {
     }
     public void updateLocation(Location location) {
         this.mPosition = new LatLong(location.getLatitude(), location.getLongitude());
-        this.mAltitude.setAltitude(location.hasAltitude() ? location.getAltitude() : LOCATION_WITH_NO_DATA);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            this.mAltitude.setAltitude(location.hasMslAltitude() ? location.getMslAltitudeMeters() : LOCATION_WITH_NO_DATA);
+        } else {
+            this.mAltitude.setAltitude(location.hasAltitude() ? location.getAltitude() : LOCATION_WITH_NO_DATA);
+        }
         this.mSpeed.setSpeed(location.hasSpeed() ? location.getSpeed() : LOCATION_WITH_NO_DATA);
         this.mBearing.setBearing(location.hasBearing() ? location.getBearing() : LOCATION_WITH_NO_DATA);
         this.mLastTime = new Date(location.getTime());
