@@ -21,38 +21,41 @@ public class SpeedModel {
     }
     private Unit mUnit = Unit.KILOMETERS_PER_HOUR;
     private double mKilometersPerHourSpeed = 0.0;
-    private static final double KMH_TO_METERSPERSECOND = 0.27778;
-    private static final double KMH_TO_MILESPERHOUR = 0.621371;
-    private static final double KMH_TO_KNOTS = 0.539957;
-    private static final double KMH_TO_MACH = 0.0008163;
-    private static final double DEFAULT_CONVERSION_FACTOR = 1.0;
-    private double mConversionFactor = DEFAULT_CONVERSION_FACTOR;
+    private static final double MPS_TO_KMH = 3.6;
+    private static final double MPS_TO_MILESPERHOUR = 2.23694;
+    private static final double MPS_TO_KNOTS = 1.94384;
+    private static final double MPS_TO_MACH = 0.00291545;
+    private static final double MPS = 1.0; // Meters per second
+    private double mConversionFactor = MPS_TO_KMH;
 
     /**
      * Default constructor assigns 0.0 kilometers per hour
      */
     public SpeedModel(){}
 
-    public  void setSpeed(double speed){
+    public
+
+
+    void setSpeed(double speed){
         mKilometersPerHourSpeed = speed;
     }
     public void setUnit(Unit unit){
         mUnit = unit;
         switch (unit){
             case KILOMETERS_PER_HOUR:
-                mConversionFactor = DEFAULT_CONVERSION_FACTOR;
+                mConversionFactor = MPS_TO_KMH;
                 break;
             case METERS_PER_SECOND:
-                mConversionFactor = KMH_TO_METERSPERSECOND;
+                mConversionFactor = MPS;
                 break;
             case MILES_PER_HOUR:
-                mConversionFactor = KMH_TO_MILESPERHOUR;
+                mConversionFactor = MPS_TO_MILESPERHOUR;
                 break;
             case KNOTS:
-                mConversionFactor = KMH_TO_KNOTS;
+                mConversionFactor = MPS_TO_KNOTS;
                 break;
             case MACH:
-                mConversionFactor = KMH_TO_MACH;
+                mConversionFactor = MPS_TO_MACH;
                 break;
         }
     }
