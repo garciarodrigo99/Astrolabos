@@ -6,11 +6,11 @@ public class AltitudeModel {
         FEET;
         @Override
         public String toString() {
-            switch (this) {
-                case METERS: return "m";
-                case FEET: return "ft";
-                default: return super.toString();
-            }
+            return switch (this) {
+                case METERS -> "m";
+                case FEET -> "ft";
+                default -> super.toString();
+            };
         }
     }
     private Unit mUnit = Unit.METERS;

@@ -4,20 +4,23 @@ package es.ull.etsii.testastrolabos.DataModels;
 public class DistanceModel {
     public enum Unit{
         KILOMETERS,
-        NAUTICAL_MILES;
+        NAUTICAL_MILES,
+        STATUTE_MILES;
         @Override
         public String toString() {
-            switch (this) {
-                case KILOMETERS: return "km";
-                case NAUTICAL_MILES: return "nm";
-                default: return super.toString();
-            }
+            return switch (this) {
+                case KILOMETERS -> "km";
+                case NAUTICAL_MILES -> "nm";
+                case STATUTE_MILES -> "mi";
+                default -> super.toString();
+            };
         }
     }
     private Unit mUnit = Unit.KILOMETERS;
-    private double mKilometersDistance = 0.0;
-    private static final double KILOMETERS_TO_NAUTICALMILES = 0.53996;
-    private static final double DEFAULT_CONVERSION_FACTOR = 1.0;
+    private double mMetersDistance = 0.0;
+    private static final double DEFAULT_CONVERSION_FACTOR = 0.001; // Android API provide distance in meters
+    private static final double KILOMETERS_TO_NAUTICALMILES = 0.53996 * DEFAULT_CONVERSION_FACTOR;
+    private static final double KILOMETERS_TO_STATUTEMILES = 0.621371192 * DEFAULT_CONVERSION_FACTOR;
     private double mConversionFactor = DEFAULT_CONVERSION_FACTOR;
 
     /**
@@ -26,7 +29,7 @@ public class DistanceModel {
     public DistanceModel(){}
 
     public  void setDistance(double distance){
-        mKilometersDistance = distance;
+        mMetersDistance = distance;
     }
     public void setUnit(Unit unit){
         mUnit = unit;
@@ -34,15 +37,17 @@ public class DistanceModel {
             mConversionFactor = DEFAULT_CONVERSION_FACTOR;
         } else if(mUnit == Unit.NAUTICAL_MILES){
             mConversionFactor = KILOMETERS_TO_NAUTICALMILES;
+        } else if(mUnit == Unit.STATUTE_MILES){
+            mConversionFactor = KILOMETERS_TO_STATUTEMILES;
         }
     }
     public int getDistance(){
-        return (int)(mKilometersDistance * mConversionFactor);
+        return (int)(mMetersDistance * mConversionFactor);
     }
 
     @Override
     public String toString() {
-        if (mKilometersDistance == AstrolabosLocationModel.LOCATION_WITH_NO_DATA)
+        if (mMetersDistance == AstrolabosLocationModel.LOCATION_WITH_NO_DATA)
             return AstrolabosLocationModel.UNAVAILABLE_DATA;
         return getDistance() + " " + mUnit.toString();
     }

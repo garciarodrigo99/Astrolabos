@@ -2,6 +2,7 @@ package es.ull.etsii.testastrolabos;
 
 import android.widget.TextView;
 import es.ull.etsii.testastrolabos.Airport.Airport;
+import es.ull.etsii.testastrolabos.DataModels.DistanceModel;
 import org.mapsforge.core.model.LatLong;
 
 public class FlightInfoPanel {
@@ -13,6 +14,8 @@ public class FlightInfoPanel {
     private final Airport mOriginAirport;
     private final Airport mDestinationAirport;
     private LatLong mCurrentLocation;
+    private DistanceModel mOriginDistance;
+    private DistanceModel mDestinationDistance;
     private final double JET_SPEED = 787;
     private final double TURBOPROP_SPEED = 340;
 
@@ -28,6 +31,8 @@ public class FlightInfoPanel {
         mOriginAirportTv.setText(originAirport.getCodeIATA());
         mDestinationAirport = destinationAirport;
         mDestinationAirportTv.setText(destinationAirport.getCodeIATA());
+        mOriginDistance = new DistanceModel();
+        mDestinationDistance = new DistanceModel();
     }
 
     public void updateLocation(LatLong location) {
@@ -53,14 +58,20 @@ public class FlightInfoPanel {
     }
 
     private void updateDistanceFromOrigin() {
-        double meters = mCurrentLocation.sphericalDistance(mOriginAirport.getLatLong());
-        int kilometers = (int) meters / 1000;
-        mDistanceFromOriginTv.setText(String.valueOf(kilometers));
+        mOriginDistance.setDistance(mCurrentLocation.sphericalDistance(mOriginAirport.getLatLong()));
+        mDistanceFromOriginTv.setText(mOriginDistance.toString());
     }
     private void updateDistanceToDestination() {
-        double meters = mCurrentLocation.sphericalDistance(mDestinationAirport.getLatLong());
-        int kilometers = (int) meters / 1000;
-        mDistanceToDestinationTv.setText(String.valueOf(kilometers));
+        mDestinationDistance.setDistance(mCurrentLocation.sphericalDistance(mDestinationAirport.getLatLong()));
+        mDistanceToDestinationTv.setText(mDestinationDistance.toString());
+    }
+
+    public DistanceModel getOriginDistance() {
+        return mOriginDistance;
+    }
+
+    public DistanceModel getDestinationDistance() {
+        return mDestinationDistance;
     }
 }
 

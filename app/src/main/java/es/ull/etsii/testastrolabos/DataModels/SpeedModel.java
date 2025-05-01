@@ -9,14 +9,14 @@ public class SpeedModel {
         MACH;
         @Override
         public String toString() {
-            switch (this) {
-                case KILOMETERS_PER_HOUR: return "km/h";
-                case METERS_PER_SECOND: return "m/s";
-                case MILES_PER_HOUR: return "mph";
-                case KNOTS: return "Knots";
-                case MACH: return "Mach";
-                default: return super.toString();
-            }
+            return switch (this) {
+                case KILOMETERS_PER_HOUR -> "km/h";
+                case METERS_PER_SECOND -> "m/s";
+                case MILES_PER_HOUR -> "mph";
+                case KNOTS -> "Knots";
+                case MACH -> "Mach";
+                default -> super.toString();
+            };
         }
     }
     private Unit mUnit = Unit.KILOMETERS_PER_HOUR;
