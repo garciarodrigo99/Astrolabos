@@ -1,17 +1,10 @@
 package es.ull.etsii.testastrolabos;
 
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresPermission;
-import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.*;
-import android.location.Location;
-import android.location.LocationManager;
 import org.jetbrains.annotations.NotNull;
-
-import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Static class for LocationRequest abstract factory

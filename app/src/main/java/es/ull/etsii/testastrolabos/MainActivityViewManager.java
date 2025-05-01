@@ -3,15 +3,8 @@ package es.ull.etsii.testastrolabos;
 import android.location.Location;
 import android.view.View;
 import android.widget.*;
-import es.ull.etsii.testastrolabos.Airport.Airport;
 import es.ull.etsii.testastrolabos.DataModels.AstrolabosLocationModel;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
-import org.mapsforge.core.model.LatLong;
-
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivityViewManager {
 

@@ -1,6 +1,5 @@
 package es.ull.etsii.testastrolabos.DataModels;
 
-
 public class DistanceModel {
     public enum Unit{
         KILOMETERS,

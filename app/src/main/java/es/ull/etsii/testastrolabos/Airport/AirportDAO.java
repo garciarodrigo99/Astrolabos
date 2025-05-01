@@ -1,7 +1,5 @@
 package es.ull.etsii.testastrolabos.Airport;
 
-import android.content.Context;
-
 import java.util.List;
 
 public interface AirportDAO {

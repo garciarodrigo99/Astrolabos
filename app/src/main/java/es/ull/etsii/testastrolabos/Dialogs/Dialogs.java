@@ -1,16 +1,12 @@
 package es.ull.etsii.testastrolabos.Dialogs;
 
 import android.content.Context;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import es.ull.etsii.testastrolabos.R;
-import es.ull.etsii.testastrolabos.TrackSettings;
 
 public class Dialogs {
     public static void showConfirmationDialog(Context context, String title, String message, final AcceptCancelActions<Void> action) {
