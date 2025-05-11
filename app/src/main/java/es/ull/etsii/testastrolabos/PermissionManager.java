@@ -44,17 +44,17 @@ public class PermissionManager {
     public boolean isLocationPermissionGranted() {
         return isFineLocationPermissionGranted() &&
                 ActivityCompat.checkSelfPermission(
-                        mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ;
+                        mActivity, ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ;
     }
 
     private boolean isFineLocationPermissionGranted() {
         return ActivityCompat.checkSelfPermission(
-                mActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                mActivity, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestLocationPermission() {
             mActivity.requestPermissions(
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{ACCESS_FINE_LOCATION},
                     mPermissionResultHandler.PERMISSIONS_FINE_LOCATION
             );
     }

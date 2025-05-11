@@ -1,6 +1,7 @@
 package es.ull.etsii.testastrolabos;
 
 import android.content.Intent;
+import android.location.GnssStatus;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -140,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String timestamp = sdf.format(date);
         mFlightTrackManager.fileFormat.addContent(timestamp,location);
+    }
+    public void writeGnssStatus(GnssStatus gnssStatus){
+        mViewManager.writeGnssStatus(gnssStatus);
     }
     public void loadMap(Uri uri) {
         mMapViewManager.loadMap(uri);

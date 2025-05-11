@@ -1,5 +1,6 @@
 package es.ull.etsii.testastrolabos;
 
+import android.location.GnssStatus;
 import android.location.Location;
 import android.view.View;
 import android.widget.*;
@@ -165,5 +166,9 @@ public class MainActivityViewManager {
         mLocationInfoPanel.setSpeed(AstrolabosLocationModel.UNAVAILABLE_DATA);
         mLocationInfoPanel.setLastTime(AstrolabosLocationModel.UNAVAILABLE_DATA);
         mLocationInfoPanel.setAccuracy(AstrolabosLocationModel.UNAVAILABLE_DATA);
+    }
+
+    public void writeGnssStatus(GnssStatus gnssStatus) {
+        mLocationInfoPanel.updateGnssStatus(gnssStatus);
     }
 }

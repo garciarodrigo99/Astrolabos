@@ -1,6 +1,9 @@
 package es.ull.etsii.testastrolabos;
 
 import android.annotation.SuppressLint;
+import android.location.GnssStatus;
+import android.location.LocationManager;
+import android.os.Build;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.location.*;
@@ -25,6 +28,7 @@ public final class AstrolabosLocationManager {
     private final int kDefaultUpdate = 10;
     private LocationRequest mAppLocationRequest;
     private LocationCallback mLocationCallBack;
+    private GnssStatus.Callback mGnssStatusCallback;
 
     // Class to use location info
     private FusedLocationProviderClient mLocationClient;
@@ -69,6 +73,34 @@ public final class AstrolabosLocationManager {
         }
         setFastUpdateLocationRequest();
         mLocationClient.requestLocationUpdates(mAppLocationRequest, mLocationCallBack, null);
+        registerGnssStatusCallback();
+    }
+
+    /**
+     *
+     */
+    @SuppressLint("MissingPermission")
+    private void registerGnssStatusCallback() {
+        if (mGnssStatusCallback == null) {
+            mGnssStatusCallback = new GnssStatus.Callback() {
+                @Override
+                public void onSatelliteStatusChanged(@NonNull GnssStatus status) {
+                    mMainActivity.writeGnssStatus(status);
+                }
+            };
+        }
+
+        LocationManager locationManager = (LocationManager) mMainActivity.getSystemService(MainActivity.LOCATION_SERVICE);
+        if (locationManager != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                locationManager.registerGnssStatusCallback(
+                        mMainActivity.getMainExecutor(),
+                        mGnssStatusCallback
+                );
+            } else {
+                locationManager.registerGnssStatusCallback(mGnssStatusCallback);
+            }
+        }
     }
 
     public void updateLocationRequest(int newInterval, int newPriority,int sensor) {

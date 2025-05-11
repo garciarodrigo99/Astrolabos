@@ -1,5 +1,6 @@
 package es.ull.etsii.testastrolabos;
 
+import android.location.GnssStatus;
 import android.location.Location;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -44,6 +45,10 @@ public class LocationInfoPanel {
         setSpeed(mAstrolabosLocationModel.getSpeed().toString());
         setLastTime(mAstrolabosLocationModel.DATE_FORMAT.format(mAstrolabosLocationModel.getLastTime()));
         setAccuracy(String.valueOf(mAstrolabosLocationModel.getAccuracy()));
+    }
+    public void updateGnssStatus(GnssStatus gnssStatus) {
+        mAstrolabosLocationModel.getSatellites().updateStatus(gnssStatus);
+        setSatellite(mAstrolabosLocationModel.getSatellites().toString());
     }
     public void setLatitude(String latitude) {
         this.mLatitudeTv.setText(latitude);

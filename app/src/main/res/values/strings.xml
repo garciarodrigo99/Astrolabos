@@ -4,7 +4,7 @@
     <!--  .xml  -->
         <!-- activity_main.xml  -->
         <string name="tv_label_lat">LAT</string>
-        <string name="tv_default_value">0.00</string>
+        <string name="tv_default_value">-</string>
         <string name="tv_label_lon">LON</string>
         <string name="iv_icon_altitude">Altitude</string>
         <string name="iv_icon_accuracy">Accuracy</string>
