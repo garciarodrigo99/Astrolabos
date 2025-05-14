@@ -35,6 +35,7 @@ public abstract class TrackingViewManager {
     protected abstract void addOriginToPathLine(LatLong latLong);
     protected void paintPathLine(){
         Paint pathStroke = mMapViewManager.getGraphicFactory().createPaint();
+        // TODO: ligar a la altitud
         pathStroke.setColor(Color.RED);
         pathStroke.setStrokeWidth(4);
         pathStroke.setStyle(Style.STROKE);

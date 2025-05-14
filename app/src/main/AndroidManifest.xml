@@ -22,9 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"/>
-        <activity android:name=".InfoActivity"/>
-        <activity android:name=".ShareActivity"/>
+        <activity android:name=".OtherActivities.SettingsActivity"/>
+        <activity android:name=".OtherActivities.InfoActivity"/>
+        <activity android:name=".OtherActivities.ShareActivity"/>
     </application>
 
 </manifest>
