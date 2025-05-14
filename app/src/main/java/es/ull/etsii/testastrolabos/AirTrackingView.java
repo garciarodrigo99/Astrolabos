@@ -23,6 +23,10 @@ public class AirTrackingView extends TrackingViewManager{
         super(mapViewManager);
         this.mOriginAirport = origin;
         this.mDestinationAirport = destination;
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mapViewManager.mUserMarker);
+        mapViewManager.mUserMarker =
+                mapViewManager.insertIconInMap(
+                        mapViewManager.mUserMarker.getLatLong(),R.drawable.ic_airplane);
     }
     @Override
     public void updateLocation(LatLong latLong) {

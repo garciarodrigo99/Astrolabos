@@ -186,6 +186,8 @@ public class MapViewManager {
         mTrackingViewManager.stopTracking();
         mTrackingViewManager = null;
         this.mIsTracking = false;
+        mMapView.getLayerManager().getLayers().remove(mUserMarker);
+        mUserMarker = insertIconInMap(mUserMarker.getLatLong(),R.drawable.ic_navigation);
     }
 }
 
