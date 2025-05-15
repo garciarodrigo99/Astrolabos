@@ -1,10 +1,12 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Helpers;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
+import es.ull.etsii.testastrolabos.MainActivity;
+import es.ull.etsii.testastrolabos.TrackingManager;
 
 public class ActivityResultHandler {
     private static final int PERMISSIONS_FINE_LOCATION = 99;

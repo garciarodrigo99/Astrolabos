@@ -171,13 +171,13 @@ public class MapViewManager {
 
     public void startTracking(TrackSettings trackSettings) {
         if (!trackSettings.isFreeTracking()){
-            mTrackingViewManager = new AirTrackingView(
+            mTrackingViewManager = new AirTrackingManager(
                     this,
                     trackSettings.getOriginAirport(),
                     trackSettings.getDestinationAirport());
 
         } else {
-            mTrackingViewManager = new FreeTrackingView(this);
+            mTrackingViewManager = new TrackingViewManager(this);
         }
         mTrackingViewManager.startTracking();
     }

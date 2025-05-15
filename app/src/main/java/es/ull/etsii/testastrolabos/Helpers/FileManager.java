@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Helpers;
 
 import android.app.Activity;
 import android.content.Context;

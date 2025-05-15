@@ -1,8 +1,10 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Helpers;
 
 import android.app.Activity;
 import android.widget.Toast;
 import android.content.pm.PackageManager;
+import es.ull.etsii.testastrolabos.MainActivity;
+import es.ull.etsii.testastrolabos.R;
 
 public class PermissionResultHandler {
     public final int PERMISSIONS_FINE_LOCATION = 99;

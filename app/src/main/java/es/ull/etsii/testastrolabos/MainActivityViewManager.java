@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.*;
 import es.ull.etsii.testastrolabos.DataModels.AstrolabosLocationModel;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
+import es.ull.etsii.testastrolabos.Helpers.FileManager;
 
 public class MainActivityViewManager {
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
+import es.ull.etsii.testastrolabos.Helpers.FileManager;
 import es.ull.etsii.testastrolabos.Writers.*;
 import es.ull.etsii.testastrolabos.Dialogs.*;
 
@@ -23,7 +24,7 @@ public class TrackingManager {
     };
 
     private State state_ = State.NOT_TRACKING;
-    FileFormat fileFormat;
+    public FileFormat fileFormat;
     private StartTrackingDialog startTrackingDialog;
 
     public TrackingManager(MainActivity activity) {

@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Helpers;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -7,6 +7,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
+import es.ull.etsii.testastrolabos.MainActivity;
+import es.ull.etsii.testastrolabos.MainActivityViewManager;
+import es.ull.etsii.testastrolabos.R;
 
 import static android.content.Context.LOCATION_SERVICE;
 

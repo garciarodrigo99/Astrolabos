@@ -12,14 +12,14 @@ import org.mapsforge.map.layer.overlay.Polyline;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirTrackingView extends TrackingViewManager{
+public class AirTrackingManager extends TrackingViewManager{
     private Polyline mDestinationPolyline;
     private List<LatLong> mDestinationPoints;
     private final Airport mOriginAirport;
     private final Airport mDestinationAirport;
     private Marker mOriginMarker = null;
     private Marker mDestinationMarker = null;
-    public AirTrackingView(MapViewManager mapViewManager, Airport origin, Airport destination) {
+    public AirTrackingManager(MapViewManager mapViewManager, Airport origin, Airport destination) {
         super(mapViewManager);
         this.mOriginAirport = origin;
         this.mDestinationAirport = destination;
@@ -28,6 +28,15 @@ public class AirTrackingView extends TrackingViewManager{
                 mapViewManager.insertIconInMap(
                         mapViewManager.mUserMarker.getLatLong(),R.drawable.ic_airplane);
     }
+
+    @Override
+    public void startTracking() {
+        paintAirports(mOriginAirport, mDestinationAirport);
+        super.startTracking();
+        mTrackPathPoints.add(new LatLong(mOriginAirport.getLatitude(), mOriginAirport.getLongitude()));
+        paintDestinationLine();
+    }
+
     @Override
     public void updateLocation(LatLong latLong) {
         super.updateLocation(latLong);
@@ -36,11 +45,11 @@ public class AirTrackingView extends TrackingViewManager{
     }
 
     @Override
-    public void startTracking() {
-        paintAirports(mOriginAirport, mDestinationAirport);
-        paintPathLine();
-        addOriginToPathLine(new LatLong(mOriginAirport.getLatitude(), mOriginAirport.getLongitude()));
-        paintDestinationLine();
+    public void stopTracking() {
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationPolyline);
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mOriginMarker);
+        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationMarker);
+        super.stopTracking();
     }
 
     private void paintDestinationLine() {
@@ -57,14 +66,6 @@ public class AirTrackingView extends TrackingViewManager{
         mMapViewManager.mMapView.getLayerManager().getLayers().add(mDestinationPolyline);
     }
 
-    @Override
-    public void stopTracking() {
-        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationPolyline);
-        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mOriginMarker);
-        mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationMarker);
-        super.stopTracking();
-    }
-
     private void paintAirports(Airport origin, Airport destination) {
         try {
             mOriginMarker = mMapViewManager.insertIconInMap(new LatLong(origin.getLatitude(), origin.getLongitude()),
@@ -74,10 +75,5 @@ public class AirTrackingView extends TrackingViewManager{
         } catch (Exception e){
             Log.e("AirTrackingView", "Error painting airports", e);
         }
-    }
-
-    @Override
-    protected void addOriginToPathLine(LatLong latLong) {
-        mTrackPathPoints.add(latLong);
     }
 }

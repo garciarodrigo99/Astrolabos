@@ -9,7 +9,7 @@ import org.mapsforge.map.layer.overlay.Polyline;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TrackingViewManager {
+public class TrackingViewManager {
     protected boolean mIsTracking = false;
     protected MapViewManager mMapViewManager;
 
@@ -31,8 +31,9 @@ public abstract class TrackingViewManager {
         mMapViewManager.mMapView.getLayerManager().getLayers().remove(mTrackPathPolyline);
     }
 
-    public abstract void startTracking();
-    protected abstract void addOriginToPathLine(LatLong latLong);
+    public void startTracking() {
+        paintPathLine();
+    }
     protected void paintPathLine(){
         Paint pathStroke = mMapViewManager.getGraphicFactory().createPaint();
         // TODO: ligar a la altitud
