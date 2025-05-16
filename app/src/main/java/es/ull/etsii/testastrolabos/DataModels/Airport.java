@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos.Airport;
+package es.ull.etsii.testastrolabos.DataModels;
 
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.core.model.LatLong;

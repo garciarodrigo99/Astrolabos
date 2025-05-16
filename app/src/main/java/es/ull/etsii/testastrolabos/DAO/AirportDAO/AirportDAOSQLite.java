@@ -1,10 +1,11 @@
-package es.ull.etsii.testastrolabos.Airport;
+package es.ull.etsii.testastrolabos.DAO.AirportDAO;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import es.ull.etsii.testastrolabos.DataModels.Airport;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -39,7 +40,7 @@ public class AirportDAOSQLite implements AirportDAO {
     }
 
     private void createFileDb(File dbFile) throws IOException {
-        if (dbFile.exists()) {
+        if (!dbFile.exists()) {
             dbFile.getParentFile().mkdirs();
 
             InputStream input = null;
@@ -48,8 +49,8 @@ public class AirportDAOSQLite implements AirportDAO {
                 Log.d("AirportDAOSQLite", "Archivo cargado correctamente desde assets.");
             } catch (IOException e) {
                 Log.e("AirportDAOSQLite", "No se pudo abrir el archivo desde assets", e);
+                return;
             }
-            // InputStream input = context.getAssets().open(DATABASE_NAME);
             OutputStream output = Files.newOutputStream(Paths.get(dbFile.getPath()));
 
             byte[] buffer = new byte[1024];

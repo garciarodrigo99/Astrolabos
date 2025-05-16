@@ -1,4 +1,6 @@
-package es.ull.etsii.testastrolabos.Airport;
+package es.ull.etsii.testastrolabos.DAO.AirportDAO;
+
+import es.ull.etsii.testastrolabos.DataModels.Airport;
 
 import java.util.List;
 
