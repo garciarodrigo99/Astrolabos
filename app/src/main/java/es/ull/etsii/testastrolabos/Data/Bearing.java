@@ -1,8 +1,10 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Data;
 
-public class BearingModel {
+import es.ull.etsii.testastrolabos.Model.AstrolabosLocationModel;
+
+public class Bearing {
     private double mBearing;
-    public BearingModel() {}
+    public Bearing() {}
     public void setBearing(double bearing) {
         mBearing = bearing;
     }

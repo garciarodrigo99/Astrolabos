@@ -1,12 +1,14 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Panels;
 
 import android.location.GnssStatus;
 import android.location.Location;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import es.ull.etsii.testastrolabos.Airport.Airport;
-import es.ull.etsii.testastrolabos.DataModels.AstrolabosLocationModel;
+import es.ull.etsii.testastrolabos.Data.Airport;
+import es.ull.etsii.testastrolabos.MainActivity;
+import es.ull.etsii.testastrolabos.Model.AstrolabosLocationModel;
+import es.ull.etsii.testastrolabos.R;
 import org.mapsforge.core.model.LatLong;
 
 public class LocationInfoPanel {

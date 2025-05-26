@@ -1,7 +1,11 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Model;
 
 import android.location.Location;
 import android.os.Build;
+import es.ull.etsii.testastrolabos.Data.Altitude;
+import es.ull.etsii.testastrolabos.Data.Bearing;
+import es.ull.etsii.testastrolabos.Data.Satellites;
+import es.ull.etsii.testastrolabos.Data.Speed;
 import org.mapsforge.core.model.LatLong;
 
 import java.text.SimpleDateFormat;
@@ -31,19 +35,19 @@ public class AstrolabosLocationModel {
     public static final String UNAVAILABLE_DATA = "-";
 
     private LatLong mPosition;
-    private SpeedModel mSpeed;
-    private AltitudeModel mAltitude;
-    private BearingModel mBearing;
-    private SatellitesModel mSatellites;
+    private Speed mSpeed;
+    private Altitude mAltitude;
+    private Bearing mBearing;
+    private Satellites mSatellites;
     private Date mLastTime;
     public final SimpleDateFormat DATE_FORMAT;
     private int mAccuracy;
     public AstrolabosLocationModel() {
         this.mPosition = new LatLong(0.0, 0.0);
-        this.mSpeed = new SpeedModel();
-        this.mAltitude = new AltitudeModel();
-        this.mBearing = new BearingModel();
-        this.mSatellites = new SatellitesModel();
+        this.mSpeed = new Speed();
+        this.mAltitude = new Altitude();
+        this.mBearing = new Bearing();
+        this.mSatellites = new Satellites();
         DATE_FORMAT = new SimpleDateFormat("HH:mm:ss",
                 Locale.getDefault());
     }
@@ -64,19 +68,19 @@ public class AstrolabosLocationModel {
         return mPosition;
     }
 
-    public SpeedModel getSpeed() {
+    public Speed getSpeed() {
         return mSpeed;
     }
 
-    public AltitudeModel getAltitude() {
+    public Altitude getAltitude() {
         return mAltitude;
     }
 
-    public BearingModel getBearing() {
+    public Bearing getBearing() {
         return mBearing;
     }
 
-    public SatellitesModel getSatellites() {
+    public Satellites getSatellites() {
         return mSatellites;
     }
     public Date getLastTime() {

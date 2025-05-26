@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos.Helpers;
+package es.ull.etsii.testastrolabos.Services;
 
 import android.app.Activity;
 import android.widget.Toast;
@@ -37,14 +37,14 @@ public class PermissionResultHandler {
         Toast.makeText(mActivity, mActivity.getString(R.string.location_permissions_granted), Toast.LENGTH_SHORT).show();
 
         if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).updateLocation(); // o usar una interfaz callback si prefieres desacoplar más
+            ((MainActivity) mActivity).updateLocation();
         }
     }
 
     private void onLocationPermissionDenied() {
         Toast.makeText(mActivity, mActivity.getString(R.string.location_permissions_not_granted), Toast.LENGTH_LONG).show();
         if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).onLocationPermissionDenied(); // o usar una interfaz callback si prefieres desacoplar más
+            ((MainActivity) mActivity).onLocationPermissionDenied();
         }
         // mActivity.finish(); // si lo necesitas
     }

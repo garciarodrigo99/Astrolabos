@@ -1,7 +1,7 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Model;
 
 
-import es.ull.etsii.testastrolabos.Airport.Airport;
+import es.ull.etsii.testastrolabos.Data.Airport;
 
 public class TrackSettings{
     public static final String DEFAULT_FLIGHT_NAME = "default_track_name";

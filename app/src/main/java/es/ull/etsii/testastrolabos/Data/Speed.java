@@ -1,6 +1,8 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Data;
 
-public class SpeedModel {
+import es.ull.etsii.testastrolabos.Model.AstrolabosLocationModel;
+
+public class Speed {
     public enum Unit{
         KILOMETERS_PER_HOUR,
         METERS_PER_SECOND,
@@ -31,9 +33,9 @@ public class SpeedModel {
     /**
      * Default constructor assigns 0.0 kilometers per hour
      */
-    public SpeedModel(){}
+    public Speed(){}
 
-    void setSpeed(double speed){
+    public void setSpeed(double speed){
         mKilometersPerHourSpeed = speed;
     }
     public void setUnit(Unit unit){

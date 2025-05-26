@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Services;
 
 import android.annotation.SuppressLint;
 import android.location.GnssStatus;
@@ -7,6 +7,8 @@ import android.os.Build;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.location.*;
+import es.ull.etsii.testastrolabos.MainActivity;
+import es.ull.etsii.testastrolabos.R;
 import org.jetbrains.annotations.NotNull;
 
 /**

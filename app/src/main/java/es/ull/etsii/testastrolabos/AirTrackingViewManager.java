@@ -1,7 +1,8 @@
 package es.ull.etsii.testastrolabos;
 
 import android.util.Log;
-import es.ull.etsii.testastrolabos.Airport.Airport;
+import es.ull.etsii.testastrolabos.Data.Airport;
+import es.ull.etsii.testastrolabos.Data.Altitude;
 import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
@@ -12,14 +13,15 @@ import org.mapsforge.map.layer.overlay.Polyline;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirTrackingManager extends TrackingViewManager{
+public class AirTrackingViewManager extends TrackingViewManager{
     private Polyline mDestinationPolyline;
     private List<LatLong> mDestinationPoints;
     private final Airport mOriginAirport;
     private final Airport mDestinationAirport;
     private Marker mOriginMarker = null;
     private Marker mDestinationMarker = null;
-    public AirTrackingManager(MapViewManager mapViewManager, Airport origin, Airport destination) {
+    private double mAltitude;
+    public AirTrackingViewManager(MapViewManager mapViewManager, Airport origin, Airport destination) {
         super(mapViewManager);
         this.mOriginAirport = origin;
         this.mDestinationAirport = destination;
@@ -35,11 +37,13 @@ public class AirTrackingManager extends TrackingViewManager{
         super.startTracking();
         mTrackPathPoints.add(new LatLong(mOriginAirport.getLatitude(), mOriginAirport.getLongitude()));
         paintDestinationLine();
+        mAltitude = 0;
     }
 
     @Override
-    public void updateLocation(LatLong latLong) {
-        super.updateLocation(latLong);
+    public void updateLocation(LatLong latLong, double altitude) {
+        mAltitude = altitude;
+        super.updateLocation(latLong,0);
         mDestinationPoints.set(0,latLong);
         mDestinationPolyline.setPoints(mDestinationPoints);
     }
@@ -49,7 +53,14 @@ public class AirTrackingManager extends TrackingViewManager{
         mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationPolyline);
         mMapViewManager.mMapView.getLayerManager().getLayers().remove(mOriginMarker);
         mMapViewManager.mMapView.getLayerManager().getLayers().remove(mDestinationMarker);
+        mAltitude = 0;
         super.stopTracking();
+    }
+
+    @Override
+    public void setPathLineColor(Paint pathStroke) {
+        pathStroke.setColor(AltitudeColorMap.getColorForAltitude(
+                mAltitude * Altitude.METERS_TO_FEET).toArgb());
     }
 
     private void paintDestinationLine() {

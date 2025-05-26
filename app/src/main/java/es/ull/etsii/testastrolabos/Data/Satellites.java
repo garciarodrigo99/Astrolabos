@@ -1,12 +1,12 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Data;
 
 import android.location.GnssStatus;
 
-public class SatellitesModel {
+public class Satellites {
     private GnssStatus mGnssStatus;
     private int mTotalSatellites;
     private int mLocationSatellites;
-    public SatellitesModel(){
+    public Satellites(){
         mTotalSatellites = 0;
         mLocationSatellites = 0;
     }

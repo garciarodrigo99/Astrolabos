@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import es.ull.etsii.testastrolabos.R;
+import es.ull.etsii.testastrolabos.TrackingManager;
 
 public class TrackingActionDialog extends DialogFragment {
     private TrackingManager trackingManager_;

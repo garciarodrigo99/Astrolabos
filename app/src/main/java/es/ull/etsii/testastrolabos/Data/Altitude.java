@@ -1,6 +1,8 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Data;
 
-public class AltitudeModel {
+import es.ull.etsii.testastrolabos.Model.AstrolabosLocationModel;
+
+public class Altitude {
     public enum Unit{
         METERS,
         FEET;
@@ -15,14 +17,14 @@ public class AltitudeModel {
     }
     private Unit mUnit = Unit.METERS;
     private double mMetersAltitude = 0.0;
-    private static final double METERS_TO_FEET = 3.28084;
+    public static final double METERS_TO_FEET = 3.28084;
     private static final double DEFAULT_CONVERSION_FACTOR = 1.0;
     private double mConversionFactor = DEFAULT_CONVERSION_FACTOR;
 
     /**
      * Default constructor assigns 0.0 Meters
      */
-    public AltitudeModel(){}
+    public Altitude(){}
 
     public  void setAltitude(double altitude){
         mMetersAltitude = altitude;

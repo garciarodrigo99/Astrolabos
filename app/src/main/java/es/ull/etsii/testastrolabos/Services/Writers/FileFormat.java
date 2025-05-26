@@ -1,7 +1,7 @@
-package es.ull.etsii.testastrolabos.Writers;
+package es.ull.etsii.testastrolabos.Services.Writers;
 
 import android.location.Location;
-import es.ull.etsii.testastrolabos.TrackSettings;
+import es.ull.etsii.testastrolabos.Model.TrackSettings;
 
 public abstract class FileFormat {
 

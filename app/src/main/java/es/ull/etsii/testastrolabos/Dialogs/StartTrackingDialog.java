@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import es.ull.etsii.testastrolabos.Airport.Airport;
+import es.ull.etsii.testastrolabos.Data.Airport;
 import es.ull.etsii.testastrolabos.MainActivity;
 import es.ull.etsii.testastrolabos.R;
-import es.ull.etsii.testastrolabos.TrackSettings;
+import es.ull.etsii.testastrolabos.Model.TrackSettings;
 
 import java.util.List;
 

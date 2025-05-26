@@ -1,11 +1,12 @@
-package es.ull.etsii.testastrolabos.DAO.AirportDAO;
+package es.ull.etsii.testastrolabos.DAO.SQLiteDAO;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import es.ull.etsii.testastrolabos.DataModels.Airport;
+import es.ull.etsii.testastrolabos.DAO.AirportDAO;
+import es.ull.etsii.testastrolabos.Data.Airport;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -26,7 +27,7 @@ public class AirportDAOSQLite implements AirportDAO {
         }
 
     }
-    public void loadDb() throws IOException, SQLException {
+    private void loadDb() throws IOException, SQLException {
         File dbFile = context.getDatabasePath(DATABASE_NAME);
         try {
             createFileDb(dbFile);

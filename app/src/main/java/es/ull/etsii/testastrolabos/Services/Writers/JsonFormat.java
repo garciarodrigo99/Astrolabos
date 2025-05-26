@@ -1,11 +1,11 @@
-package es.ull.etsii.testastrolabos.Writers;
+package es.ull.etsii.testastrolabos.Services.Writers;
 
 import android.location.Location;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import es.ull.etsii.testastrolabos.TrackSettings;
+import es.ull.etsii.testastrolabos.Model.TrackSettings;
 import org.jetbrains.annotations.NotNull;
 
 public class JsonFormat extends FileFormat {

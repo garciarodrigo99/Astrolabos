@@ -1,8 +1,10 @@
-package es.ull.etsii.testastrolabos;
+package es.ull.etsii.testastrolabos.Panels;
 
 import android.widget.TextView;
-import es.ull.etsii.testastrolabos.Airport.Airport;
-import es.ull.etsii.testastrolabos.DataModels.DistanceModel;
+import es.ull.etsii.testastrolabos.Data.Airport;
+import es.ull.etsii.testastrolabos.Data.Distance;
+import es.ull.etsii.testastrolabos.MainActivity;
+import es.ull.etsii.testastrolabos.R;
 import org.mapsforge.core.model.LatLong;
 
 public class FlightInfoPanel {
@@ -14,8 +16,8 @@ public class FlightInfoPanel {
     private final Airport mOriginAirport;
     private final Airport mDestinationAirport;
     private LatLong mCurrentLocation;
-    private DistanceModel mOriginDistance;
-    private DistanceModel mDestinationDistance;
+    private Distance mOriginDistance;
+    private Distance mDestinationDistance;
     private final double JET_SPEED = 787;
     private final double TURBOPROP_SPEED = 340;
 
@@ -31,8 +33,8 @@ public class FlightInfoPanel {
         mOriginAirportTv.setText(originAirport.getCodeIATA());
         mDestinationAirport = destinationAirport;
         mDestinationAirportTv.setText(destinationAirport.getCodeIATA());
-        mOriginDistance = new DistanceModel();
-        mDestinationDistance = new DistanceModel();
+        mOriginDistance = new Distance();
+        mDestinationDistance = new Distance();
     }
 
     public void updateLocation(LatLong location) {
@@ -66,11 +68,11 @@ public class FlightInfoPanel {
         mDistanceToDestinationTv.setText(mDestinationDistance.toString());
     }
 
-    public DistanceModel getOriginDistance() {
+    public Distance getOriginDistance() {
         return mOriginDistance;
     }
 
-    public DistanceModel getDestinationDistance() {
+    public Distance getDestinationDistance() {
         return mDestinationDistance;
     }
 }

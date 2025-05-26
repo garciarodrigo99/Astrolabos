@@ -4,9 +4,12 @@ import android.location.GnssStatus;
 import android.location.Location;
 import android.view.View;
 import android.widget.*;
-import es.ull.etsii.testastrolabos.DataModels.AstrolabosLocationModel;
+import es.ull.etsii.testastrolabos.Model.AstrolabosLocationModel;
+import es.ull.etsii.testastrolabos.Model.TrackSettings;
 import es.ull.etsii.testastrolabos.Dialogs.LocationUpdatesSettingsDialog;
-import es.ull.etsii.testastrolabos.Helpers.FileManager;
+import es.ull.etsii.testastrolabos.Dialogs.TrackingActionDialog;
+import es.ull.etsii.testastrolabos.Panels.LocationInfoPanel;
+import es.ull.etsii.testastrolabos.Services.FileManager;
 
 public class MainActivityViewManager {
 

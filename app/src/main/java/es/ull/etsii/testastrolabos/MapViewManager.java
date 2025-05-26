@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.util.Log;
 import androidx.annotation.CheckResult;
 import androidx.core.content.ContextCompat;
+import es.ull.etsii.testastrolabos.Model.TrackSettings;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.model.LatLong;
@@ -158,7 +159,7 @@ public class MapViewManager {
         }
 
         if(mTrackingViewManager != null){
-            mTrackingViewManager.updateLocation(latLong);
+            mTrackingViewManager.updateLocation(latLong,location.getAltitude());
         }
         mUserMarker.requestRedraw();
         mMapView.repaint();
@@ -171,7 +172,7 @@ public class MapViewManager {
 
     public void startTracking(TrackSettings trackSettings) {
         if (!trackSettings.isFreeTracking()){
-            mTrackingViewManager = new AirTrackingManager(
+            mTrackingViewManager = new AirTrackingViewManager(
                     this,
                     trackSettings.getOriginAirport(),
                     trackSettings.getDestinationAirport());

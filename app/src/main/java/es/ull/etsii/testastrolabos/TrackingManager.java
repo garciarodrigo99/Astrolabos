@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
-import es.ull.etsii.testastrolabos.Helpers.FileManager;
-import es.ull.etsii.testastrolabos.Writers.*;
+import es.ull.etsii.testastrolabos.Model.TrackSettings;
+import es.ull.etsii.testastrolabos.Services.FileManager;
+import es.ull.etsii.testastrolabos.Services.Writers.FileFormat;
+import es.ull.etsii.testastrolabos.Services.Writers.JsonFormat;
 import es.ull.etsii.testastrolabos.Dialogs.*;
 
 import java.util.function.Consumer;

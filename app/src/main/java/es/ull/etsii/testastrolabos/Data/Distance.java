@@ -1,6 +1,8 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Data;
 
-public class DistanceModel {
+import es.ull.etsii.testastrolabos.Model.AstrolabosLocationModel;
+
+public class Distance {
     public enum Unit{
         KILOMETERS,
         NAUTICAL_MILES,
@@ -25,7 +27,7 @@ public class DistanceModel {
     /**
      * Default constructor assigns 0.0 Kilometers
      */
-    public DistanceModel(){}
+    public Distance(){}
 
     public  void setDistance(double distance){
         mMetersDistance = distance;

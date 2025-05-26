@@ -22,7 +22,7 @@ public class TrackingViewManager {
     public void setEnableTracking(boolean enableTracking) {
         this.mIsTracking = enableTracking;
     }
-    public void updateLocation(LatLong latLong) {
+    public void updateLocation(LatLong latLong, double altitude) {
         mTrackPathPoints.add(latLong);
         mTrackPathPolyline.setPoints(mTrackPathPoints);
     }
@@ -44,5 +44,9 @@ public class TrackingViewManager {
         mTrackPathPolyline = new Polyline(pathStroke, mMapViewManager.getGraphicFactory());
         mTrackPathPolyline.setPoints(mTrackPathPoints);
         mMapViewManager.mMapView.getLayerManager().getLayers().add(mTrackPathPolyline);
+    }
+
+    protected void setPathLineColor(Paint pathStroke) {
+        pathStroke.setColor(Color.RED);
     }
 }

@@ -1,4 +1,4 @@
-package es.ull.etsii.testastrolabos.DataModels;
+package es.ull.etsii.testastrolabos.Data;
 
 import org.jetbrains.annotations.NotNull;
 import org.mapsforge.core.model.LatLong;
