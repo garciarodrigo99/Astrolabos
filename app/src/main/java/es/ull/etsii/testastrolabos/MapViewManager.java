@@ -30,6 +30,7 @@ public class MapViewManager {
     Marker mUserMarker;
     private boolean mIsTracking = false;
     private TrackingViewManager mTrackingViewManager = null;
+    protected int mIconId;
     public MapViewManager(MainActivity activity, MapView mapView) {
         this.mActivity = activity;
         this.mMapView = mapView;
@@ -40,7 +41,8 @@ public class MapViewManager {
             mMapView.setBuiltInZoomControls(true);
 
             LatLong initialPos = new LatLong(0, 0);
-            mUserMarker = insertIconInMap(initialPos,R.drawable.ic_navigation);
+            mIconId = R.drawable.ic_navigation;
+            mUserMarker = insertIconInMap(initialPos,mIconId);
         } catch (Exception e) {
             Log.e("MapViewManager", "Error creating map view manager", e);
         }
@@ -102,7 +104,7 @@ public class MapViewManager {
 
     private org.mapsforge.core.graphics.Bitmap getRotatedUserIcon(float angle) {
         // 1. Obtener el drawable normal
-        Drawable drawable = ContextCompat.getDrawable(mActivity, R.drawable.ic_navigation);
+        Drawable drawable = ContextCompat.getDrawable(mActivity, mIconId);
 
         if (drawable == null) {
             Log.e("MapViewManager", "Drawable navigation es null");
@@ -176,7 +178,7 @@ public class MapViewManager {
                     this,
                     trackSettings.getOriginAirport(),
                     trackSettings.getDestinationAirport());
-
+            mIconId = R.drawable.ic_airplane;
         } else {
             mTrackingViewManager = new TrackingViewManager(this);
         }
@@ -188,6 +190,7 @@ public class MapViewManager {
         mTrackingViewManager = null;
         this.mIsTracking = false;
         mMapView.getLayerManager().getLayers().remove(mUserMarker);
+        mIconId = R.drawable.ic_navigation;
         mUserMarker = insertIconInMap(mUserMarker.getLatLong(),R.drawable.ic_navigation);
     }
 }

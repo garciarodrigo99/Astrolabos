@@ -29,6 +29,7 @@ public class AirTrackingViewManager extends TrackingViewManager{
         mapViewManager.mUserMarker =
                 mapViewManager.insertIconInMap(
                         mapViewManager.mUserMarker.getLatLong(),R.drawable.ic_airplane);
+
     }
 
     @Override
