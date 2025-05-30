@@ -14,7 +14,8 @@ public class FlightInfoPanel {
 
     private final TextView mOriginAirportTv, mDestinationAirportTv,
             mTimeFromStartTrackingTv, mTimeToDestinationTv,
-            mDistanceFromOriginTv, mDistanceToDestinationTv;
+            mDistanceFromOriginTv, mDistanceToDestinationTv,
+            mProgressTv;
     private final ProgressBar mProgressBar;
     private final Airport mOriginAirport;
     private final Airport mDestinationAirport;
@@ -31,6 +32,8 @@ public class FlightInfoPanel {
         mTimeToDestinationTv = this.mActivity.findViewById(R.id.tv_timeToDestination);
         mDistanceFromOriginTv = this.mActivity.findViewById(R.id.tv_distanceFromOrigin);
         mDistanceToDestinationTv = this.mActivity.findViewById(R.id.tv_distanceToDestination);
+        mProgressTv = this.mActivity.findViewById(R.id.tv_progress);
+//        mProgressTv.set
         mProgressBar = this.mActivity.findViewById(R.id.progressBar);
         mOriginAirport = originAirport;
         mOriginAirportTv.setText(originAirport.getCodeIATA());
@@ -80,7 +83,9 @@ public class FlightInfoPanel {
         double progress = (double) mOriginDistance.getDistance() / mTotalDistance.getDistance();
         progress = Math.round(progress * 100);
         mProgressBar.setProgress((int)progress);
-        Log.d("ProgressBar", progress + "");
+        String progressText = (int) progress + "%";
+        mProgressTv.setText(progressText);
+        Log.d("ProgressBar", progressText);
     }
 
     public Distance getOriginDistance() {

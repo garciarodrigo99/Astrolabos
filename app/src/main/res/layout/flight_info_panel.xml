@@ -117,13 +117,29 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <!-- Progress Bar -->
-    <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
+            android:id="@+id/progress_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:progress="0"
-            android:progressBackgroundTint="#ffd"
-    />
+            android:orientation="horizontal">
+
+        <!-- Progress Bar -->
+        <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/progressBar"
+                android:progress="0"
+                android:progressBackgroundTint="#ffd"
+                android:textAlignment="center"
+        />
+        <TextView
+                android:id="@+id/tv_progress"
+                android:text="@string/tv_default_value"
+                style="@style/LocationInfoPanelText"
+                android:layout_weight="8"
+                android:textAlignment="center"
+        />
+    </LinearLayout>
 </LinearLayout>
