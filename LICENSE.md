@@ -1,6 +1,6 @@
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)
 
-Copyright (c) [2025] [Astrolabos]
+Copyright (c) 2025 Astrolabos
 
 This project is licensed under the terms of the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 
